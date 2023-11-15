@@ -1,12 +1,12 @@
-# senior_design
+# Physical Therapy Sensor System
 
-A new Flutter project.
+This is the mobile application for F23-SPR24 UT ECE Senior Design Group SP16. 
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+This project is built on Flutter.
 
-A few resources to get you started if this is your first Flutter project:
+Some resources:
 
 - [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
 - [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
