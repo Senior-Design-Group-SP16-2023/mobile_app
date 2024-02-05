@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:senior_design/views/widgets/graph.dart';
 import 'package:senior_design/views/widgets/recent_activity.dart';
 import 'package:senior_design/views/widgets/calendar.dart';
 import 'package:intl/intl.dart';
@@ -46,6 +47,7 @@ class _DashboardViewState extends State<DashboardView> {
               ),
               RecentActivity(),
               CalendarWidget(),
+              RecentActivityWithBarChart(),
             ],
           ),
         ),
