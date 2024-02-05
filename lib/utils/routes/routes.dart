@@ -1,6 +1,6 @@
 import 'package:senior_design/utils/routes/routes_name.dart';
-import 'package:senior_design/views/home_view.dart';
-import 'package:senior_design/views/login_view.dart';
+import 'package:senior_design/views/screens/home_view.dart';
+import 'package:senior_design/views/screens/login_view.dart';
 import 'package:flutter/material.dart';
 
 class Routes {
