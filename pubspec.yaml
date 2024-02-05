@@ -31,6 +31,7 @@ dependencies:
   flutter:
     sdk: flutter
   intl: ^0.17.0 # Check for the latest version available
+  charts_flutter: ^0.12.0 # Check for the latest version
   table_calendar: ^3.0.0 # Check for the latest version on pub.dev
   provider: ^6.1.1
   fluttertoast: ^8.0.8
