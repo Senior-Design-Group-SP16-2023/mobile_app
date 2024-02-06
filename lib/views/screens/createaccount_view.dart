@@ -19,6 +19,7 @@ class CreateAccountView extends HookWidget{
     final lastNameController = useTextEditingController();
     final emailController = useTextEditingController();
     final passwordController = useTextEditingController();
+    final isPatientState = useState(true);
 
 
     return Scaffold(
@@ -26,8 +27,11 @@ class CreateAccountView extends HookWidget{
       appBar: AppBar(
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
-          onPressed: () => Navigator.of(context)
-              .pop(), // This line will handle the back navigation
+          onPressed: () =>
+          {
+            userViewModel.clearUser(),
+            Navigator.of(context).pop(),
+          }, // This line will handle the back navigation
         ),
         title: Text('Back'), // Optionally, you can also add a title here
         // align the title to the right of the icon
@@ -61,23 +65,21 @@ class CreateAccountView extends HookWidget{
               const SizedBox(height: 40.0),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 16.0),
-                child: CupertinoSegmentedControl<String>(
+                child: CupertinoSegmentedControl<bool>(
                   children: {
-                    'Patient': Padding(
+                    true: Padding(
                       padding: const EdgeInsets.symmetric(vertical: 16.0),
                       child: Text('Patient'),
                     ),
-                    'Doctor': Padding(
+                    false: Padding(
                       padding: const EdgeInsets.symmetric(vertical: 16.0),
                       child: Text('Doctor'),
                     ),
                   },
-                  onValueChanged: (String value) {
-                    setState(() {
-                      _selectedRole = value;
-                    });
+                  onValueChanged: (bool val) {
+                    isPatientState.value = val;
                   },
-                  groupValue: _selectedRole,
+                  groupValue: isPatientState.value,
                   borderColor: Theme.of(context).primaryColor,
                   selectedColor: Theme.of(context).primaryColor,
                   unselectedColor: Colors.grey.shade300,
@@ -87,9 +89,6 @@ class CreateAccountView extends HookWidget{
               const SizedBox(height: 24.0),
               TextField(
                 controller: firstNameController,
-                onChanged: (value){
-                  userViewModel.setFirstName(value);
-                },
                 decoration: const InputDecoration(
                   labelText: 'First Name',
                   border: OutlineInputBorder(),
@@ -98,9 +97,6 @@ class CreateAccountView extends HookWidget{
               const SizedBox(height: 12.0),
               TextField(
                 controller: lastNameController,
-                onChanged: (value){
-                  userViewModel.setLastName(value);
-                },
                 decoration: const InputDecoration(
                   labelText: 'Last Name',
                   border: OutlineInputBorder(),
@@ -109,9 +105,6 @@ class CreateAccountView extends HookWidget{
               const SizedBox(height: 12.0),
               TextField(
                 controller: emailController,
-                onChanged: (value){
-                  userViewModel.setEmail(value);
-                },
                 decoration: const InputDecoration(
                   labelText: 'Email Address',
                   border: OutlineInputBorder(),
@@ -120,9 +113,6 @@ class CreateAccountView extends HookWidget{
               ),
               const SizedBox(height: 12.0),
               TextField(
-                onChanged: (value){
-                  userViewModel.setPassword(value);
-                },
                 controller: passwordController,
                 decoration: const InputDecoration(
                   labelText: 'Password',
@@ -133,6 +123,13 @@ class CreateAccountView extends HookWidget{
               const SizedBox(height: 24.0),
               ElevatedButton(
                 onPressed: () {
+                  userViewModel.setAccountInfo(
+                    firstNameController.text,
+                    lastNameController.text,
+                    emailController.text,
+                    passwordController.text,
+                    userViewModel.user.isPatient,
+                  );
                   // if patient is selected, navigate to patient account screen
                   if (userViewModel.user.isPatient == true) {
                     Navigator.of(context).pushNamed(RoutesName.patientAccount);

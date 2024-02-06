@@ -4,50 +4,22 @@ import 'package:senior_design/view_models/auth_view_model.dart';
 import 'package:senior_design/views/widgets/backgrounds/background.dart';
 import 'package:senior_design/views/widgets/backgrounds/background_name.dart';
 
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:senior_design/view_models/user_view_model.dart';
 
-class PatientAccountView extends StatefulWidget {
+class PatientAccountView extends HookWidget {
   const PatientAccountView({Key? key}) : super(key: key);
 
   @override
-  State<PatientAccountView> createState() => _PatientAccountViewState();
-}
-
-class _PatientAccountViewState extends State<PatientAccountView> {
-  late TextEditingController _dateOfBirthController;
-  late TextEditingController _genderController;
-  late TextEditingController _weightController;
-  late TextEditingController _heightController;
-  late TextEditingController _injuryTypeController;
-  late TextEditingController _dateOfInjuryController;
-  late TextEditingController _pastInjuriesController;
-
-  @override
-  void initState() {
-    super.initState();
-    _dateOfBirthController = TextEditingController();
-    _genderController = TextEditingController();
-    _weightController = TextEditingController();
-    _heightController = TextEditingController();
-    _injuryTypeController = TextEditingController();
-    _dateOfInjuryController = TextEditingController();
-    _pastInjuriesController = TextEditingController();
-  }
-
-  @override
-  void dispose() {
-    _dateOfBirthController.dispose();
-    _genderController.dispose();
-    _weightController.dispose();
-    _heightController.dispose();
-    _injuryTypeController.dispose();
-    _dateOfInjuryController.dispose();
-    _pastInjuriesController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    final authViewModel = Provider.of<AuthViewModel>(context);
+    final userViewModel = Provider.of<UserViewModel>(context);
+    final dateOfBirthController = useTextEditingController();
+    final genderController = useTextEditingController();
+    final weightController = useTextEditingController();
+    final heightController = useTextEditingController();
+    final injuryTypeController = useTextEditingController();
+    final dateOfInjuryController = useTextEditingController();
+    final pastInjuriesController = useTextEditingController();
 
     return Scaffold(
       extendBodyBehindAppBar: true, // Make body extend behind AppBar
@@ -90,13 +62,13 @@ class _PatientAccountViewState extends State<PatientAccountView> {
                 Row(
                   children: <Widget>[
                     Expanded(
-                      child: buildTextField(_dateOfBirthController,
+                      child: buildTextField(dateOfBirthController,
                           'Date of Birth', TextInputType.datetime),
                     ),
                     const SizedBox(width: 12.0),
                     Expanded(
                       child: buildTextField(
-                          _genderController, 'Gender', TextInputType.text),
+                          genderController, 'Gender', TextInputType.text),
                     ),
                   ],
                 ),
@@ -104,22 +76,22 @@ class _PatientAccountViewState extends State<PatientAccountView> {
                   children: <Widget>[
                     Expanded(
                       child: buildTextField(
-                          _weightController, 'Weight', TextInputType.number),
+                          weightController, 'Weight', TextInputType.number),
                     ),
                     const SizedBox(width: 12.0),
                     Expanded(
                       child: buildTextField(
-                          _heightController, 'Height', TextInputType.number),
+                          heightController, 'Height', TextInputType.number),
                     ),
                   ],
                 ),
                 // Continue with the rest of your fields
                 buildTextField(
-                    _injuryTypeController, 'Injury Type', TextInputType.text),
-                buildTextField(_dateOfInjuryController, 'Date of Injury',
+                    injuryTypeController, 'Injury Type', TextInputType.text),
+                buildTextField(dateOfInjuryController, 'Date of Injury',
                     TextInputType.datetime),
                 buildTextField(
-                  _pastInjuriesController,
+                  pastInjuriesController,
                   'Past Injuries',
                   TextInputType.multiline,
                   maxLines: null,
@@ -128,6 +100,15 @@ class _PatientAccountViewState extends State<PatientAccountView> {
                 ElevatedButton(
                   onPressed: () {
                     // Logic to handle patient information submission
+                    userViewModel.setPatientInfo(
+                      dateOfBirthController.text,
+                      genderController.text,
+                      weightController.text,
+                      heightController.text,
+                      injuryTypeController.text,
+                      dateOfInjuryController.text,
+                      pastInjuriesController.text,
+                    );
                   },
                   child: const Padding(
                     padding: EdgeInsets.all(16.0),

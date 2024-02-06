@@ -1,52 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:provider/provider.dart';
 import 'package:senior_design/view_models/auth_view_model.dart';
 import 'package:senior_design/views/widgets/backgrounds/background.dart';
 import 'package:senior_design/views/widgets/backgrounds/background_name.dart';
+import 'package:senior_design/view_models/user_view_model.dart';
 
-class DoctorAccountView extends StatefulWidget {
+class DoctorAccountView extends HookWidget {
   const DoctorAccountView({Key? key}) : super(key: key);
 
-  @override
-  State<DoctorAccountView> createState() => _DoctorAccountViewState();
-}
-
-class _DoctorAccountViewState extends State<DoctorAccountView> {
-  late TextEditingController _hospitalNameController;
-  late TextEditingController _addressController;
-  late TextEditingController _cityController;
-  late TextEditingController _stateController;
-  late TextEditingController _zipCodeController;
-  late TextEditingController _floorRoomController;
-  late TextEditingController _specializationController;
-
-  @override
-  void initState() {
-    super.initState();
-    _hospitalNameController = TextEditingController();
-    _addressController = TextEditingController();
-    _cityController = TextEditingController();
-    _stateController = TextEditingController();
-    _zipCodeController = TextEditingController();
-    _floorRoomController = TextEditingController();
-    _specializationController = TextEditingController();
-  }
-
-  @override
-  void dispose() {
-    _hospitalNameController.dispose();
-    _addressController.dispose();
-    _cityController.dispose();
-    _stateController.dispose();
-    _zipCodeController.dispose();
-    _floorRoomController.dispose();
-    _specializationController.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
-    final authViewModel = Provider.of<AuthViewModel>(context);
+    final userViewModel = Provider.of<UserViewModel>(context);
+    final hospitalNameController = useTextEditingController();
+    final addressController = useTextEditingController();
+    final cityController = useTextEditingController();
+    final stateController = useTextEditingController();
+    final zipCodeController = useTextEditingController();
+    final floorRoomController = useTextEditingController();
+    final specializationController = useTextEditingController();
 
     return Scaffold(
       extendBodyBehindAppBar: true, // Make body extend behind AppBar
@@ -87,42 +60,51 @@ class _DoctorAccountViewState extends State<DoctorAccountView> {
                     ),
                   ),
                   const SizedBox(height: 40.0),
-                  buildTextField(_hospitalNameController, 'Hospital Name',
+                  buildTextField(hospitalNameController, 'Hospital Name',
                       TextInputType.text),
-                  buildTextField(_addressController, 'Address',
+                  buildTextField(addressController, 'Address',
                       TextInputType.streetAddress),
                   Row(
                     children: <Widget>[
                       Expanded(
                         child: buildTextField(
-                            _cityController, 'City', TextInputType.text),
+                            cityController, 'City', TextInputType.text),
                       ),
                       const SizedBox(width: 12.0),
                       Expanded(
                         child: buildTextField(
-                            _stateController, 'State', TextInputType.text),
+                            stateController, 'State', TextInputType.text),
                       ),
                     ],
                   ),
                   Row(
                     children: <Widget>[
                       Expanded(
-                        child: buildTextField(_zipCodeController, 'Zip Code',
+                        child: buildTextField(zipCodeController, 'Zip Code',
                             TextInputType.number),
                       ),
                       const SizedBox(width: 12.0),
                       Expanded(
-                        child: buildTextField(_floorRoomController,
+                        child: buildTextField(floorRoomController,
                             'Floor/Room', TextInputType.text),
                       ),
                     ],
                   ),
-                  buildTextField(_specializationController, 'Specialization',
+                  buildTextField(specializationController, 'Specialization',
                       TextInputType.text),
                   const SizedBox(height: 24.0),
                   ElevatedButton(
                     onPressed: () {
                       // Logic to handle doctor information submission
+                      userViewModel.setDoctorInfo(
+                        hospitalNameController.text,
+                        addressController.text,
+                        cityController.text,
+                        stateController.text,
+                        zipCodeController.text,
+                        floorRoomController.text,
+                        specializationController.text,
+                      );
                     },
                     child: const Padding(
                       padding: EdgeInsets.all(16.0),
