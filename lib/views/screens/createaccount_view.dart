@@ -5,44 +5,20 @@ import 'package:senior_design/view_models/auth_view_model.dart';
 import 'package:senior_design/utils/routes/routes_name.dart';
 import 'package:senior_design/views/widgets/backgrounds/background.dart';
 import 'package:senior_design/views/widgets/backgrounds/background_name.dart';
+import 'package:senior_design/view_models/user_view_model.dart';
 
-class CreateAccountView extends StatefulWidget {
-  const CreateAccountView({Key? key}) : super(key: key);
 
-  @override
-  State<CreateAccountView> createState() => _CreateAccountViewState();
-}
+class CreateAccountView extends StatelessWidget{
+  final _firstNameController = TextEditingController();
+  final _lastNameController = TextEditingController();
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
 
-class _CreateAccountViewState extends State<CreateAccountView> {
-  late TextEditingController _firstNameController;
-  late TextEditingController _lastNameController;
-  late TextEditingController _emailController;
-  late TextEditingController _passwordController;
-
-  // Add a variable to track the selected role
-  String? _selectedRole;
-
-  @override
-  void initState() {
-    super.initState();
-    _firstNameController = TextEditingController();
-    _lastNameController = TextEditingController();
-    _emailController = TextEditingController();
-    _passwordController = TextEditingController();
-  }
-
-  @override
-  void dispose() {
-    _firstNameController.dispose();
-    _lastNameController.dispose();
-    _emailController.dispose();
-    _passwordController.dispose();
-    super.dispose();
-  }
+  CreateAccountView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final authViewModel = Provider.of<AuthViewModel>(context);
+    final userViewModel = Provider.of<UserViewModel>(context);
 
     return Scaffold(
       extendBodyBehindAppBar: true, // Make body extend behind AppBar
@@ -110,6 +86,9 @@ class _CreateAccountViewState extends State<CreateAccountView> {
               const SizedBox(height: 24.0),
               TextField(
                 controller: _firstNameController,
+                onChanged: (value){
+                  userViewModel.setFirstName(value);
+                },
                 decoration: const InputDecoration(
                   labelText: 'First Name',
                   border: OutlineInputBorder(),
@@ -118,6 +97,9 @@ class _CreateAccountViewState extends State<CreateAccountView> {
               const SizedBox(height: 12.0),
               TextField(
                 controller: _lastNameController,
+                onChanged: (value){
+                  userViewModel.setLastName(value);
+                },
                 decoration: const InputDecoration(
                   labelText: 'Last Name',
                   border: OutlineInputBorder(),
@@ -126,6 +108,9 @@ class _CreateAccountViewState extends State<CreateAccountView> {
               const SizedBox(height: 12.0),
               TextField(
                 controller: _emailController,
+                onChanged: (value){
+                  userViewModel.setEmail(value);
+                },
                 decoration: const InputDecoration(
                   labelText: 'Email Address',
                   border: OutlineInputBorder(),
@@ -145,11 +130,11 @@ class _CreateAccountViewState extends State<CreateAccountView> {
               ElevatedButton(
                 onPressed: () {
                   // if patient is selected, navigate to patient account screen
-                  if (_selectedRole == 'Patient') {
+                  if (userViewModel.user.isPatient == true) {
                     Navigator.of(context).pushNamed(RoutesName.patientAccount);
                   }
                   // if doctor is selected, navigate to doctor account screen
-                  if (_selectedRole == 'Doctor') {
+                  if (userViewModel.user.isPatient == false) {
                     Navigator.of(context).pushNamed(RoutesName.doctorAccount);
                   }
                   // Logic to handle account creation
