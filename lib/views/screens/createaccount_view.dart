@@ -6,19 +6,20 @@ import 'package:senior_design/utils/routes/routes_name.dart';
 import 'package:senior_design/views/widgets/backgrounds/background.dart';
 import 'package:senior_design/views/widgets/backgrounds/background_name.dart';
 import 'package:senior_design/view_models/user_view_model.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 
 
-class CreateAccountView extends StatelessWidget{
-  final _firstNameController = TextEditingController();
-  final _lastNameController = TextEditingController();
-  final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
-
-  CreateAccountView({super.key});
+class CreateAccountView extends HookWidget{
+  const CreateAccountView({super.key});
 
   @override
   Widget build(BuildContext context) {
     final userViewModel = Provider.of<UserViewModel>(context);
+    final firstNameController = useTextEditingController();
+    final lastNameController = useTextEditingController();
+    final emailController = useTextEditingController();
+    final passwordController = useTextEditingController();
+
 
     return Scaffold(
       extendBodyBehindAppBar: true, // Make body extend behind AppBar
@@ -85,7 +86,7 @@ class CreateAccountView extends StatelessWidget{
               ),
               const SizedBox(height: 24.0),
               TextField(
-                controller: _firstNameController,
+                controller: firstNameController,
                 onChanged: (value){
                   userViewModel.setFirstName(value);
                 },
@@ -96,7 +97,7 @@ class CreateAccountView extends StatelessWidget{
               ),
               const SizedBox(height: 12.0),
               TextField(
-                controller: _lastNameController,
+                controller: lastNameController,
                 onChanged: (value){
                   userViewModel.setLastName(value);
                 },
@@ -107,7 +108,7 @@ class CreateAccountView extends StatelessWidget{
               ),
               const SizedBox(height: 12.0),
               TextField(
-                controller: _emailController,
+                controller: emailController,
                 onChanged: (value){
                   userViewModel.setEmail(value);
                 },
@@ -119,7 +120,10 @@ class CreateAccountView extends StatelessWidget{
               ),
               const SizedBox(height: 12.0),
               TextField(
-                controller: _passwordController,
+                onChanged: (value){
+                  userViewModel.setPassword(value);
+                },
+                controller: passwordController,
                 decoration: const InputDecoration(
                   labelText: 'Password',
                   border: OutlineInputBorder(),

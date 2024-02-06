@@ -34,14 +34,12 @@ dependencies:
   charts_flutter: ^0.12.0 # Check for the latest version
   table_calendar: ^3.0.0 # Check for the latest version on pub.dev
   provider: ^6.1.1
-  fluttertoast: ^8.0.8
-  another_flushbar: ^1.10.17
+  flutter_hooks: ^0.20.5
 
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
-  mongo_dart: ^0.9.3
 
 dev_dependencies:
   flutter_test:

@@ -32,6 +32,11 @@ class UserViewModel with ChangeNotifier {
     notifyListeners();
   }
 
+  void setPassword(String password) {
+    _user.password = password;
+    notifyListeners();
+  }
+
 
 
 
