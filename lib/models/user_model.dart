@@ -61,7 +61,6 @@ class User {
     hospitalZipCode = json['hospitalZipCode'];
     hospitalFloorRoom = json['hospitalFloorRoom'];
     specialization = json['specialization'];
-
   }
 
   Map<String, dynamic> toJson() {
@@ -87,10 +86,4 @@ class User {
     data['specialization'] = specialization;
     return data;
   }
-
-
-
-
-
-
 }

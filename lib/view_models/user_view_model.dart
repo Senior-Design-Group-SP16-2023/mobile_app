@@ -147,12 +147,8 @@ class UserViewModel with ChangeNotifier {
     notifyListeners();
   }
 
-  void setAccountInfo(
-      String firstName,
-      String lastName,
-      String email,
-      String password,
-      bool? isPatient) {
+  void setAccountInfo(String firstName, String lastName, String email,
+      String password, bool? isPatient) {
     _user.firstName = firstName;
     _user.lastName = lastName;
     _user.email = email;
@@ -160,5 +156,4 @@ class UserViewModel with ChangeNotifier {
     _user.isPatient = isPatient;
     notifyListeners();
   }
-
 }
