@@ -4,7 +4,6 @@ import 'package:senior_design/view_models/auth_view_model.dart';
 import 'package:senior_design/views/widgets/backgrounds/background.dart';
 import 'package:senior_design/views/widgets/backgrounds/background_name.dart';
 
-
 class SignInView extends StatefulWidget {
   const SignInView({Key? key}) : super(key: key);
 

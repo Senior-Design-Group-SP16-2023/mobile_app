@@ -5,7 +5,6 @@ import 'package:senior_design/utils/routes/routes_name.dart';
 import 'package:senior_design/views/widgets/backgrounds/background.dart';
 import 'package:senior_design/views/widgets/backgrounds/background_name.dart';
 
-
 class WelcomeView extends StatefulWidget {
   const WelcomeView({Key? key}) : super(key: key);
 

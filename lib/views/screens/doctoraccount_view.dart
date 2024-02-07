@@ -9,7 +9,6 @@ import 'package:senior_design/view_models/user_view_model.dart';
 class DoctorAccountView extends HookWidget {
   const DoctorAccountView({Key? key}) : super(key: key);
 
-
   @override
   Widget build(BuildContext context) {
     final userViewModel = Provider.of<UserViewModel>(context);
@@ -85,8 +84,8 @@ class DoctorAccountView extends HookWidget {
                       ),
                       const SizedBox(width: 12.0),
                       Expanded(
-                        child: buildTextField(floorRoomController,
-                            'Floor/Room', TextInputType.text),
+                        child: buildTextField(floorRoomController, 'Floor/Room',
+                            TextInputType.text),
                       ),
                     ],
                   ),
