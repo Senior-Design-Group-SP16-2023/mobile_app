@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "89542398713",
+    "project_id": "seniordesign-28d60",
+    "storage_bucket": "seniordesign-28d60.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:89542398713:android:98522444871a191fdb4828",
+        "android_client_info": {
+          "package_name": "com.example.senior_design"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCf2aXKOEGwYLyKX4BZfZxYbyD80bvRVT4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
