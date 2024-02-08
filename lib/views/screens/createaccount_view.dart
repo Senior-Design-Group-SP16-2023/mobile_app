@@ -6,6 +6,7 @@ import 'package:senior_design/views/widgets/backgrounds/background.dart';
 import 'package:senior_design/views/widgets/backgrounds/background_name.dart';
 import 'package:senior_design/view_models/user_view_model.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:senior_design/view_models/auth_view_model.dart';
 
 class CreateAccountView extends HookWidget {
   const CreateAccountView({super.key});
@@ -13,6 +14,7 @@ class CreateAccountView extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final userViewModel = Provider.of<UserViewModel>(context);
+    final authViewModel = Provider.of<AuthViewModel>(context);
     final firstNameController = useTextEditingController();
     final lastNameController = useTextEditingController();
     final emailController = useTextEditingController();
@@ -130,26 +132,11 @@ class CreateAccountView extends HookWidget {
                         passwordController.text,
                         isPatientState.value,
                       );
-                      // if patient is selected, navigate to patient account screen
-                      if (userViewModel.user.isPatient == true) {
-                        Navigator.of(context)
-                            .pushNamed(RoutesName.patientAccount);
-                      }
-                      // if doctor is selected, navigate to doctor account screen
-                      if (userViewModel.user.isPatient == false) {
-                        Navigator.of(context)
-                            .pushNamed(RoutesName.doctorAccount);
-                      }
-                      // Logic to handle account creation
-                      // Make sure to handle the role as part of the account creation
-                      // Map<String, String> data = {
-                      //   'role': _selectedRole ?? 'Patient', // Default to 'Patient' if nothing is selected
-                      //   'firstName': _firstNameController.text,
-                      //   'lastName': _lastNameController.text,
-                      //   'email': _emailController.text,
-                      //   'password': _passwordController.text,
-                      // };
-                      // authViewModel.createAccount(context, data);
+                      authViewModel.createAccount(context,
+                        email: emailController.text,
+                        password: passwordController.text,
+                        isPatient: userViewModel.user.isPatient
+                      );
                     },
                     child: const Padding(
                       padding: EdgeInsets.all(16.0),

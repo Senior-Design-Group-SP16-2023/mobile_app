@@ -94,11 +94,10 @@ class _SignInViewState extends State<SignInView> {
               const SizedBox(height: 24.0),
               ElevatedButton(
                 onPressed: () {
-                  Map<String, String> data = {
-                    'email': _emailController.text,
-                    'password': _passwordController.text,
-                  };
-                  authViewModel.login(context, data);
+                  authViewModel.signIn(context,
+                      email: _emailController.text,
+                      password: _passwordController.text
+                  );
                 },
                 child: const Padding(
                   padding: EdgeInsets.all(16.0),
