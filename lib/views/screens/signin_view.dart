@@ -38,7 +38,10 @@ class _SignInViewState extends State<SignInView> {
       appBar: AppBar(
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
-          onPressed: () => Navigator.of(context).pop(),
+          onPressed: (){
+            Navigator.of(context).pop();
+            authViewModel.setErrorMessage("", true);
+          },
         ),
         title: Text('Back'), // Optionally, you can also add a title here
         // align the title to the right of the icon
@@ -109,10 +112,24 @@ class _SignInViewState extends State<SignInView> {
                   ),
                 ),
               ),
+              if(authViewModel.errorMessage.isNotEmpty && authViewModel.isSignIn)
+                Column(
+                  children: [
+                    const SizedBox(height: 15.0),
+                    Text(
+                      authViewModel.errorMessage,
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.red
+                      ),
+                    ),
+                  ],
+                ),
               TextButton(
                 onPressed: () {/* Forgot Password? action */},
                 child: const Text('Forgot Password?',
-                    style: TextStyle(color: Colors.white)),
+                    style: TextStyle(color: Colors.blue)),
               ),
               Spacer(flex: 1),
             ],

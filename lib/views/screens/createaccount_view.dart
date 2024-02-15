@@ -26,10 +26,11 @@ class CreateAccountView extends HookWidget {
       appBar: AppBar(
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
-          onPressed: () => {
-            userViewModel.clearUser(),
-            Navigator.of(context).pop(),
-          }, // This line will handle the back navigation
+          onPressed: () {
+            userViewModel.clearUser();
+            Navigator.of(context).pop();
+            authViewModel.setErrorMessage("", true);
+        }, // This line will handle the back navigation
         ),
         title: Text('Back'), // Optionally, you can also add a title here
         // align the title to the right of the icon
@@ -123,6 +124,20 @@ class CreateAccountView extends HookWidget {
                     obscureText: true,
                   ),
                   const SizedBox(height: 24.0),
+                  if(authViewModel.errorMessage.isNotEmpty && !authViewModel.isSignIn)
+                    Column(
+                      children: [
+                        Text(
+                          authViewModel.errorMessage,
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.red
+                          ),
+                        ),
+                        const SizedBox(height: 15.0),
+                      ],
+                    ),
                   ElevatedButton(
                     onPressed: () {
                       userViewModel.setAccountInfo(
