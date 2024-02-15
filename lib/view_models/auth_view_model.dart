@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:senior_design/services/auth_repository.dart';
 import 'package:senior_design/utils/routes/routes_name.dart';
+import 'package:senior_design/view_models/user_view_model.dart';
 
 class AuthViewModel with ChangeNotifier {
   bool _isAuthenticated = false;
@@ -25,16 +26,28 @@ class AuthViewModel with ChangeNotifier {
 
   final _authRepository = AuthRepository();
 
-  Future<void> signIn(context, {required String email, required String password}) async {
-    try{
+  Future<void> signIn(context,
+      {required String email,
+      required String password,
+      required UserViewModel userViewModel}) async {
+    try {
       await _authRepository.signIn(email: email, password: password);
       setAuthenticated(true);
-      Navigator.of(context).pushNamed(RoutesName.home);
+      await userViewModel.getUserFromFireStore(email);
+      if (userViewModel.user.completedSignUp == false) {
+        if (userViewModel.user.isPatient == true) {
+          Navigator.of(context).pushNamed(RoutesName.patientAccount);
+        } else {
+          Navigator.of(context).pushNamed(RoutesName.doctorAccount);
+        }
+      } else {
+        Navigator.of(context).pushNamed(RoutesName.home);
+      }
       setErrorMessage("", true);
-    } on FirebaseAuthException catch (error){
+    } on FirebaseAuthException catch (error) {
       setAuthenticated(false);
       String message = "";
-      switch(error.code){
+      switch (error.code) {
         case 'invalid-email':
           message = "INVALID EMAIL";
           debugPrint("INVALID EMAIL");
@@ -50,11 +63,16 @@ class AuthViewModel with ChangeNotifier {
     }
   }
 
-  Future<void> createAccount(context, {required String email, required String password, required bool? isPatient}) async {
+  Future<void> createAccount(context,
+      {required String email,
+      required String password,
+      required bool? isPatient,
+      required UserViewModel userViewModel}) async {
     try {
       await _authRepository.createAccount(email: email, password: password);
       setAuthenticated(true);
-      if(isPatient == true) {
+      userViewModel.newUserToFireStore();
+      if (isPatient == true) {
         Navigator.of(context).pushNamed(RoutesName.patientAccount);
       } else {
         Navigator.of(context).pushNamed(RoutesName.doctorAccount);

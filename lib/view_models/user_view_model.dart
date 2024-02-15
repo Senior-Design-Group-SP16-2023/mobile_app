@@ -1,8 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:senior_design/models/user_model.dart';
+import 'package:senior_design/services/firestore_repository.dart';
 
 class UserViewModel with ChangeNotifier {
   User _user = User();
+
+  final FireStoreRepository _fireStoreRepository = FireStoreRepository();
 
   User get user => _user;
 
@@ -33,11 +36,6 @@ class UserViewModel with ChangeNotifier {
 
   void setIsPatient(bool? isPatient) {
     _user.isPatient = isPatient;
-    notifyListeners();
-  }
-
-  void setPassword(String? password) {
-    _user.password = password;
     notifyListeners();
   }
 
@@ -126,6 +124,7 @@ class UserViewModel with ChangeNotifier {
     _user.hospitalZipCode = hospitalZipCode;
     _user.hospitalFloorRoom = hospitalFloorRoom;
     _user.specialization = specialization;
+    _user.completedSignUp = true;
     notifyListeners();
   }
 
@@ -144,16 +143,29 @@ class UserViewModel with ChangeNotifier {
     _user.injuryType = injuryType;
     _user.dateOfInjury = dateOfInjury;
     _user.pastInjuries = pastInjuries;
+    _user.completedSignUp = true;
     notifyListeners();
   }
 
-  void setAccountInfo(String firstName, String lastName, String email,
-      String password, bool? isPatient) {
+  void setAccountInfo(
+      String firstName, String lastName, String email, bool? isPatient) {
     _user.firstName = firstName;
     _user.lastName = lastName;
     _user.email = email;
-    _user.password = password;
     _user.isPatient = isPatient;
     notifyListeners();
+  }
+
+  void newUserToFireStore() {
+    _fireStoreRepository.addNewUser(_user);
+  }
+
+  void updateUserInFireStore() {
+    _fireStoreRepository.updateUser(_user);
+  }
+
+  Future<void> getUserFromFireStore(String email) async {
+    User user = await _fireStoreRepository.fetchUser(email);
+    setUser(user);
   }
 }

@@ -2,7 +2,6 @@ class User {
   String? firstName;
   String? lastName;
   String? email;
-  String? password;
   bool? isPatient;
   String? dateOfBirth;
   String? gender;
@@ -18,12 +17,12 @@ class User {
   String? hospitalZipCode;
   String? hospitalFloorRoom;
   String? specialization;
+  bool completedSignUp = false;
 
   User({
     this.firstName,
     this.lastName,
     this.email,
-    this.password,
     this.isPatient,
     this.dateOfBirth,
     this.gender,
@@ -45,7 +44,6 @@ class User {
     firstName = json['firstName'];
     lastName = json['lastName'];
     email = json['email'];
-    password = json['password'];
     isPatient = json['isPatient'];
     dateOfBirth = json['dateOfBirth'];
     gender = json['gender'];
@@ -61,6 +59,7 @@ class User {
     hospitalZipCode = json['hospitalZipCode'];
     hospitalFloorRoom = json['hospitalFloorRoom'];
     specialization = json['specialization'];
+    completedSignUp = json['completedSignUp'];
   }
 
   Map<String, dynamic> toJson() {
@@ -68,7 +67,6 @@ class User {
     data['firstName'] = firstName;
     data['lastName'] = lastName;
     data['email'] = email;
-    data['password'] = password;
     data['isPatient'] = isPatient;
     data['dateOfBirth'] = dateOfBirth;
     data['gender'] = gender;
@@ -84,6 +82,7 @@ class User {
     data['hospitalZipCode'] = hospitalZipCode;
     data['hospitalFloorRoom'] = hospitalFloorRoom;
     data['specialization'] = specialization;
+    data['completedSignUp'] = completedSignUp;
     return data;
   }
 }
