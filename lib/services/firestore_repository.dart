@@ -19,7 +19,7 @@ class FireStoreRepository {
     return _firestore.collection('users').doc(user.email).update(user.toJson());
   }
 
-  Future<void> fetchLastFiveDays(User user) async {
+  Future<List<Map<String, dynamic>>> fetchLastFiveDays(User user) async {
     final now = DateTime.now();
     List<Map<String, dynamic>> daysData = [];
 
@@ -45,6 +45,7 @@ class FireStoreRepository {
       }
     }
     print(daysData);
+    return daysData;
   }
 
 }

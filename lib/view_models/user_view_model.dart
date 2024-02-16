@@ -169,8 +169,9 @@ class UserViewModel with ChangeNotifier {
     setUser(user);
   }
 
-  Future<void> fetchLastFiveDays() async {
-    await _fireStoreRepository.fetchLastFiveDays(_user);
+  Future<List<Map<String, dynamic>>> fetchLastFiveDays() async {
+    List<Map<String, dynamic>> data = await _fireStoreRepository.fetchLastFiveDays(_user);
+    return data;
   }
 
 }
