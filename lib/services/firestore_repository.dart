@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:intl/intl.dart';
 import 'package:senior_design/models/user_model.dart';
 
 class FireStoreRepository {
@@ -17,4 +18,33 @@ class FireStoreRepository {
   Future<void> updateUser(User user) {
     return _firestore.collection('users').doc(user.email).update(user.toJson());
   }
+
+  Future<void> fetchLastFiveDays(User user) async {
+    final now = DateTime.now();
+    List<Map<String, dynamic>> daysData = [];
+
+    for (int i = 0; i < 5; i++) {
+      DateTime day = now.subtract(Duration(days: i));
+
+      var dayDocSnapshot = await _firestore
+          .collection('workouts')
+          .doc(user.email)
+          .collection("${day.year}_${day.month}")
+          .doc("${day.day}")
+          .get();
+
+      if (dayDocSnapshot.exists && dayDocSnapshot.data()!.containsKey('workouts')) {
+        var dayOfWeek = DateFormat('EEEE').format(day); // Gets day of the week as a string
+        var workouts = dayDocSnapshot.data()!['workouts'] as List<dynamic>;
+        var maxAccuracy = workouts.reduce((curr, next) => curr['accuracy'] > next['accuracy'] ? curr['accuracy'] : next['accuracy']);
+
+        daysData.add({
+          "dayOfWeek": dayOfWeek,
+          "maxAccuracy": maxAccuracy,
+        });
+      }
+    }
+    print(daysData);
+  }
+
 }

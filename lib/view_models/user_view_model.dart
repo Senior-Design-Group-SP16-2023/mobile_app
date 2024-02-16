@@ -168,4 +168,9 @@ class UserViewModel with ChangeNotifier {
     User user = await _fireStoreRepository.fetchUser(email);
     setUser(user);
   }
+
+  Future<void> fetchLastFiveDays() async {
+    await _fireStoreRepository.fetchLastFiveDays(_user);
+  }
+
 }
