@@ -36,14 +36,17 @@ class FireStoreRepository {
       if (dayDocSnapshot.exists && dayDocSnapshot.data()!.containsKey('workouts')) {
         var dayOfWeek = DateFormat('EEEE').format(day); // Gets day of the week as a string
         var workouts = dayDocSnapshot.data()!['workouts'] as List<dynamic>;
-        var maxAccuracy = workouts.reduce((curr, next) => curr['accuracy'] > next['accuracy'] ? curr['accuracy'] : next['accuracy']);
+        var maxAccuracy = workouts.fold<int>(0, (max, item) => item['accuracy'] > max ? item['accuracy'] : max);
 
         daysData.add({
+          "date": day,
           "dayOfWeek": dayOfWeek,
           "maxAccuracy": maxAccuracy,
         });
       }
     }
+
+    daysData.sort((a, b) => a["date"].compareTo(b["date"]));
     print(daysData);
     return daysData;
   }

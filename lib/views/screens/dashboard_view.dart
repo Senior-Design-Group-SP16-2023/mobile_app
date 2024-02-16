@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:senior_design/views/widgets/backgrounds/background.dart';
 import 'package:senior_design/views/widgets/backgrounds/background_name.dart';
 import 'package:senior_design/views/widgets/graph.dart';
 import 'package:senior_design/views/widgets/recent_activity.dart';
 import 'package:senior_design/views/widgets/calendar.dart';
 import 'package:senior_design/views/widgets/dashboard_header.dart';
+import 'package:senior_design/view_models/user_view_model.dart';
 
 class DashboardView extends StatefulWidget {
   const DashboardView({Key? key}) : super(key: key);
@@ -14,9 +16,10 @@ class DashboardView extends StatefulWidget {
 }
 
 class _DashboardViewState extends State<DashboardView> {
+
   @override
   Widget build(BuildContext context) {
-    // Format the current date
+    final userViewModel = Provider.of<UserViewModel>(context);
 
     return Scaffold(
       body: BackgroundImage(
@@ -31,7 +34,17 @@ class _DashboardViewState extends State<DashboardView> {
               DashboardHeader(),
               RecentActivity(),
               CalendarWidget(),
-              RecentActivityWithBarChart(),
+              FutureBuilder<List<Map<String, dynamic>>>(
+                  future: userViewModel.fetchLastFiveDays(),
+                  builder: (context, snapshot){
+                    if(snapshot.connectionState == ConnectionState.done && snapshot.hasData){
+                      return RecentActivityWithBarChart(data: snapshot.data!);
+                    }else if(snapshot.hasError){
+                      return Text("Error ${snapshot.error}");
+                    }
+                    return CircularProgressIndicator();
+                  }
+              )
             ],
           ),
         ),

@@ -3,13 +3,16 @@ import 'dart:ui'; // Import this for ImageFilter.
 import 'package:charts_flutter/flutter.dart' as charts;
 
 class RecentActivityWithBarChart extends StatefulWidget {
+  final List<Map<String, dynamic>> data;
+
+  const RecentActivityWithBarChart({super.key, required this.data});
+
   @override
-  _RecentActivityWithBarChartState createState() =>
-      _RecentActivityWithBarChartState();
+  _RecentActivityWithBarChartState createState() => _RecentActivityWithBarChartState();
 }
 
-class _RecentActivityWithBarChartState
-    extends State<RecentActivityWithBarChart> {
+class _RecentActivityWithBarChartState extends State<RecentActivityWithBarChart> {
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -51,7 +54,7 @@ class _RecentActivityWithBarChartState
                   Container(
                     height: 200,
                     child: charts.BarChart(
-                      createSampleData(),
+                      createData(),
                       animate: true,
                       domainAxis: new charts.OrdinalAxisSpec(),
                       primaryMeasureAxis: charts.NumericAxisSpec(
@@ -80,32 +83,24 @@ class _RecentActivityWithBarChartState
     );
   }
 
-  static List<charts.Series<WorkoutAccuracy, String>> createSampleData() {
-    final bicepCurlAccuracy = [
-      WorkoutAccuracy('Mon', 10),
-      WorkoutAccuracy('Tue', 35),
-      WorkoutAccuracy('Wed', 23),
-      WorkoutAccuracy('Thu', 42),
-      WorkoutAccuracy('Fri', 69),
-    ];
+  List<charts.Series<BarGraphData, String>> createData() {
+    List<BarGraphData> myDataList = widget.data.map((map) => BarGraphData(map['dayOfWeek'], map['maxAccuracy'])).toList();
 
     return [
-      charts.Series<WorkoutAccuracy, String>(
+      charts.Series<BarGraphData, String>(
         id: 'Bicep Curl',
-        domainFn: (WorkoutAccuracy accuracy, _) => accuracy.session,
-        measureFn: (WorkoutAccuracy accuracy, _) => accuracy.percentage,
-        data: bicepCurlAccuracy,
-        // Change the color back to blue for the bars
-        colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
-        labelAccessorFn: (WorkoutAccuracy row, _) => '${row.percentage}%',
+        domainFn: (BarGraphData data, _) => data.dayOfWeek,
+        measureFn: (BarGraphData data, _) => data.maxAccuracy,
+        data: myDataList,
       ),
     ];
   }
+
 }
 
-class WorkoutAccuracy {
-  final String session;
-  final int percentage;
+class BarGraphData {
+  final String dayOfWeek; // For x-axis
+  final dynamic maxAccuracy; // For y-axis
 
-  WorkoutAccuracy(this.session, this.percentage);
+  BarGraphData(this.dayOfWeek, this.maxAccuracy);
 }
