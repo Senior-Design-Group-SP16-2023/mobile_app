@@ -10,6 +10,7 @@ class User {
   String? injuryType;
   String? dateOfInjury;
   String? pastInjuries;
+  int? totalWorkouts;
   String? hospitalName;
   String? hospitalAddress;
   String? hospitalCity;
@@ -31,6 +32,7 @@ class User {
     this.injuryType,
     this.dateOfInjury,
     this.pastInjuries,
+    this.totalWorkouts,
     this.hospitalName,
     this.hospitalAddress,
     this.hospitalCity,
@@ -52,6 +54,7 @@ class User {
     injuryType = json['injuryType'];
     dateOfInjury = json['dateOfInjury'];
     pastInjuries = json['pastInjuries'];
+    totalWorkouts = json['totalWorkouts'];
     hospitalName = json['hospitalName'];
     hospitalAddress = json['hospitalAddress'];
     hospitalCity = json['hospitalCity'];
@@ -75,6 +78,7 @@ class User {
     data['injuryType'] = injuryType;
     data['dateOfInjury'] = dateOfInjury;
     data['pastInjuries'] = pastInjuries;
+    data['totalWorkouts'] = totalWorkouts;
     data['hospitalName'] = hospitalName;
     data['hospitalAddress'] = hospitalAddress;
     data['hospitalCity'] = hospitalCity;

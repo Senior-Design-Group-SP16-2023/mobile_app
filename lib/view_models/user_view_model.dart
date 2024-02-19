@@ -143,6 +143,7 @@ class UserViewModel with ChangeNotifier {
     _user.injuryType = injuryType;
     _user.dateOfInjury = dateOfInjury;
     _user.pastInjuries = pastInjuries;
+    _user.totalWorkouts = 0;
     _user.completedSignUp = true;
     notifyListeners();
   }
