@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:senior_design/view_models/user_view_model.dart';
 import 'package:senior_design/views/widgets/backgrounds/background.dart';
 import 'package:senior_design/views/widgets/backgrounds/background_name.dart';
 import 'package:senior_design/views/widgets/graph.dart';
@@ -14,9 +16,10 @@ class DashboardView extends StatefulWidget {
 }
 
 class _DashboardViewState extends State<DashboardView> {
+
   @override
   Widget build(BuildContext context) {
-    // Format the current date
+    final userViewModel = Provider.of<UserViewModel>(context);
 
     return Scaffold(
       body: BackgroundImage(
@@ -29,7 +32,17 @@ class _DashboardViewState extends State<DashboardView> {
               // insert a space between the top of the screen and the content
               SizedBox(height: 50),
               DashboardHeader(),
-              RecentActivity(),
+              FutureBuilder(
+                  future: userViewModel.fetchWorkoutData(1),
+                  builder: (context, snapshot){
+                    if(snapshot.connectionState == ConnectionState.done && snapshot.hasData){
+                      return RecentActivity(data: snapshot.data!);
+                    }else if(snapshot.hasError){
+                      return Text("Error ${snapshot.error}");
+                    }
+                    return CircularProgressIndicator();
+                  }
+              ),
               CalendarWidget(),
               RecentActivityWithBarChart(),
             ],

@@ -169,4 +169,8 @@ class UserViewModel with ChangeNotifier {
     User user = await _fireStoreRepository.fetchUser(email);
     setUser(user);
   }
+
+  Future<List<Map<String, dynamic>>> fetchWorkoutData(int numberOfWorkouts) async{
+    return await _fireStoreRepository.fetchWorkoutData(user, numberOfWorkouts);
+  }
 }

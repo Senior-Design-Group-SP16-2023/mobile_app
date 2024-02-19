@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'dart:ui'; // Import this for ImageFilter.
 
 class RecentActivity extends StatelessWidget {
+  final List<Map<String, dynamic>> data;
+
+  const RecentActivity({super.key, required this.data});
+
   @override
   Widget build(BuildContext context) {
     // Removed Scaffold, directly returning the padding and content.
@@ -51,7 +55,7 @@ class RecentActivity extends StatelessWidget {
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   color: Colors.blue)),
-                          Text('0%',
+                          Text("${data[0]['accuracy']}%",
                               style:
                                   TextStyle(fontSize: 18, color: Colors.black)),
                         ],
@@ -67,7 +71,7 @@ class RecentActivity extends StatelessWidget {
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   color: Colors.blue)),
-                          Text('0 min',
+                          Text('${data[0]['duration']} min',
                               style:
                                   TextStyle(fontSize: 18, color: Colors.black)),
                         ],
