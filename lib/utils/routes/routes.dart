@@ -25,20 +25,13 @@ class Routes {
       case RoutesName.doctorAccount:
         return MaterialPageRoute(builder: (context) => DoctorAccountView());
       case RoutesName.workoutDetails:
-        final selectedDay = settings.arguments as DateTime?;
-        // Ensure that selectedDay is not null before navigating
-        if (selectedDay != null) {
-          return MaterialPageRoute(builder: (context) => WorkoutDetailsView(selectedDay: selectedDay));
-        } else {
-          // Handle the case where selectedDay is null
-          // This could navigate back or show an error message
-          return MaterialPageRoute(builder: (context) => const Scaffold(body: Center(child: Text("Error: No selected day"))));
-        }
+        final selectedDay = settings.arguments as DateTime;
+        return MaterialPageRoute(builder: (context) => WorkoutDetailsView(selectedDay: selectedDay));
       default:
         return MaterialPageRoute(builder: (context) {
           return const Scaffold(
             body: Center(
-              child: Text("no route defined"),
+              child: Text("No route defined."),
             ),
           );
         });
