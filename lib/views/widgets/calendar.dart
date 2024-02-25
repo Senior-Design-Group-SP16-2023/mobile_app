@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:senior_design/views/screens/workoutdetails_view.dart';
 import 'package:table_calendar/table_calendar.dart';
 import '../../view_models/user_view_model.dart';
 
@@ -140,6 +141,21 @@ class _CalendarWidgetState extends State<CalendarWidget> {
                         return null;
                       },
                     ),
+                    onDaySelected: (selectedDay, focusedDay) {
+                      if (isWorkoutDay(selectedDay)) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                WorkoutDetailsView(selectedDay: selectedDay),
+                          ),
+                        );
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                            content:
+                                Text('Selected day is not a workout day')));
+                      }
+                    },
                   ),
                 ],
               ),
