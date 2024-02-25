@@ -16,10 +16,10 @@ class DashboardView extends StatefulWidget {
 }
 
 class _DashboardViewState extends State<DashboardView> {
-
   @override
   Widget build(BuildContext context) {
     final userViewModel = Provider.of<UserViewModel>(context);
+    final now = DateTime.now();
 
     return Scaffold(
       body: BackgroundImage(
@@ -30,23 +30,36 @@ class _DashboardViewState extends State<DashboardView> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // insert a space between the top of the screen and the content
-              SizedBox(height: 50),
+              const SizedBox(height: 50),
               DashboardHeader(),
               FutureBuilder(
                   future: userViewModel.fetchWorkoutData(1),
-                  builder: (context, snapshot){
-                    if(snapshot.connectionState == ConnectionState.done && snapshot.hasData){
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.done &&
+                        snapshot.hasData) {
                       return RecentActivity(data: snapshot.data!);
-                    }else if(snapshot.hasError){
+                    } else if (snapshot.hasError) {
                       return Text("Error ${snapshot.error}");
                     }
-                    return CircularProgressIndicator();
-                  }
-              ),
-              CalendarWidget(),
+                    return const CircularProgressIndicator();
+                  }),
+              FutureBuilder(
+                  future: userViewModel.fetchWorkoutDataWithTime(
+                      DateTime(now.year, now.month, 1), now),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.done &&
+                        snapshot.hasData) {
+                      return CalendarWidget(
+                          userViewModel: userViewModel,
+                          workoutData: snapshot.data!);
+                    } else if (snapshot.hasError) {
+                      return Text("Error ${snapshot.error}");
+                    }
+                    return const CircularProgressIndicator();
+                  }),
               RecentActivityGraphWidget(),
               // insert a space between the content and the bottom of the screen
-              SizedBox(height: 25),
+              const SizedBox(height: 25),
             ],
           ),
         ),

@@ -1,27 +1,33 @@
 import 'package:flutter/material.dart';
-import 'package:senior_design/views/screens/workoutdetails_view.dart';
 import 'package:table_calendar/table_calendar.dart';
+import '../../view_models/user_view_model.dart';
 
 class CalendarWidget extends StatefulWidget {
-  const CalendarWidget({super.key});
+  final UserViewModel userViewModel;
+  final List<DateTime> workoutData;
+
+  const CalendarWidget(
+      {super.key, required this.userViewModel, required this.workoutData});
 
   @override
   _CalendarWidgetState createState() => _CalendarWidgetState();
 }
 
 class _CalendarWidgetState extends State<CalendarWidget> {
-  List<DateTime> workoutDays = [
-    DateTime.now().subtract(const Duration(days: 2)),
-    DateTime.now().subtract(const Duration(days: 4)),
-    DateTime.now().add(const Duration(days: 3)),
-  ];
+  List<DateTime> workoutDays = [];
+  DateTime _focusedDay = DateTime.now();
 
   bool isWorkoutDay(DateTime day) {
     return workoutDays.any((workoutDay) =>
-    day.year == workoutDay.year &&
+        day.year == workoutDay.year &&
         day.month == workoutDay.month &&
-        day.day == workoutDay.day
-    );
+        day.day == workoutDay.day);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    workoutDays = widget.workoutData;
   }
 
   @override
@@ -65,7 +71,7 @@ class _CalendarWidgetState extends State<CalendarWidget> {
                   TableCalendar(
                     firstDay: DateTime.utc(2010, 10, 16),
                     lastDay: DateTime.utc(2030, 3, 14),
-                    focusedDay: DateTime.now(),
+                    focusedDay: _focusedDay,
                     calendarFormat: CalendarFormat.month,
                     startingDayOfWeek: StartingDayOfWeek.monday,
                     headerStyle: const HeaderStyle(
@@ -75,8 +81,10 @@ class _CalendarWidgetState extends State<CalendarWidget> {
                         fontWeight: FontWeight.bold,
                         color: Colors.black,
                       ),
-                      leftChevronIcon: Icon(Icons.chevron_left, color: Colors.black),
-                      rightChevronIcon: Icon(Icons.chevron_right, color: Colors.black),
+                      leftChevronIcon:
+                          Icon(Icons.chevron_left, color: Colors.black),
+                      rightChevronIcon:
+                          Icon(Icons.chevron_right, color: Colors.black),
                     ),
                     daysOfWeekStyle: const DaysOfWeekStyle(
                       weekendStyle: TextStyle(color: Colors.black),
@@ -96,6 +104,10 @@ class _CalendarWidgetState extends State<CalendarWidget> {
                       weekendTextStyle: TextStyle(color: Colors.black),
                       defaultTextStyle: TextStyle(color: Colors.black),
                     ),
+                    onPageChanged: (focusedDay) {
+                      _focusedDay = focusedDay;
+                      updateCalendar(focusedDay);
+                    },
                     calendarBuilders: CalendarBuilders(
                       defaultBuilder: (context, day, focusedDay) {
                         if (isWorkoutDay(day)) {
@@ -128,19 +140,6 @@ class _CalendarWidgetState extends State<CalendarWidget> {
                         return null;
                       },
                     ),
-                    onDaySelected: (selectedDay, focusedDay) {
-                      if (isWorkoutDay(selectedDay)) {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => WorkoutDetailsView(selectedDay: selectedDay),
-                          ),
-                        );
-                      } else {
-                        ScaffoldMessenger.of(context)
-                            .showSnackBar(SnackBar(content: Text('Selected day is not a workout day')));
-                      }
-                    },
                   ),
                 ],
               ),
@@ -149,5 +148,13 @@ class _CalendarWidgetState extends State<CalendarWidget> {
         ),
       ),
     );
+  }
+
+  Future<void> updateCalendar(DateTime earliestTs) async {
+    var data = await widget.userViewModel
+        .fetchWorkoutDataWithTime(earliestTs, DateTime.now());
+    setState(() {
+      workoutDays = data;
+    });
   }
 }
