@@ -47,6 +47,9 @@ class FireStoreRepository {
       },
       onError: (e) => print("Error completing: $e"),
     );
+
+    workoutData.sort((a, b) => a["timestamp"].compareTo(b["timestamp"]));
+    print(workoutData);
     return workoutData;
   }
 }
