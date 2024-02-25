@@ -175,7 +175,7 @@ class UserViewModel with ChangeNotifier {
     return await _fireStoreRepository.fetchWorkoutData(user, numberOfWorkouts);
   }
 
-  Future<List<Map<String, dynamic>>> fetchWorkoutDataWithTime(
+  Future<List<DateTime>> fetchWorkoutDataWithTime(
       DateTime earliestTs, DateTime latestTs) async {
     latestTs = latestTs.isAfter(DateTime.now())
         ? DateTime.now()

@@ -51,9 +51,10 @@ class FireStoreRepository {
     return workoutData;
   }
 
-  Future<List<Map<String, dynamic>>> fetchWorkoutDataWithTime(
+  Future<List<DateTime>> fetchWorkoutDataWithTime(
       User user, DateTime earliestTs, DateTime latestTs) async {
-    List<Map<String, dynamic>> workoutData = [];
+    Set<DateTime> workoutData = {};
+
 
     await _firestore
         .collection("workouts")
@@ -66,20 +67,11 @@ class FireStoreRepository {
       (snapshot) {
         for (var docSnapshot in snapshot.docs) {
           DateTime dateTime = docSnapshot.data()['timestamp'].toDate();
-          String formattedDate =
-              DateFormat('yyyy-MM-dd-HH-mm-ss').format(dateTime);
-
-          workoutData.add({
-            "accuracy": docSnapshot.data()['accuracy'],
-            "timestamp": formattedDate,
-            "workout_id": docSnapshot.data()['workout_id'],
-            "duration": docSnapshot.data()['duration']
-          });
+          workoutData.add(dateTime);
         }
       },
       onError: (e) => print("Error completing: $e"),
     );
-    print(workoutData);
-    return workoutData;
+    return workoutData.toList();
   }
 }
