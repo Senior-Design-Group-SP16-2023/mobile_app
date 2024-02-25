@@ -151,9 +151,10 @@ class _CalendarWidgetState extends State<CalendarWidget> {
                           ),
                         );
                       } else {
-                        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                            content:
-                                Text('Selected day is not a workout day')));
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                                content:
+                                    Text('Selected day is not a workout day')));
                       }
                     },
                   ),
