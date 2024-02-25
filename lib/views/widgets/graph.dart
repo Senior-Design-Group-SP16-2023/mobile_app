@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
-import 'dart:ui'; // Import this for ImageFilter.
 
 class RecentActivityGraphWidget extends StatelessWidget {
+  final List<Map<String, dynamic>> data;
+
+  const RecentActivityGraphWidget({super.key, required this.data});
+
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.fromLTRB(10, 20, 10, 0),
+      padding: const EdgeInsets.fromLTRB(10, 20, 10, 0),
       child: Align(
         alignment: Alignment.topCenter,
         child: ClipRRect(
@@ -26,7 +29,7 @@ class RecentActivityGraphWidget extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Row(
+                  const Row(
                     children: <Widget>[
                       Icon(Icons.bar_chart, color: Colors.black),
                       SizedBox(width: 8),
@@ -40,7 +43,7 @@ class RecentActivityGraphWidget extends StatelessWidget {
                       ),
                     ],
                   ),
-                  SizedBox(height: 30),
+                  const SizedBox(height: 30),
                   Container(
                     height: 200,
                     child: LineChart(
@@ -49,9 +52,8 @@ class RecentActivityGraphWidget extends StatelessWidget {
                         maxY: 100, // Set maximum y-value to include 100
                         gridData: FlGridData(
                           show: true,
-                          drawVerticalLine: true,
+                          drawVerticalLine: false,
                           horizontalInterval: 10, // Increased for reduced frequency
-                          verticalInterval: 1, // Adjust as needed for vertical lines
                         ),
                         titlesData: FlTitlesData(
                           bottomTitles: AxisTitles(
@@ -60,20 +62,7 @@ class RecentActivityGraphWidget extends StatelessWidget {
                               reservedSize: 22,
                               interval: 1,
                               getTitlesWidget: (value, meta) {
-                                switch (value.toInt()) {
-                                  case 0:
-                                    return Text('1');
-                                  case 1:
-                                    return Text('2');
-                                  case 2:
-                                    return Text('3');
-                                  case 3:
-                                    return Text('4');
-                                  case 4:
-                                    return Text('5');
-                                  default:
-                                    return Text('');
-                                }
+                                return Text(value.toInt().toString());
                               },
                             ),
                           ),
@@ -81,7 +70,7 @@ class RecentActivityGraphWidget extends StatelessWidget {
                             sideTitles: SideTitles(
                               showTitles: true,
                               getTitlesWidget: (value, meta) {
-                                TextStyle customStyle = TextStyle(
+                                TextStyle customStyle = const TextStyle(
                                   fontSize: 12, // Adjusted font size
                                   fontWeight: FontWeight.bold,
                                 );
@@ -103,14 +92,8 @@ class RecentActivityGraphWidget extends StatelessWidget {
                         ),
                         lineBarsData: [
                           LineChartBarData(
-                            spots: [
-                              FlSpot(0, 70),
-                              FlSpot(1, 85),
-                              FlSpot(2, 75),
-                              FlSpot(3, 90),
-                              FlSpot(4, 95),
-                            ],
-                            isCurved: true,
+                            spots: createData(),
+                            isCurved: false,
                             color: Colors.blue,
                             barWidth: 5,
                             isStrokeCapRound: true,
@@ -128,5 +111,15 @@ class RecentActivityGraphWidget extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  List<FlSpot> createData(){
+    List<FlSpot> spots = [];
+    for(int i = 0; i < data.length; i++){
+      double workoutId = (i + 1).toDouble();
+      double accuracy = data[i]['accuracy'].toDouble();
+      spots.add(FlSpot(workoutId, accuracy));
+    }
+    return spots;
   }
 }

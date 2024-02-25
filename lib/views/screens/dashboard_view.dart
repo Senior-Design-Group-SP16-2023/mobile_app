@@ -44,7 +44,17 @@ class _DashboardViewState extends State<DashboardView> {
                   }
               ),
               CalendarWidget(),
-              RecentActivityGraphWidget(),
+              FutureBuilder(
+                  future: userViewModel.fetchWorkoutData(5),
+                  builder: (context, snapshot){
+                    if(snapshot.connectionState == ConnectionState.done && snapshot.hasData){
+                      return RecentActivityGraphWidget(data: snapshot.data!);
+                    }else if(snapshot.hasError){
+                      return Text("Error ${snapshot.error}");
+                    }
+                    return const CircularProgressIndicator();
+                  }
+              ),
               // insert a space between the content and the bottom of the screen
               SizedBox(height: 25),
             ],
