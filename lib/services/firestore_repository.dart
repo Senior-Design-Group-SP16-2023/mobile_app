@@ -36,7 +36,7 @@ class FireStoreRepository {
         for (var docSnapshot in snapshot.docs) {
           DateTime dateTime = docSnapshot.data()['timestamp'].toDate();
           String formattedDate =
-              DateFormat('yyyy-MM-dd-HH-mm-ss').format(dateTime);
+              DateFormat("MMM d (h:mm a)").format(dateTime);
 
           workoutData.add({
             "accuracy": docSnapshot.data()['accuracy'],
