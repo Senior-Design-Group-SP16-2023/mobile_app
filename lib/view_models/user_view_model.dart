@@ -177,6 +177,10 @@ class UserViewModel with ChangeNotifier {
 
   Future<List<DateTime>> fetchWorkoutDataWithTime(
       DateTime earliestTs, DateTime latestTs) async {
+    DateTime now = DateTime.now();
+    if (earliestTs.isAfter(now)) {
+      return [];
+    }
     latestTs = latestTs.isAfter(DateTime.now())
         ? DateTime.now()
         : latestTs; // Check if the given variable is valid
