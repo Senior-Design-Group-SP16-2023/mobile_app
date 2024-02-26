@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
+import 'package:senior_design/view_models/user_view_model.dart';
 
 class RecentActivityGraphWidget extends StatefulWidget {
+  final UserViewModel userViewModel;
   final List<Map<String, dynamic>> data;
 
-  const RecentActivityGraphWidget({super.key, required this.data});
+  const RecentActivityGraphWidget({super.key, required this.data, required this.userViewModel});
 
   @override
   State<RecentActivityGraphWidget> createState() =>
@@ -14,6 +16,13 @@ class RecentActivityGraphWidget extends StatefulWidget {
 class _RecentActivityGraphWidgetState extends State<RecentActivityGraphWidget> {
   String dropDownValue = '5';
   var allValues = ['3', '5', '7', 'All']; //This should be changed
+  List<Map<String, dynamic>> workoutData = [];
+
+  @override
+  void initState() {
+    super.initState();
+    workoutData = widget.data;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -63,9 +72,7 @@ class _RecentActivityGraphWidgetState extends State<RecentActivityGraphWidget> {
                             );
                           }).toList(),
                           onChanged: (String? newValue) {
-                            setState(() {
-                              dropDownValue = newValue!;
-                            });
+                            updateData(newValue!);
                           },
                         ),
                       ))
@@ -144,11 +151,21 @@ class _RecentActivityGraphWidgetState extends State<RecentActivityGraphWidget> {
     );
   }
 
+  Future<void> updateData(String newValue) async {
+    int numWorkouts = newValue != "All" ? int.parse(newValue) : -1; // This might not be the best
+    var data = await widget.userViewModel
+        .fetchWorkoutData(numWorkouts);
+    setState(() {
+      dropDownValue = newValue;
+      workoutData = data;
+    });
+  }
+
   List<FlSpot> createData() {
     List<FlSpot> spots = [];
-    for (int i = 0; i < widget.data.length; i++) {
+    for (int i = 0; i < workoutData.length; i++) {
       double workoutId = (i + 1).toDouble();
-      double accuracy = widget.data[i]['accuracy'].toDouble();
+      double accuracy = workoutData[i]['accuracy'].toDouble();
       spots.add(FlSpot(workoutId, accuracy));
     }
     return spots;

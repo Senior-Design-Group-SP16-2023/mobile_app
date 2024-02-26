@@ -16,7 +16,6 @@ class DashboardView extends StatefulWidget {
 }
 
 class _DashboardViewState extends State<DashboardView> {
-
   @override
   Widget build(BuildContext context) {
     final userViewModel = Provider.of<UserViewModel>(context);
@@ -34,27 +33,28 @@ class _DashboardViewState extends State<DashboardView> {
               DashboardHeader(),
               FutureBuilder(
                   future: userViewModel.fetchWorkoutData(1),
-                  builder: (context, snapshot){
-                    if(snapshot.connectionState == ConnectionState.done && snapshot.hasData){
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.done &&
+                        snapshot.hasData) {
                       return RecentActivity(data: snapshot.data!);
-                    }else if(snapshot.hasError){
+                    } else if (snapshot.hasError) {
                       return Text("Error ${snapshot.error}");
                     }
                     return CircularProgressIndicator();
-                  }
-              ),
+                  }),
               CalendarWidget(),
               FutureBuilder(
                   future: userViewModel.fetchWorkoutData(5),
-                  builder: (context, snapshot){
-                    if(snapshot.connectionState == ConnectionState.done && snapshot.hasData){
-                      return RecentActivityGraphWidget(data: snapshot.data!);
-                    }else if(snapshot.hasError){
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.done &&
+                        snapshot.hasData) {
+                      return RecentActivityGraphWidget(
+                          userViewModel: userViewModel, data: snapshot.data!);
+                    } else if (snapshot.hasError) {
                       return Text("Error ${snapshot.error}");
                     }
                     return const CircularProgressIndicator();
-                  }
-              ),
+                  }),
               // insert a space between the content and the bottom of the screen
               SizedBox(height: 25),
             ],
