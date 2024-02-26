@@ -19,6 +19,7 @@ class _DashboardViewState extends State<DashboardView> {
   @override
   Widget build(BuildContext context) {
     final userViewModel = Provider.of<UserViewModel>(context);
+    final now = DateTime.now();
 
     return Scaffold(
       body: BackgroundImage(
@@ -29,7 +30,7 @@ class _DashboardViewState extends State<DashboardView> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // insert a space between the top of the screen and the content
-              SizedBox(height: 50),
+              const SizedBox(height: 50),
               DashboardHeader(),
               FutureBuilder(
                   future: userViewModel.fetchWorkoutData(1),
@@ -40,9 +41,22 @@ class _DashboardViewState extends State<DashboardView> {
                     } else if (snapshot.hasError) {
                       return Text("Error ${snapshot.error}");
                     }
-                    return CircularProgressIndicator();
+                    return const CircularProgressIndicator();
                   }),
-              CalendarWidget(),
+              FutureBuilder(
+                  future: userViewModel.fetchWorkoutDataWithTime(
+                      DateTime(now.year, now.month, 1), now),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.done &&
+                        snapshot.hasData) {
+                      return CalendarWidget(
+                          userViewModel: userViewModel,
+                          workoutData: snapshot.data!);
+                    } else if (snapshot.hasError) {
+                      return Text("Error ${snapshot.error}");
+                    }
+                    return const CircularProgressIndicator();
+                  }),
               FutureBuilder(
                   future: userViewModel.fetchWorkoutData(5),
                   builder: (context, snapshot) {
@@ -56,7 +70,7 @@ class _DashboardViewState extends State<DashboardView> {
                     return const CircularProgressIndicator();
                   }),
               // insert a space between the content and the bottom of the screen
-              SizedBox(height: 25),
+              const SizedBox(height: 25),
             ],
           ),
         ),
