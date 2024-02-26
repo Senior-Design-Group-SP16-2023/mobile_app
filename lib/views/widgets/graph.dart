@@ -1,10 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 
-class RecentActivityGraphWidget extends StatelessWidget {
+class RecentActivityGraphWidget extends StatefulWidget {
   final List<Map<String, dynamic>> data;
 
   const RecentActivityGraphWidget({super.key, required this.data});
+
+  @override
+  State<RecentActivityGraphWidget> createState() =>
+      _RecentActivityGraphWidgetState();
+}
+
+class _RecentActivityGraphWidgetState extends State<RecentActivityGraphWidget> {
+  String dropDownValue = '5';
+  var allValues = ['3', '5', '7', 'All']; //This should be changed
 
   @override
   Widget build(BuildContext context) {
@@ -29,11 +38,11 @@ class RecentActivityGraphWidget extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  const Row(
+                  Row(
                     children: <Widget>[
                       Icon(Icons.bar_chart, color: Colors.black),
                       SizedBox(width: 8),
-                      Text(
+                      const Text(
                         'Recent Activity',
                         style: TextStyle(
                           fontSize: 18,
@@ -41,9 +50,28 @@ class RecentActivityGraphWidget extends StatelessWidget {
                           color: Colors.black,
                         ),
                       ),
+                      Expanded(
+                          child: Align(
+                        alignment: Alignment.centerRight,
+                        child: DropdownButton<String>(
+                          value: dropDownValue,
+                          icon: const Icon(Icons.keyboard_arrow_down),
+                          items: allValues.map((String val) {
+                            return DropdownMenuItem(
+                              value: val,
+                              child: Text(val),
+                            );
+                          }).toList(),
+                          onChanged: (String? newValue) {
+                            setState(() {
+                              dropDownValue = newValue!;
+                            });
+                          },
+                        ),
+                      ))
                     ],
                   ),
-                  const SizedBox(height: 30),
+                  SizedBox(height: 25),
                   Container(
                     height: 200,
                     child: LineChart(
@@ -53,7 +81,8 @@ class RecentActivityGraphWidget extends StatelessWidget {
                         gridData: FlGridData(
                           show: true,
                           drawVerticalLine: false,
-                          horizontalInterval: 10, // Increased for reduced frequency
+                          horizontalInterval:
+                              10, // Increased for reduced frequency
                         ),
                         titlesData: FlTitlesData(
                           bottomTitles: AxisTitles(
@@ -75,9 +104,11 @@ class RecentActivityGraphWidget extends StatelessWidget {
                                   fontWeight: FontWeight.bold,
                                 );
                                 // Convert value to int to remove the decimal point
-                                return Text(value.toInt().toString(), style: customStyle);
+                                return Text(value.toInt().toString(),
+                                    style: customStyle);
                               },
-                              reservedSize: 40, // Adjusted reserved size for labels
+                              reservedSize:
+                                  40, // Adjusted reserved size for labels
                             ),
                           ),
                           rightTitles: AxisTitles(
@@ -113,11 +144,11 @@ class RecentActivityGraphWidget extends StatelessWidget {
     );
   }
 
-  List<FlSpot> createData(){
+  List<FlSpot> createData() {
     List<FlSpot> spots = [];
-    for(int i = 0; i < data.length; i++){
+    for (int i = 0; i < widget.data.length; i++) {
       double workoutId = (i + 1).toDouble();
-      double accuracy = data[i]['accuracy'].toDouble();
+      double accuracy = widget.data[i]['accuracy'].toDouble();
       spots.add(FlSpot(workoutId, accuracy));
     }
     return spots;
