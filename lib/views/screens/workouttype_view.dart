@@ -52,7 +52,7 @@ class _WorkoutTypeViewState extends State<WorkoutTypeView> {
                   MaterialPageRoute(builder: (context) => WorkoutStartView()),
                 );
               },
-              child: Text('In Office', style: TextStyle(fontSize: 20)), // Increase font size
+              child: Text('In Office', style: TextStyle(fontSize: 18)), // Increase font size
               style: ElevatedButton.styleFrom(
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(15),
@@ -71,7 +71,7 @@ class _WorkoutTypeViewState extends State<WorkoutTypeView> {
                   MaterialPageRoute(builder: (context) => WorkoutStartView()),
                 );
               },
-              child: Text('At Home', style: TextStyle(fontSize: 20)),
+              child: Text('At Home', style: TextStyle(fontSize: 18)),
               style: ElevatedButton.styleFrom(
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(15),

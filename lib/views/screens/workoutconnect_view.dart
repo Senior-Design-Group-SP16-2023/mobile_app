@@ -59,7 +59,7 @@ class _WorkoutConnectViewState extends State<WorkoutConnectView> {
                 );
               },
               child: Text('Next',
-                  style: TextStyle(fontSize: 20)), // Increase font size
+                  style: TextStyle(fontSize: 18)), // Increase font size
               style: ElevatedButton.styleFrom(
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(15),

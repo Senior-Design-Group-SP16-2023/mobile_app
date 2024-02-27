@@ -61,14 +61,17 @@ class AddPatientView extends HookWidget {
                   },
                   child: const Padding(
                     padding: EdgeInsets.all(16.0),
-                    child: Text('Add', style: TextStyle(fontSize: 18)),
+                    child: Text('Add', style: TextStyle(fontSize: 18)), // Text updated to 'Sign in' with fontSize 18
                   ),
                   style: ElevatedButton.styleFrom(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(15),
                     ),
+                    // Padding and minimumSize properties removed to match the provided style
+                    minimumSize: Size(double.infinity, 60), // Increase button size
                   ),
                 ),
+
               ],
             ),
           ),
