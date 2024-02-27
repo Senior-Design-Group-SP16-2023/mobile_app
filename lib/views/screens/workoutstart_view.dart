@@ -55,7 +55,7 @@ class _WorkoutStartViewState extends State<WorkoutStartView> {
                   MaterialPageRoute(
                       builder: (context) => WorkoutDetailsView(
                           selectedDay:
-                              selectedDay)), // Replace WorkoutConnect with your actual WorkoutConnect page class name
+                          selectedDay)), // Replace WorkoutConnect with your actual WorkoutConnect page class name
                 );
               },
               child: Text('Next'),

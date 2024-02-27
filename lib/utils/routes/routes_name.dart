@@ -8,5 +8,5 @@ class RoutesName {
   static const String workoutDetails = 'workout_details_screen';
   static const String workoutConnect = 'workout_connect_screen';
   static const String workoutCalibrate = 'workout_calibrate_screen';
-  static const String workoutStart = 'workout_start_screen';
+  static const String workoutSelect = 'workout_type_screen';
 }

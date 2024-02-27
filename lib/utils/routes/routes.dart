@@ -10,7 +10,7 @@ import 'package:senior_design/views/screens/welcome_view.dart';
 import '../../views/screens/workoutcalibration_view.dart';
 import '../../views/screens/workoutconnect_view.dart';
 import '../../views/screens/workoutdetails_view.dart';
-import '../../views/screens/workoutstart_view.dart';
+import '../../views/screens/workouttype_view.dart';
 
 class Routes {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -45,8 +45,8 @@ class Routes {
         return MaterialPageRoute(builder: (context) => WorkoutConnectView());
       case RoutesName.workoutCalibrate:
         return MaterialPageRoute(builder: (context) => WorkoutCalibrateView());
-        case RoutesName.workoutStart:
-        return MaterialPageRoute(builder: (context) => WorkoutStartView());
+        case RoutesName.workoutSelect:
+        return MaterialPageRoute(builder: (context) => WorkoutTypeView());
       default:
         return MaterialPageRoute(builder: (context) {
           return const Scaffold(

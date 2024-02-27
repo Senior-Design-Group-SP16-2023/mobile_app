@@ -22,16 +22,14 @@ class _WorkoutConnectViewState extends State<WorkoutConnectView> {
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.of(context).pop();
-          }, // This line will handle the back navigation
+          },
         ),
-        title: const Text('Back'), // Optionally, you can also add a title here
-        // align the title to the right of the icon
+        title: const Text('Back'),
         centerTitle: false,
         titleSpacing: 0,
-        elevation: 0, // Removes the shadow under the app bar.
-        backgroundColor: Colors
-            .transparent, // Sets the AppBar background color to transparent
-        foregroundColor: Colors.black, // Sets the icon color
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+        foregroundColor: Colors.black,
       ),
       body: ListView(
         children: [
@@ -39,25 +37,66 @@ class _WorkoutConnectViewState extends State<WorkoutConnectView> {
             padding: const EdgeInsets.only(top: 20.0, left: 20.0, bottom: 20.0),
             child: Text(
               'Connect to Device',
-              style: TextStyle(
-                fontSize: 35.0,
-                fontWeight: FontWeight.bold,
-              ),
+              style: TextStyle(fontSize: 35.0, fontWeight: FontWeight.bold),
             ),
           ),
+          instructionStep('1', 'Open Settings App'),
+          instructionStep('2', 'Go to Bluetooth'),
+          instructionStep('3', 'Turn on Device(s)'),
+          instructionStep('4', 'Search for "XXX"'),
+          instructionStep('5', 'Select Device(s) to Pair'),
+          instructionStep('6', 'Return to Recover'),
+          SizedBox(
+              height:
+                  20.0), // Space between the last instruction and the Next button
           Center(
             child: ElevatedButton(
               onPressed: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) =>
-                          WorkoutCalibrateView()), // Replace WorkoutConnect with your actual WorkoutConnect page class name
+                      builder: (context) => WorkoutCalibrateView()),
                 );
               },
-              child: Text('Next'),
+              child: Text('Next',
+                  style: TextStyle(fontSize: 20)), // Increase font size
+              style: ElevatedButton.styleFrom(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                padding: EdgeInsets.symmetric(
+                    vertical: 15.0), // Increase button padding
+                minimumSize: Size(300, 60), // Increase button size
+              ),
             ),
           ),
+        ],
+      ),
+    );
+  }
+
+  Widget instructionStep(String number, String text) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 20.0),
+      child: Row(
+        children: [
+          Container(
+            padding: EdgeInsets.all(2),
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              border: Border.all(color: Colors.blue, width: 2),
+            ),
+            child: CircleAvatar(
+              radius: 12.0,
+              backgroundColor: Colors.white,
+              foregroundColor: Colors.blue,
+              child: Text(number,
+                  style:
+                      TextStyle(fontSize: 14.0, fontWeight: FontWeight.bold)),
+            ),
+          ),
+          SizedBox(width: 10.0),
+          Expanded(child: Text(text, style: TextStyle(fontSize: 18.0))),
         ],
       ),
     );
