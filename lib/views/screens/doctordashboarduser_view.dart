@@ -16,24 +16,60 @@ class UserDetailPage extends StatelessWidget {
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.of(context).pop();
-          }, // This line will handle the back navigation
+          },
         ),
-        title: const Text('Back'), // Optionally, you can also add a title here
-        // align the title to the right of the icon
+        title: const Text('Back'),
         centerTitle: false,
         titleSpacing: 0,
-        elevation: 0, // Removes the shadow under the app bar.
-        backgroundColor: Colors
-            .transparent, // Sets the AppBar background color to transparent
-        foregroundColor: Colors.black, // Sets the icon color
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+        foregroundColor: Colors.black,
       ),
       body: ListView(
         children: [
           Padding(
             padding: const EdgeInsets.all(16.0),
-            child: Text(
-              userName,
-              style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  child: Text(
+                    userName,
+                    style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+                IconButton(
+                  icon: const Icon(Icons.delete, color: Colors.blue),
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: const Text("Remove User"),
+                          content: const Text("Are you sure you want to remove this user?"),
+                          actions: <Widget>[
+                            TextButton(
+                              child: const Text("Cancel"),
+                              onPressed: () {
+                                Navigator.of(context).pop(); // Close the dialog
+                              },
+                            ),
+                            TextButton(
+                              child: const Text("Remove"),
+                              onPressed: () {
+                                // Here, add your logic to remove the user
+                                Navigator.of(context).pop(); // Close the dialog
+                                // Navigator.of(context).pop(); // Optionally, navigate back after deletion
+                              },
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  },
+                ),
+              ],
             ),
           ),
           RecentActivity(
