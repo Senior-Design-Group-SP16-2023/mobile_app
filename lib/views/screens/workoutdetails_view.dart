@@ -27,7 +27,7 @@ class WorkoutDayAndTimeCard extends StatelessWidget {
                 Icon(Icons.calendar_today, color: Colors.black),
                 SizedBox(width: 8),
                 Text(
-                  'Date',
+                  'Date/Time',
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                 ),
               ],
@@ -38,7 +38,6 @@ class WorkoutDayAndTimeCard extends StatelessWidget {
               formattedDate,
               style: const TextStyle(
                   fontSize: 22,
-                  fontWeight: FontWeight.bold,
                   color: Colors.blue), // Use a larger font size for the date
             ),
           ],
@@ -82,7 +81,6 @@ class WorkoutDurationCard extends StatelessWidget {
               '$duration minutes',
               style: const TextStyle(
                   fontSize: 22,
-                  fontWeight: FontWeight.bold,
                   color: Colors.blue),
             ),
           ],
@@ -125,7 +123,6 @@ class WorkoutTypeCard extends StatelessWidget {
               type,
               style: const TextStyle(
                   fontSize: 22,
-                  fontWeight: FontWeight.bold,
                   color: Colors.blue),
             ),
           ],
@@ -169,7 +166,6 @@ class WorkoutAccuracyCard extends StatelessWidget {
               '$accuracy%',
               style: const TextStyle(
                   fontSize: 22,
-                  fontWeight: FontWeight.bold,
                   color: Colors.blue),
             ),
           ],
