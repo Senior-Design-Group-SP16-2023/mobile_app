@@ -35,8 +35,7 @@ class FireStoreRepository {
       (snapshot) {
         for (var docSnapshot in snapshot.docs) {
           DateTime dateTime = docSnapshot.data()['timestamp'].toDate();
-          String formattedDate =
-              DateFormat("MMM d (h:mm a)").format(dateTime);
+          String formattedDate = DateFormat("MMM d (h:mm a)").format(dateTime);
 
           workoutData.add({
             "accuracy": docSnapshot.data()['accuracy'],
@@ -55,13 +54,12 @@ class FireStoreRepository {
       User user, DateTime earliestTs, DateTime latestTs) async {
     Set<DateTime> workoutData = {};
 
-
     await _firestore
         .collection("workouts")
         .doc(user.email)
         .collection("data")
         .where('timestamp', isGreaterThanOrEqualTo: earliestTs)
-        .where('timestamp', isLessThanOrEqualTo: latestTs)
+        .where('timestamp', isLessThan: latestTs)
         .get()
         .then(
       (snapshot) {

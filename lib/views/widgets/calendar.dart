@@ -145,10 +145,9 @@ class _CalendarWidgetState extends State<CalendarWidget> {
                       if (isWorkoutDay(selectedDay)) {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(
-                            builder: (context) =>
-                                WorkoutDetailsView(selectedDay: selectedDay),
-                          ),
+                          MaterialPageRoute(builder: (context) {
+                            return WorkoutDetailsView(selectedDay: selectedDay);
+                          }),
                         );
                       } else {
                         ScaffoldMessenger.of(context).showSnackBar(
@@ -168,8 +167,17 @@ class _CalendarWidgetState extends State<CalendarWidget> {
   }
 
   Future<void> updateCalendar(DateTime earliestTs) async {
+    int year = earliestTs.year;
+    int month = earliestTs.month;
+    if (month == 12) {
+      year += 1;
+      month = 1;
+    } else {
+      month += 1;
+    }
+    DateTime firstDayOfNextMonth = DateTime(year, month, 1, 0, 0, 0);
     var data = await widget.userViewModel
-        .fetchWorkoutDataWithTime(earliestTs, DateTime.now());
+        .fetchWorkoutDataWithTime(earliestTs, firstDayOfNextMonth);
     setState(() {
       workoutDays = data;
     });
