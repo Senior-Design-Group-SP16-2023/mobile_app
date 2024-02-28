@@ -6,7 +6,8 @@ class RecentActivityGraphWidget extends StatefulWidget {
   final UserViewModel userViewModel;
   final List<Map<String, dynamic>> data;
 
-  const RecentActivityGraphWidget({super.key, required this.data, required this.userViewModel});
+  const RecentActivityGraphWidget(
+      {super.key, required this.data, required this.userViewModel});
 
   @override
   State<RecentActivityGraphWidget> createState() =>
@@ -49,8 +50,8 @@ class _RecentActivityGraphWidgetState extends State<RecentActivityGraphWidget> {
                 children: <Widget>[
                   Row(
                     children: <Widget>[
-                      Icon(Icons.bar_chart, color: Colors.black),
-                      SizedBox(width: 8),
+                      const Icon(Icons.bar_chart, color: Colors.black),
+                      const SizedBox(width: 8),
                       const Text(
                         'Recent Activity',
                         style: TextStyle(
@@ -78,18 +79,25 @@ class _RecentActivityGraphWidgetState extends State<RecentActivityGraphWidget> {
                       ))
                     ],
                   ),
-                  SizedBox(height: 25),
+                  const SizedBox(height: 25),
                   Container(
                     height: 200,
                     child: LineChart(
                       LineChartData(
-                        minY: 50, // Set minimum y-value to include 50
+                        minY: ((workoutData.reduce((a, b) =>
+                                            a['accuracy'] < b['accuracy']
+                                                ? a
+                                                : b)['accuracy'] as num)
+                                        .toDouble() /
+                                    10)
+                                .floor() *
+                            10,
                         maxY: 100, // Set maximum y-value to include 100
                         gridData: FlGridData(
                           show: true,
                           drawVerticalLine: false,
                           horizontalInterval:
-                              10, // Increased for reduced frequency
+                              20, // Increased for reduced frequency
                         ),
                         titlesData: FlTitlesData(
                           bottomTitles: AxisTitles(
@@ -152,9 +160,10 @@ class _RecentActivityGraphWidgetState extends State<RecentActivityGraphWidget> {
   }
 
   Future<void> updateData(String newValue) async {
-    int numWorkouts = newValue != "All" ? int.parse(newValue) : -1; // This might not be the best
-    var data = await widget.userViewModel
-        .fetchWorkoutData(numWorkouts);
+    int numWorkouts = newValue != "All"
+        ? int.parse(newValue)
+        : -1; // This might not be the best
+    var data = await widget.userViewModel.fetchWorkoutData(numWorkouts);
     setState(() {
       dropDownValue = newValue;
       workoutData = data;
