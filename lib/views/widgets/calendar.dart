@@ -7,7 +7,8 @@ class CalendarWidget extends StatefulWidget {
   final UserViewModel userViewModel;
   final List<DateTime> workoutData;
 
-  const CalendarWidget({super.key, required this.userViewModel, required this.workoutData});
+  const CalendarWidget(
+      {super.key, required this.userViewModel, required this.workoutData});
 
   @override
   _CalendarWidgetState createState() => _CalendarWidgetState();
@@ -19,7 +20,7 @@ class _CalendarWidgetState extends State<CalendarWidget> {
 
   bool isWorkoutDay(DateTime day) {
     return workoutDays.any((workoutDay) =>
-    day.year == workoutDay.year &&
+        day.year == workoutDay.year &&
         day.month == workoutDay.month &&
         day.day == workoutDay.day);
   }
@@ -82,9 +83,9 @@ class _CalendarWidgetState extends State<CalendarWidget> {
                         color: Colors.black,
                       ),
                       leftChevronIcon:
-                      Icon(Icons.chevron_left, color: Colors.black),
+                          Icon(Icons.chevron_left, color: Colors.black),
                       rightChevronIcon:
-                      Icon(Icons.chevron_right, color: Colors.black),
+                          Icon(Icons.chevron_right, color: Colors.black),
                     ),
                     daysOfWeekStyle: const DaysOfWeekStyle(
                       weekendStyle: TextStyle(color: Colors.black),
@@ -116,7 +117,7 @@ class _CalendarWidgetState extends State<CalendarWidget> {
                               Center(
                                 child: Text(
                                   day.day.toString(),
-                                  style: TextStyle(color: Colors.black),
+                                  style: const TextStyle(color: Colors.black),
                                 ),
                               ),
                               Positioned(
@@ -126,7 +127,7 @@ class _CalendarWidgetState extends State<CalendarWidget> {
                                 child: Container(
                                   height: 5,
                                   width: 5,
-                                  decoration: BoxDecoration(
+                                  decoration: const BoxDecoration(
                                     color: Colors.blue,
                                     shape: BoxShape.circle,
                                   ),
@@ -156,12 +157,15 @@ class _CalendarWidgetState extends State<CalendarWidget> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => WorkoutDetailsView(selectedDay: selectedDay),
+                            builder: (context) =>
+                                WorkoutDetailsView(selectedDay: selectedDay),
                           ),
                         );
                       } else {
                         ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('Selected day is not a workout day')),
+                          const SnackBar(
+                              content:
+                                  Text('Selected day is not a workout day')),
                         );
                       }
                     },
@@ -176,7 +180,8 @@ class _CalendarWidgetState extends State<CalendarWidget> {
   }
 
   Future<void> updateCalendar(DateTime earliestTs) async {
-    var data = await widget.userViewModel.fetchWorkoutDataWithTime(earliestTs, DateTime.now());
+    var data = await widget.userViewModel
+        .fetchWorkoutDataWithTime(earliestTs, DateTime.now());
     setState(() {
       workoutDays = data;
     });
