@@ -19,10 +19,11 @@ class _ProfileViewState extends State<ProfileView> {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start, // Ensures left alignment
+            crossAxisAlignment:
+                CrossAxisAlignment.start, // Ensures left alignment
             children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 20.0, left: 20.0),
+              const Padding(
+                padding: EdgeInsets.only(top: 20.0, left: 20.0),
                 child: Text(
                   'Profile',
                   style: TextStyle(
@@ -35,18 +36,22 @@ class _ProfileViewState extends State<ProfileView> {
                 padding: const EdgeInsets.fromLTRB(10, 20, 10, 0),
                 child: Card(
                   elevation: 5,
-                  shape: RoundedRectangleBorder( // This shapes the card with rounded corners
-                    borderRadius: BorderRadius.circular(10), // Match the borderRadius as in your provided code
+                  shape: RoundedRectangleBorder(
+                    // This shapes the card with rounded corners
+                    borderRadius: BorderRadius.circular(
+                        10), // Match the borderRadius as in your provided code
                   ),
                   child: Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.start, // Ensures left alignment within the card
+                      crossAxisAlignment: CrossAxisAlignment
+                          .start, // Ensures left alignment within the card
                       children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start, // Ensures the row content is left-aligned
-                          children: const [
+                        const Row(
+                          mainAxisAlignment: MainAxisAlignment
+                              .start, // Ensures the row content is left-aligned
+                          children: [
                             Icon(Icons.person, color: Colors.black),
                             SizedBox(width: 8),
                             Text(
@@ -62,27 +67,34 @@ class _ProfileViewState extends State<ProfileView> {
                         const SizedBox(height: 20),
                         ...userInfoMap.entries.map((entry) {
                           return Column(
-                            crossAxisAlignment: CrossAxisAlignment.start, // Ensures left alignment for each entry
+                            crossAxisAlignment: CrossAxisAlignment
+                                .start, // Ensures left alignment for each entry
                             children: [
                               Padding(
                                 padding: const EdgeInsets.only(bottom: 8.0),
                                 child: RichText(
                                   text: TextSpan(
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       fontSize: 16,
                                       color: Colors.black, // Default text color
                                     ),
                                     children: <TextSpan>[
-                                      TextSpan(text: '${entry.key}: ', style: TextStyle(fontWeight: FontWeight.bold)),
+                                      TextSpan(
+                                          text: '${entry.key}: ',
+                                          style: const TextStyle(
+                                              fontWeight: FontWeight.bold)),
                                       TextSpan(
                                         text: entry.value.toString(),
-                                        style: TextStyle(color: Colors.blue), // Value text color
+                                        style: const TextStyle(
+                                            color: Colors
+                                                .blue), // Value text color
                                       ),
                                     ],
                                   ),
                                 ),
                               ),
-                              if (entry != userInfoMap.entries.last) Divider(),
+                              if (entry != userInfoMap.entries.last)
+                                const Divider(),
                             ],
                           );
                         }).toList(),
