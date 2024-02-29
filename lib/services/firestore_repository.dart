@@ -19,7 +19,7 @@ class FireStoreRepository {
     return _firestore.collection('users').doc(user.email).update(user.toJson());
   }
 
-  Future<List<Map<String, dynamic>>> fetchWorkoutData(
+  Future<List<Map<String, dynamic>>> fetchWorkoutDataWithId(
       User user, int numberOfWorkouts) async {
     List<Map<String, dynamic>> workoutData = [];
 
@@ -50,9 +50,9 @@ class FireStoreRepository {
     return workoutData;
   }
 
-  Future<List<DateTime>> fetchWorkoutDataWithTime(
+  Future<List<Map<String, dynamic>>> fetchWorkoutDataWithTime(
       User user, DateTime earliestTs, DateTime latestTs) async {
-    Set<DateTime> workoutData = {};
+    List<Map<String, dynamic>> workoutData = [];
 
     await _firestore
         .collection("workouts")
@@ -64,12 +64,16 @@ class FireStoreRepository {
         .then(
       (snapshot) {
         for (var docSnapshot in snapshot.docs) {
-          DateTime dateTime = docSnapshot.data()['timestamp'].toDate();
-          workoutData.add(dateTime);
+          workoutData.add({
+            "accuracy": docSnapshot.data()['accuracy'],
+            "timestamp": docSnapshot.data()['timestamp'].toDate(),
+            "workout_id": docSnapshot.data()['workout_id'],
+            "duration": docSnapshot.data()['duration']
+          });
         }
       },
       onError: (e) => print("Error completing: $e"),
     );
-    return workoutData.toList();
+    return workoutData;
   }
 }

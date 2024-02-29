@@ -44,7 +44,7 @@ class _DashboardViewState extends State<DashboardView> {
                     return const CircularProgressIndicator();
                   }),
               FutureBuilder(
-                  future: userViewModel.fetchWorkoutDataWithTime(
+                  future: userViewModel.fetchWorkoutsInMonth(
                       DateTime(now.year, now.month, 1), now),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.done &&

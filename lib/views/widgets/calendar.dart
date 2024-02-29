@@ -146,6 +146,10 @@ class _CalendarWidgetState extends State<CalendarWidget> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(builder: (context) {
+                            DateTime latestTs = DateTime(selectedDay.year,
+                                    selectedDay.month, selectedDay.day)
+                                .add(const Duration(days: 1));
+                            //widget.userViewModel.fetchWorkoutDataWithTime(selectedDay, latestTs);
                             return WorkoutDetailsView(selectedDay: selectedDay);
                           }),
                         );
@@ -177,7 +181,7 @@ class _CalendarWidgetState extends State<CalendarWidget> {
     }
     DateTime firstDayOfNextMonth = DateTime(year, month, 1, 0, 0, 0);
     var data = await widget.userViewModel
-        .fetchWorkoutDataWithTime(earliestTs, firstDayOfNextMonth);
+        .fetchWorkoutsInMonth(earliestTs, firstDayOfNextMonth);
     setState(() {
       workoutDays = data;
     });
