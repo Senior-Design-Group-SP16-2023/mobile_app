@@ -112,17 +112,28 @@ class _CalendarWidgetState extends State<CalendarWidget> {
                     calendarBuilders: CalendarBuilders(
                       defaultBuilder: (context, day, focusedDay) {
                         if (isWorkoutDay(day)) {
-                          return Container(
-                            margin: const EdgeInsets.all(4.0),
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                              border: Border.all(color: Colors.blue, width: 2),
-                              shape: BoxShape.circle,
-                            ),
-                            child: Text(
-                              day.day.toString(),
-                              style: const TextStyle(color: Colors.black),
-                            ),
+                          return Stack(
+                            children: <Widget>[
+                              Center(
+                                child: Text(
+                                  day.day.toString(),
+                                  style: const TextStyle(color: Colors.black),
+                                ),
+                              ),
+                              Positioned(
+                                bottom: 1,
+                                left: 0,
+                                right: 0,
+                                child: Container(
+                                  height: 5,
+                                  width: 5,
+                                  decoration: const BoxDecoration(
+                                    color: Colors.blue,
+                                    shape: BoxShape.circle,
+                                  ),
+                                ),
+                              ),
+                            ],
                           );
                         } else if (day == DateTime.now()) {
                           return Container(
@@ -160,9 +171,10 @@ class _CalendarWidgetState extends State<CalendarWidget> {
                         });
                       } else {
                         ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                                content:
-                                    Text('Selected day is not a workout day')));
+                          const SnackBar(
+                              content:
+                                  Text('Selected day is not a workout day')),
+                        );
                       }
                     },
                   ),

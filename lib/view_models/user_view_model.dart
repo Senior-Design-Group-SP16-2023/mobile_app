@@ -172,6 +172,8 @@ class UserViewModel with ChangeNotifier {
 
   Future<List<Map<String, dynamic>>> fetchWorkoutData(
       int numberOfWorkouts) async {
+    numberOfWorkouts =
+        (numberOfWorkouts != -1 ? numberOfWorkouts : user.totalWorkouts)!;
     return await _fireStoreRepository.fetchWorkoutDataWithId(
         user, numberOfWorkouts);
   }

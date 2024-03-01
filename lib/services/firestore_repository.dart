@@ -47,6 +47,9 @@ class FireStoreRepository {
       },
       onError: (e) => print("Error completing: $e"),
     );
+
+    workoutData.sort((a, b) => a["workout_id"].compareTo(b["workout_id"]));
+    print(workoutData);
     return workoutData;
   }
 

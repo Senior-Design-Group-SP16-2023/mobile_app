@@ -1,12 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
-import 'dart:ui'; // Import this for ImageFilter.
+import 'package:senior_design/view_models/user_view_model.dart';
 
-class RecentActivityGraphWidget extends StatelessWidget {
+class RecentActivityGraphWidget extends StatefulWidget {
+  final UserViewModel userViewModel;
+  final List<Map<String, dynamic>> data;
+
+  const RecentActivityGraphWidget(
+      {super.key, required this.data, required this.userViewModel});
+
+  @override
+  State<RecentActivityGraphWidget> createState() =>
+      _RecentActivityGraphWidgetState();
+}
+
+class _RecentActivityGraphWidgetState extends State<RecentActivityGraphWidget> {
+  String dropDownValue = '5';
+  var allValues = ['3', '5', '7', 'All']; //This should be changed
+  List<Map<String, dynamic>> workoutData = [];
+
+  @override
+  void initState() {
+    super.initState();
+    workoutData = widget.data;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.fromLTRB(10, 20, 10, 0),
+      padding: const EdgeInsets.fromLTRB(10, 20, 10, 0),
       child: Align(
         alignment: Alignment.topCenter,
         child: ClipRRect(
@@ -28,9 +50,9 @@ class RecentActivityGraphWidget extends StatelessWidget {
                 children: <Widget>[
                   Row(
                     children: <Widget>[
-                      Icon(Icons.bar_chart, color: Colors.black),
-                      SizedBox(width: 8),
-                      Text(
+                      const Icon(Icons.bar_chart, color: Colors.black),
+                      const SizedBox(width: 8),
+                      const Text(
                         'Recent Activity',
                         style: TextStyle(
                           fontSize: 18,
@@ -38,20 +60,44 @@ class RecentActivityGraphWidget extends StatelessWidget {
                           color: Colors.black,
                         ),
                       ),
+                      Expanded(
+                          child: Align(
+                        alignment: Alignment.centerRight,
+                        child: DropdownButton<String>(
+                          value: dropDownValue,
+                          icon: const Icon(Icons.keyboard_arrow_down),
+                          items: allValues.map((String val) {
+                            return DropdownMenuItem(
+                              value: val,
+                              child: Text(val),
+                            );
+                          }).toList(),
+                          onChanged: (String? newValue) {
+                            updateData(newValue!);
+                          },
+                        ),
+                      ))
                     ],
                   ),
-                  SizedBox(height: 30),
+                  const SizedBox(height: 25),
                   Container(
                     height: 200,
                     child: LineChart(
                       LineChartData(
-                        minY: 50, // Set minimum y-value to include 50
+                        minY: ((workoutData.reduce((a, b) =>
+                                            a['accuracy'] < b['accuracy']
+                                                ? a
+                                                : b)['accuracy'] as num)
+                                        .toDouble() /
+                                    10)
+                                .floor() *
+                            10,
                         maxY: 100, // Set maximum y-value to include 100
                         gridData: FlGridData(
                           show: true,
-                          drawVerticalLine: true,
-                          horizontalInterval: 10, // Increased for reduced frequency
-                          verticalInterval: 1, // Adjust as needed for vertical lines
+                          drawVerticalLine: false,
+                          horizontalInterval:
+                              20, // Increased for reduced frequency
                         ),
                         titlesData: FlTitlesData(
                           bottomTitles: AxisTitles(
@@ -60,20 +106,7 @@ class RecentActivityGraphWidget extends StatelessWidget {
                               reservedSize: 22,
                               interval: 1,
                               getTitlesWidget: (value, meta) {
-                                switch (value.toInt()) {
-                                  case 0:
-                                    return Text('1');
-                                  case 1:
-                                    return Text('2');
-                                  case 2:
-                                    return Text('3');
-                                  case 3:
-                                    return Text('4');
-                                  case 4:
-                                    return Text('5');
-                                  default:
-                                    return Text('');
-                                }
+                                return Text(value.toInt().toString());
                               },
                             ),
                           ),
@@ -81,14 +114,16 @@ class RecentActivityGraphWidget extends StatelessWidget {
                             sideTitles: SideTitles(
                               showTitles: true,
                               getTitlesWidget: (value, meta) {
-                                TextStyle customStyle = TextStyle(
+                                TextStyle customStyle = const TextStyle(
                                   fontSize: 12, // Adjusted font size
                                   fontWeight: FontWeight.bold,
                                 );
                                 // Convert value to int to remove the decimal point
-                                return Text(value.toInt().toString(), style: customStyle);
+                                return Text(value.toInt().toString(),
+                                    style: customStyle);
                               },
-                              reservedSize: 40, // Adjusted reserved size for labels
+                              reservedSize:
+                                  40, // Adjusted reserved size for labels
                             ),
                           ),
                           rightTitles: AxisTitles(
@@ -103,14 +138,8 @@ class RecentActivityGraphWidget extends StatelessWidget {
                         ),
                         lineBarsData: [
                           LineChartBarData(
-                            spots: [
-                              FlSpot(0, 70),
-                              FlSpot(1, 85),
-                              FlSpot(2, 75),
-                              FlSpot(3, 90),
-                              FlSpot(4, 95),
-                            ],
-                            isCurved: true,
+                            spots: createData(),
+                            isCurved: false,
                             color: Colors.blue,
                             barWidth: 5,
                             isStrokeCapRound: true,
@@ -128,5 +157,26 @@ class RecentActivityGraphWidget extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future<void> updateData(String newValue) async {
+    int numWorkouts = newValue != "All"
+        ? int.parse(newValue)
+        : -1; // This might not be the best
+    var data = await widget.userViewModel.fetchWorkoutData(numWorkouts);
+    setState(() {
+      dropDownValue = newValue;
+      workoutData = data;
+    });
+  }
+
+  List<FlSpot> createData() {
+    List<FlSpot> spots = [];
+    for (int i = 0; i < workoutData.length; i++) {
+      double workoutId = (i + 1).toDouble();
+      double accuracy = workoutData[i]['accuracy'].toDouble();
+      spots.add(FlSpot(workoutId, accuracy));
+    }
+    return spots;
   }
 }
