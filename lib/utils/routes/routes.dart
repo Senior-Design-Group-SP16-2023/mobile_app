@@ -6,27 +6,32 @@ import 'package:senior_design/views/screens/patientaccount_view.dart';
 import 'package:senior_design/views/screens/signin_view.dart';
 import 'package:flutter/material.dart';
 import 'package:senior_design/views/screens/welcome_view.dart';
-
-import '../../views/screens/workoutdetails_view.dart';
+import 'package:senior_design/views/screens/workoutdetails_view.dart';
 
 class Routes {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case RoutesName.home:
-        return MaterialPageRoute(builder: (context) => HomeView());
+        return MaterialPageRoute(builder: (context) => const HomeView());
       case RoutesName.welcome:
-        return MaterialPageRoute(builder: (context) => WelcomeView());
+        return MaterialPageRoute(builder: (context) => const WelcomeView());
       case RoutesName.signin:
-        return MaterialPageRoute(builder: (context) => SignInView());
+        return MaterialPageRoute(builder: (context) => const SignInView());
       case RoutesName.createAccount:
-        return MaterialPageRoute(builder: (context) => CreateAccountView());
+        return MaterialPageRoute(
+            builder: (context) => const CreateAccountView());
       case RoutesName.patientAccount:
-        return MaterialPageRoute(builder: (context) => PatientAccountView());
+        return MaterialPageRoute(
+            builder: (context) => const PatientAccountView());
       case RoutesName.doctorAccount:
-        return MaterialPageRoute(builder: (context) => DoctorAccountView());
+        return MaterialPageRoute(
+            builder: (context) => const DoctorAccountView());
       case RoutesName.workoutDetails:
         final selectedDay = settings.arguments as DateTime;
-        return MaterialPageRoute(builder: (context) => WorkoutDetailsView(selectedDay: selectedDay));
+        final workouts = settings.arguments as List<Map<String, dynamic>>;
+        return MaterialPageRoute(
+            builder: (context) => WorkoutDetailsView(
+                selectedDay: selectedDay, workouts: workouts));
       default:
         return MaterialPageRoute(builder: (context) {
           return const Scaffold(

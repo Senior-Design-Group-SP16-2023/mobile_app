@@ -143,16 +143,21 @@ class _CalendarWidgetState extends State<CalendarWidget> {
                     ),
                     onDaySelected: (selectedDay, focusedDay) {
                       if (isWorkoutDay(selectedDay)) {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) {
-                            DateTime latestTs = DateTime(selectedDay.year,
-                                    selectedDay.month, selectedDay.day)
-                                .add(const Duration(days: 1));
-                            //widget.userViewModel.fetchWorkoutDataWithTime(selectedDay, latestTs);
-                            return WorkoutDetailsView(selectedDay: selectedDay);
-                          }),
-                        );
+                        DateTime latestTs = DateTime(selectedDay.year,
+                                selectedDay.month, selectedDay.day)
+                            .add(const Duration(days: 1));
+                        widget.userViewModel
+                            .fetchWorkoutsInDay(selectedDay, latestTs)
+                            .then((items) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) {
+                              //widget.userViewModel.fetchWorkoutDataWithTime(selectedDay, latestTs);
+                              return WorkoutDetailsView(
+                                  selectedDay: selectedDay, workouts: items);
+                            }),
+                          );
+                        });
                       } else {
                         ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(

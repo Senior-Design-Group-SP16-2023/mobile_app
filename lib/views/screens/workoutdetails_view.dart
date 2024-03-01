@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart'; // Import intl package for formatting dates
+import 'package:intl/intl.dart';
 
 // 1. Workout Day and Time Widget
 class WorkoutDayAndTimeCard extends StatelessWidget {
@@ -22,8 +22,8 @@ class WorkoutDayAndTimeCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              children: const [
+            const Row(
+              children: [
                 Icon(Icons.calendar_today, color: Colors.black),
                 SizedBox(width: 8),
                 Text(
@@ -66,8 +66,8 @@ class WorkoutDurationCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              children: const [
+            const Row(
+              children: [
                 Icon(Icons.timer, color: Colors.black),
                 SizedBox(width: 8),
                 Text(
@@ -79,9 +79,7 @@ class WorkoutDurationCard extends StatelessWidget {
             const SizedBox(height: 16),
             Text(
               '$duration minutes',
-              style: const TextStyle(
-                  fontSize: 22,
-                  color: Colors.blue),
+              style: const TextStyle(fontSize: 22, color: Colors.blue),
             ),
           ],
         ),
@@ -108,8 +106,8 @@ class WorkoutTypeCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              children: const [
+            const Row(
+              children: [
                 Icon(Icons.directions_run, color: Colors.black),
                 SizedBox(width: 8),
                 Text(
@@ -121,9 +119,7 @@ class WorkoutTypeCard extends StatelessWidget {
             const SizedBox(height: 16),
             Text(
               type,
-              style: const TextStyle(
-                  fontSize: 22,
-                  color: Colors.blue),
+              style: const TextStyle(fontSize: 22, color: Colors.blue),
             ),
           ],
         ),
@@ -151,8 +147,8 @@ class WorkoutAccuracyCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              children: const [
+            const Row(
+              children: [
                 Icon(Icons.check_circle_outline, color: Colors.black),
                 SizedBox(width: 8),
                 Text(
@@ -164,9 +160,7 @@ class WorkoutAccuracyCard extends StatelessWidget {
             const SizedBox(height: 16),
             Text(
               '$accuracy%',
-              style: const TextStyle(
-                  fontSize: 22,
-                  color: Colors.blue),
+              style: const TextStyle(fontSize: 22, color: Colors.blue),
             ),
           ],
         ),
@@ -177,16 +171,19 @@ class WorkoutAccuracyCard extends StatelessWidget {
 
 class WorkoutDetailsView extends StatelessWidget {
   final DateTime selectedDay;
+  final List<Map<String, dynamic>> workouts;
 
-  const WorkoutDetailsView({Key? key, required this.selectedDay})
+  const WorkoutDetailsView(
+      {Key? key, required this.selectedDay, required this.workouts})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    // Example placeholder data for other widgets
-    final int workoutDuration = 10; // in minutes
-    final String workoutType = "Bicep Curl";
-    final int workoutAccuracy = 75; // in percentage
+    // CHANGE HERE!!!!
+    final int workoutDuration = workouts[0]['duration']; // in minutes
+    const String workoutType = "Bicep Curl";
+    final int workoutAccuracy = workouts[0]['accuracy']; // in percentage
+    final DateTime workoutTime = workouts[0]['timestamp'];
 
     return Scaffold(
       appBar: AppBar(
@@ -203,16 +200,16 @@ class WorkoutDetailsView extends StatelessWidget {
       ),
       body: ListView(
         children: [
-          Padding(
-            padding: const EdgeInsets.only(top: 20.0, left: 20.0, bottom: 20.0),
-            child: const Text(
+          const Padding(
+            padding: EdgeInsets.only(top: 20.0, left: 20.0, bottom: 20.0),
+            child: Text(
               'Workout Details',
               style: TextStyle(fontSize: 35.0, fontWeight: FontWeight.bold),
             ),
           ),
-          WorkoutDayAndTimeCard(dayAndTime: selectedDay),
+          WorkoutDayAndTimeCard(dayAndTime: workoutTime),
           WorkoutDurationCard(duration: workoutDuration),
-          WorkoutTypeCard(type: workoutType),
+          const WorkoutTypeCard(type: workoutType),
           WorkoutAccuracyCard(accuracy: workoutAccuracy),
         ],
       ),
