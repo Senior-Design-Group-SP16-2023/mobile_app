@@ -1,8 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:senior_design/views/screens/workoutcalibration_view.dart';
-import '../../view_models/user_view_model.dart';
 
 class WorkoutConnectView extends StatefulWidget {
   const WorkoutConnectView({Key? key}) : super(key: key);
@@ -14,8 +11,6 @@ class WorkoutConnectView extends StatefulWidget {
 class _WorkoutConnectViewState extends State<WorkoutConnectView> {
   @override
   Widget build(BuildContext context) {
-    final userViewModel = Provider.of<UserViewModel>(context);
-
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -33,8 +28,8 @@ class _WorkoutConnectViewState extends State<WorkoutConnectView> {
       ),
       body: ListView(
         children: [
-          Padding(
-            padding: const EdgeInsets.only(top: 20.0, left: 20.0, bottom: 20.0),
+          const Padding(
+            padding: EdgeInsets.only(top: 20.0, left: 20.0, bottom: 20.0),
             child: Text(
               'Connect to Device',
               style: TextStyle(fontSize: 35.0, fontWeight: FontWeight.bold),
@@ -46,7 +41,7 @@ class _WorkoutConnectViewState extends State<WorkoutConnectView> {
           instructionStep('4', 'Search for "XXX"'),
           instructionStep('5', 'Select Device(s) to Pair'),
           instructionStep('6', 'Return to Recover'),
-          SizedBox(
+          const SizedBox(
               height:
                   20.0), // Space between the last instruction and the Next button
           Center(
@@ -55,19 +50,18 @@ class _WorkoutConnectViewState extends State<WorkoutConnectView> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => WorkoutCalibrateView()),
+                      builder: (context) => const WorkoutCalibrateView()),
                 );
-              },
-              child: Text('Next',
-                  style: TextStyle(fontSize: 18)), // Increase font size
+              }, // Increase font size
               style: ElevatedButton.styleFrom(
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(15),
                 ),
-                padding: EdgeInsets.symmetric(
+                padding: const EdgeInsets.symmetric(
                     vertical: 15.0), // Increase button padding
-                minimumSize: Size(300, 60), // Increase button size
+                minimumSize: const Size(300, 60), // Increase button size
               ),
+              child: const Text('Next', style: TextStyle(fontSize: 18)),
             ),
           ),
         ],
@@ -81,7 +75,7 @@ class _WorkoutConnectViewState extends State<WorkoutConnectView> {
       child: Row(
         children: [
           Container(
-            padding: EdgeInsets.all(2),
+            padding: const EdgeInsets.all(2),
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               border: Border.all(color: Colors.blue, width: 2),
@@ -91,12 +85,12 @@ class _WorkoutConnectViewState extends State<WorkoutConnectView> {
               backgroundColor: Colors.white,
               foregroundColor: Colors.blue,
               child: Text(number,
-                  style:
-                      TextStyle(fontSize: 14.0, fontWeight: FontWeight.bold)),
+                  style: const TextStyle(
+                      fontSize: 14.0, fontWeight: FontWeight.bold)),
             ),
           ),
-          SizedBox(width: 10.0),
-          Expanded(child: Text(text, style: TextStyle(fontSize: 18.0))),
+          const SizedBox(width: 10.0),
+          Expanded(child: Text(text, style: const TextStyle(fontSize: 18.0))),
         ],
       ),
     );

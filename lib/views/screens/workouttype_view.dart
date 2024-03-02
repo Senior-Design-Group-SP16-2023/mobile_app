@@ -1,9 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:senior_design/views/screens/workoutdetails_view.dart';
 import 'package:senior_design/views/screens/workoutstart_view.dart';
-import '../../view_models/user_view_model.dart';
 
 class WorkoutTypeView extends StatefulWidget {
   const WorkoutTypeView({Key? key}) : super(key: key);
@@ -15,8 +11,6 @@ class WorkoutTypeView extends StatefulWidget {
 class _WorkoutTypeViewState extends State<WorkoutTypeView> {
   @override
   Widget build(BuildContext context) {
-    final userViewModel = Provider.of<UserViewModel>(context);
-
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -32,8 +26,8 @@ class _WorkoutTypeViewState extends State<WorkoutTypeView> {
       ),
       body: ListView(
         children: [
-          Padding(
-            padding: const EdgeInsets.only(top: 20.0, left: 20.0, bottom: 20.0),
+          const Padding(
+            padding: EdgeInsets.only(top: 20.0, left: 20.0, bottom: 20.0),
             child: Text(
               'Workout Type',
               style: TextStyle(
@@ -44,41 +38,47 @@ class _WorkoutTypeViewState extends State<WorkoutTypeView> {
           ),
           // Reduce the padding to bring the buttons closer together
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0), // Adjust vertical padding
+            padding: const EdgeInsets.symmetric(
+                horizontal: 16.0, vertical: 8.0), // Adjust vertical padding
             child: ElevatedButton(
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => WorkoutStartView()),
+                  MaterialPageRoute(
+                      builder: (context) => const WorkoutStartView()),
                 );
-              },
-              child: Text('In Office', style: TextStyle(fontSize: 18)), // Increase font size
+              }, // Increase font size
               style: ElevatedButton.styleFrom(
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(15),
                 ),
-                padding: EdgeInsets.symmetric(vertical: 15.0), // Increase button padding
-                minimumSize: Size(double.infinity, 60), // Increase button size
+                padding: const EdgeInsets.symmetric(
+                    vertical: 15.0), // Increase button padding
+                minimumSize:
+                    const Size(double.infinity, 60), // Increase button size
               ),
+              child: const Text('In Office', style: TextStyle(fontSize: 18)),
             ),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+            padding:
+                const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
             child: ElevatedButton(
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => WorkoutStartView()),
+                  MaterialPageRoute(
+                      builder: (context) => const WorkoutStartView()),
                 );
               },
-              child: Text('At Home', style: TextStyle(fontSize: 18)),
               style: ElevatedButton.styleFrom(
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(15),
                 ),
-                padding: EdgeInsets.symmetric(vertical: 15.0),
-                minimumSize: Size(double.infinity, 60),
+                padding: const EdgeInsets.symmetric(vertical: 15.0),
+                minimumSize: const Size(double.infinity, 60),
               ),
+              child: const Text('At Home', style: TextStyle(fontSize: 18)),
             ),
           ),
         ],

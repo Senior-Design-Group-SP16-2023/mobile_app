@@ -1,8 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:senior_design/views/screens/workoutconnect_view.dart';
-import '../../view_models/user_view_model.dart';
 
 class WorkoutView extends StatefulWidget {
   const WorkoutView({Key? key}) : super(key: key);
@@ -14,13 +11,11 @@ class WorkoutView extends StatefulWidget {
 class _WorkoutViewState extends State<WorkoutView> {
   @override
   Widget build(BuildContext context) {
-    final userViewModel = Provider.of<UserViewModel>(context);
-
     return Scaffold(
       body: ListView(
         children: [
-          Padding(
-            padding: const EdgeInsets.only(top: 20.0, left: 20.0, bottom: 20.0),
+          const Padding(
+            padding: EdgeInsets.only(top: 20.0, left: 20.0, bottom: 20.0),
             child: Text(
               'Workout',
               style: TextStyle(
@@ -36,10 +31,10 @@ class _WorkoutViewState extends State<WorkoutView> {
                   context,
                   MaterialPageRoute(
                       builder: (context) =>
-                          WorkoutConnectView()), // Replace WorkoutConnect with your actual WorkoutConnect page class name
+                          const WorkoutConnectView()), // Replace WorkoutConnect with your actual WorkoutConnect page class name
                 );
               },
-              child: Text('Next'),
+              child: const Text('Next'),
             ),
           ),
         ],

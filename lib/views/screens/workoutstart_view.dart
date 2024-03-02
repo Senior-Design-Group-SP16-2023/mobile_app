@@ -1,8 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:senior_design/views/screens/workoutdetails_view.dart';
-import '../../view_models/user_view_model.dart';
 
 class WorkoutStartView extends StatefulWidget {
   const WorkoutStartView({Key? key}) : super(key: key);
@@ -16,8 +12,6 @@ class _WorkoutStartViewState extends State<WorkoutStartView> {
 
   @override
   Widget build(BuildContext context) {
-    final userViewModel = Provider.of<UserViewModel>(context);
-
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -37,8 +31,8 @@ class _WorkoutStartViewState extends State<WorkoutStartView> {
       ),
       body: ListView(
         children: [
-          Padding(
-            padding: const EdgeInsets.only(top: 20.0, left: 20.0, bottom: 20.0),
+          const Padding(
+            padding: EdgeInsets.only(top: 20.0, left: 20.0, bottom: 20.0),
             child: Text(
               'Start Workout',
               style: TextStyle(
@@ -49,16 +43,8 @@ class _WorkoutStartViewState extends State<WorkoutStartView> {
           ),
           Center(
             child: ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => WorkoutDetailsView(
-                          selectedDay:
-                          selectedDay)), // Replace WorkoutConnect with your actual WorkoutConnect page class name
-                );
-              },
-              child: Text('Next'),
+              onPressed: () => {},
+              child: const Text('Next'),
             ),
           ),
         ],
