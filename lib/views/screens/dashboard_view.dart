@@ -14,10 +14,10 @@ class DashboardView extends StatefulWidget {
 }
 
 class _DashboardViewState extends State<DashboardView> {
-
   @override
   Widget build(BuildContext context) {
     final userViewModel = Provider.of<UserViewModel>(context);
+    final now = DateTime.now();
 
     return Scaffold(
       body: SafeArea( // Use SafeArea directly here
@@ -25,21 +25,48 @@ class _DashboardViewState extends State<DashboardView> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              // insert a space between the top of the screen and the content
+              const SizedBox(height: 50),
               DashboardHeader(),
               FutureBuilder(
                   future: userViewModel.fetchWorkoutData(1),
-                  builder: (context, snapshot){
-                    if(snapshot.connectionState == ConnectionState.done && snapshot.hasData){
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.done &&
+                        snapshot.hasData) {
                       return RecentActivity(data: snapshot.data!);
-                    }else if(snapshot.hasError){
+                    } else if (snapshot.hasError) {
                       return Text("Error ${snapshot.error}");
                     }
-                    return CircularProgressIndicator();
-                  }
-              ),
-              CalendarWidget(),
-              RecentActivityGraphWidget(),
-              SizedBox(height: 25), // space at the bottom
+                    return const CircularProgressIndicator();
+                  }),
+              FutureBuilder(
+                  future: userViewModel.fetchWorkoutsInMonth(
+                      DateTime(now.year, now.month, 1), now),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.done &&
+                        snapshot.hasData) {
+                      return CalendarWidget(
+                          userViewModel: userViewModel,
+                          workoutData: snapshot.data!);
+                    } else if (snapshot.hasError) {
+                      return Text("Error ${snapshot.error}");
+                    }
+                    return const CircularProgressIndicator();
+                  }),
+              FutureBuilder(
+                  future: userViewModel.fetchWorkoutData(5),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.done &&
+                        snapshot.hasData) {
+                      return RecentActivityGraphWidget(
+                          userViewModel: userViewModel, data: snapshot.data!);
+                    } else if (snapshot.hasError) {
+                      return Text("Error ${snapshot.error}");
+                    }
+                    return const CircularProgressIndicator();
+                  }),
+              // insert a space between the content and the bottom of the screen
+              const SizedBox(height: 25),
             ],
           ),
         ),

@@ -15,42 +15,39 @@ class Routes {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case RoutesName.home:
-        return MaterialPageRoute(builder: (context) => HomeView());
+        return MaterialPageRoute(builder: (context) => const HomeView());
       case RoutesName.welcome:
-        return MaterialPageRoute(builder: (context) => WelcomeView());
+        return MaterialPageRoute(builder: (context) => const WelcomeView());
       case RoutesName.signin:
-        return MaterialPageRoute(builder: (context) => SignInView());
+        return MaterialPageRoute(builder: (context) => const SignInView());
       case RoutesName.createAccount:
-        return MaterialPageRoute(builder: (context) => CreateAccountView());
+        return MaterialPageRoute(
+            builder: (context) => const CreateAccountView());
       case RoutesName.patientAccount:
-        return MaterialPageRoute(builder: (context) => PatientAccountView());
+        return MaterialPageRoute(
+            builder: (context) => const PatientAccountView());
       case RoutesName.doctorAccount:
-        return MaterialPageRoute(builder: (context) => DoctorAccountView());
+        return MaterialPageRoute(
+            builder: (context) => const DoctorAccountView());
       case RoutesName.workoutDetails:
-        final selectedDay = settings.arguments as DateTime?;
-        // Ensure that selectedDay is not null before navigating
-        if (selectedDay != null) {
-          return MaterialPageRoute(
-              builder: (context) =>
-                  WorkoutDetailsView(selectedDay: selectedDay));
-        } else {
-          // Handle the case where selectedDay is null
-          // This could navigate back or show an error message
-          return MaterialPageRoute(
-              builder: (context) => const Scaffold(
-                  body: Center(child: Text("Error: No selected day"))));
-        }
+        final selectedDay = settings.arguments as DateTime;
+        final workouts = settings.arguments as List<Map<String, dynamic>>;
+        return MaterialPageRoute(
+            builder: (context) => WorkoutDetailsView(
+                selectedDay: selectedDay, workouts: workouts));
       case RoutesName.workoutConnect:
-        return MaterialPageRoute(builder: (context) => WorkoutConnectView());
+        return MaterialPageRoute(
+            builder: (context) => const WorkoutConnectView());
       case RoutesName.workoutCalibrate:
-        return MaterialPageRoute(builder: (context) => WorkoutCalibrateView());
-        case RoutesName.workoutSelect:
-        return MaterialPageRoute(builder: (context) => WorkoutTypeView());
+        return MaterialPageRoute(
+            builder: (context) => const WorkoutCalibrateView());
+      case RoutesName.workoutSelect:
+        return MaterialPageRoute(builder: (context) => const WorkoutTypeView());
       default:
         return MaterialPageRoute(builder: (context) {
           return const Scaffold(
             body: Center(
-              child: Text("no route defined"),
+              child: Text("No route defined."),
             ),
           );
         });

@@ -170,7 +170,38 @@ class UserViewModel with ChangeNotifier {
     setUser(user);
   }
 
-  Future<List<Map<String, dynamic>>> fetchWorkoutData(int numberOfWorkouts) async{
-    return await _fireStoreRepository.fetchWorkoutData(user, numberOfWorkouts);
+  Future<List<Map<String, dynamic>>> fetchWorkoutData(
+      int numberOfWorkouts) async {
+    numberOfWorkouts =
+        (numberOfWorkouts != -1 ? numberOfWorkouts : user.totalWorkouts)!;
+    return await _fireStoreRepository.fetchWorkoutDataWithId(
+        user, numberOfWorkouts);
+  }
+
+  Future<List<DateTime>> fetchWorkoutsInMonth(
+      DateTime earliestTs, DateTime latestTs) async {
+    DateTime now = DateTime.now();
+    if (earliestTs.isAfter(now)) {
+      return [];
+    }
+    latestTs = latestTs.isAfter(DateTime.now())
+        ? DateTime.now()
+        : latestTs; // Check if the given variable is valid
+    var workouts = await _fireStoreRepository.fetchWorkoutDataWithTime(
+        user, earliestTs, latestTs);
+    return workouts.map((map) => map['timestamp'] as DateTime).toSet().toList();
+  }
+
+  Future<List<Map<String, dynamic>>> fetchWorkoutsInDay(
+      DateTime earliestTs, DateTime latestTs) async {
+    DateTime now = DateTime.now();
+    if (earliestTs.isAfter(now)) {
+      return [];
+    }
+    latestTs = latestTs.isAfter(DateTime.now())
+        ? DateTime.now()
+        : latestTs; // Check if the given variable is valid
+    return await _fireStoreRepository.fetchWorkoutDataWithTime(
+        user, earliestTs, latestTs);
   }
 }
