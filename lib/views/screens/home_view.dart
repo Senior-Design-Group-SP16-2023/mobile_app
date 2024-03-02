@@ -28,21 +28,21 @@ class _HomeViewState extends State<HomeView> {
               offstage: index != 0,
               child: TickerMode(
                 enabled: index == 0,
-                child: MaterialApp(home: DashboardView()),
+                child: const MaterialApp(home: DashboardView()),
               ),
             ),
             Offstage(
               offstage: index != 1,
               child: TickerMode(
                 enabled: index == 1,
-                child: MaterialApp(home: WorkoutView()),
+                child: const MaterialApp(home: WorkoutView()),
               ),
             ),
             Offstage(
               offstage: index != 2,
               child: TickerMode(
                 enabled: index == 2,
-                child: MaterialApp(home: ProfileView()),
+                child: const MaterialApp(home: ProfileView()),
               ),
             ),
           ],
@@ -54,7 +54,7 @@ class _HomeViewState extends State<HomeView> {
               this.index = index;
             });
           },
-          items: <BottomNavigationBarItem>[
+          items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
               icon: Icon(Icons.dashboard),
               label: 'Dashboard',
@@ -78,21 +78,21 @@ class _HomeViewState extends State<HomeView> {
               offstage: index != 0,
               child: TickerMode(
                 enabled: index == 0,
-                child: MaterialApp(home: SearchPage()),
+                child: const MaterialApp(home: SearchPage()),
               ),
             ),
             Offstage(
               offstage: index != 1,
               child: TickerMode(
                 enabled: index == 1,
-                child: MaterialApp(home: AddPatientView()),
+                child: const MaterialApp(home: AddPatientView()),
               ),
             ),
             Offstage(
               offstage: index != 2,
               child: TickerMode(
                 enabled: index == 2,
-                child: MaterialApp(home: ProfileView()),
+                child: const MaterialApp(home: ProfileView()),
               ),
             ),
           ],
@@ -104,7 +104,7 @@ class _HomeViewState extends State<HomeView> {
               this.index = index;
             });
           },
-          items: <BottomNavigationBarItem>[
+          items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
               icon: Icon(Icons.dashboard),
               label: 'Dashboard',

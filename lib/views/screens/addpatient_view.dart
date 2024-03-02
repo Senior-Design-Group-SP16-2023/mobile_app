@@ -14,8 +14,8 @@ class AddPatientView extends HookWidget {
       body: ListView(
         // Use ListView for consistent alignment and scrolling
         children: [
-          Padding(
-            padding: const EdgeInsets.only(top: 20.0, left: 20.0, bottom: 20.0),
+          const Padding(
+            padding: EdgeInsets.only(top: 20.0, left: 20.0, bottom: 20.0),
             child: Text(
               'Add Patient',
               style: TextStyle(
@@ -59,19 +59,22 @@ class AddPatientView extends HookWidget {
                   onPressed: () {
                     // Implement the logic for adding a patient here
                   },
-                  child: const Padding(
-                    padding: EdgeInsets.all(16.0),
-                    child: Text('Add', style: TextStyle(fontSize: 18)), // Text updated to 'Sign in' with fontSize 18
-                  ),
                   style: ElevatedButton.styleFrom(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(15),
                     ),
                     // Padding and minimumSize properties removed to match the provided style
-                    minimumSize: Size(double.infinity, 60), // Increase button size
+                    minimumSize:
+                        const Size(double.infinity, 60), // Increase button size
+                  ),
+                  child: const Padding(
+                    padding: EdgeInsets.all(16.0),
+                    child: Text('Add',
+                        style: TextStyle(
+                            fontSize:
+                                18)), // Text updated to 'Sign in' with fontSize 18
                   ),
                 ),
-
               ],
             ),
           ),

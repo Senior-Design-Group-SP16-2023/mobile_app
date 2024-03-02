@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import '../widgets/recent_activity.dart'; // Make sure these imports match the location of your widgets
-import '../widgets/calendar.dart';
-import '../widgets/graph.dart';
+import 'package:senior_design/views/widgets/recent_activity.dart'; // Make sure these imports match the location of your widgets
+import 'package:senior_design/views/widgets/calendar.dart';
+import 'package:senior_design/views/widgets/graph.dart';
 
 class UserDetailPage extends StatelessWidget {
   final String userName;
@@ -35,7 +35,8 @@ class UserDetailPage extends StatelessWidget {
                 Expanded(
                   child: Text(
                     userName,
-                    style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
+                    style: const TextStyle(
+                        fontSize: 35, fontWeight: FontWeight.bold),
                     overflow: TextOverflow.ellipsis,
                   ),
                 ),
@@ -47,7 +48,8 @@ class UserDetailPage extends StatelessWidget {
                       builder: (BuildContext context) {
                         return AlertDialog(
                           title: const Text("Remove User"),
-                          content: const Text("Are you sure you want to remove this user?"),
+                          content: const Text(
+                              "Are you sure you want to remove this user?"),
                           actions: <Widget>[
                             TextButton(
                               child: const Text("Cancel"),
@@ -72,7 +74,7 @@ class UserDetailPage extends StatelessWidget {
               ],
             ),
           ),
-          RecentActivity(
+          const RecentActivity(
             data: [
               {
                 'accuracy': 90,
@@ -80,9 +82,9 @@ class UserDetailPage extends StatelessWidget {
               },
             ],
           ),
-          CalendarWidget(),
+          const CalendarWidget(),
           RecentActivityGraphWidget(),
-          SizedBox(height: 25),
+          const SizedBox(height: 25),
         ],
       ),
     );

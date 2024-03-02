@@ -6,11 +6,10 @@ import 'package:senior_design/views/screens/patientaccount_view.dart';
 import 'package:senior_design/views/screens/signin_view.dart';
 import 'package:flutter/material.dart';
 import 'package:senior_design/views/screens/welcome_view.dart';
-
-import '../../views/screens/workoutcalibration_view.dart';
-import '../../views/screens/workoutconnect_view.dart';
-import '../../views/screens/workoutdetails_view.dart';
-import '../../views/screens/workouttype_view.dart';
+import 'package:senior_design/views/screens/workoutcalibration_view.dart';
+import 'package:senior_design/views/screens/workoutconnect_view.dart';
+import 'package:senior_design/views/screens/workoutdetails_view.dart';
+import 'package:senior_design/views/screens/workouttype_view.dart';
 
 class Routes {
   static Route<dynamic> generateRoute(RouteSettings settings) {

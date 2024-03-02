@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'doctordashboarduser_view.dart'; // Make sure the import path is correct
-import '../widgets/dashboard_header.dart'; // Adjust the path as necessary
+import 'package:senior_design/views/widgets/dashboard_header.dart'; // Adjust the path as necessary
 
 class SearchPage extends StatefulWidget {
   const SearchPage({Key? key}) : super(key: key);
@@ -12,7 +12,7 @@ class SearchPage extends StatefulWidget {
 class _SearchPageState extends State<SearchPage> {
   final TextEditingController _searchController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
-  List<String> _allPatients = [
+  final List<String> _allPatients = [
     // Your list of patients
     'Alex Johnson',
     'Amelia Earhart',
@@ -65,7 +65,11 @@ class _SearchPageState extends State<SearchPage> {
 
   void _onSearchChanged() {
     setState(() {
-      _filteredPatients = _allPatients.where((patient) => patient.toLowerCase().contains(_searchController.text.toLowerCase())).toList();
+      _filteredPatients = _allPatients
+          .where((patient) => patient
+              .toLowerCase()
+              .contains(_searchController.text.toLowerCase()))
+          .toList();
     });
   }
 
@@ -77,12 +81,20 @@ class _SearchPageState extends State<SearchPage> {
         mainAxisSize: MainAxisSize.min,
         children: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').map((String letter) {
           return GestureDetector(
-            child: Text(letter, style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.blue)),
+            child: Text(letter,
+                style: const TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.blue)),
             onTap: () {
-              int index = _filteredPatients.indexWhere((patient) => patient.toUpperCase().startsWith(letter));
+              int index = _filteredPatients.indexWhere(
+                  (patient) => patient.toUpperCase().startsWith(letter));
               if (index != -1) {
-                double position = index * 60.0; // You may need to adjust this value
-                _scrollController.animateTo(position, duration: Duration(milliseconds: 500), curve: Curves.easeIn);
+                double position =
+                    index * 60.0; // You may need to adjust this value
+                _scrollController.animateTo(position,
+                    duration: const Duration(milliseconds: 500),
+                    curve: Curves.easeIn);
               }
             },
           );
@@ -105,19 +117,23 @@ class _SearchPageState extends State<SearchPage> {
                     alignment: Alignment.centerLeft,
                     child: DashboardHeader(),
                   ),
-                  SizedBox(height: 20.0), // Add small space between header and search bar
+                  const SizedBox(
+                      height:
+                          20.0), // Add small space between header and search bar
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8.0),
                     child: TextField(
                       controller: _searchController,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         labelText: 'Search Patients',
-                        border: const OutlineInputBorder(),
-                        suffixIcon: const Icon(Icons.search),
+                        border: OutlineInputBorder(),
+                        suffixIcon: Icon(Icons.search),
                       ),
                     ),
                   ),
-                  SizedBox(height: 15.0), // Add small space between header and search bar
+                  const SizedBox(
+                      height:
+                          15.0), // Add small space between header and search bar
                   Expanded(
                     child: ListView.separated(
                       controller: _scrollController,
@@ -126,10 +142,15 @@ class _SearchPageState extends State<SearchPage> {
                         final patient = _filteredPatients[index];
                         return ListTile(
                           title: Text(patient),
-                          onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => UserDetailPage(userName: patient))),
+                          onTap: () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      UserDetailPage(userName: patient))),
                         );
                       },
-                      separatorBuilder: (context, index) => Divider(), // Add horizontal line between each item
+                      separatorBuilder: (context, index) =>
+                          const Divider(), // Add horizontal line between each item
                     ),
                   ),
                 ],
