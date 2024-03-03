@@ -204,4 +204,8 @@ class UserViewModel with ChangeNotifier {
     return await _fireStoreRepository.fetchWorkoutDataWithTime(
         user, earliestTs, latestTs);
   }
+
+  Future<List<String>> fetchAllPatients() async {
+    return await _fireStoreRepository.fetchAllPatients(user);
+  }
 }

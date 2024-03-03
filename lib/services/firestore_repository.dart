@@ -79,4 +79,18 @@ class FireStoreRepository {
     );
     return workoutData;
   }
+
+  Future<List<String>> fetchAllPatients(User user) async {
+    List<String> patients = [];
+    DocumentSnapshot documentSnapshot =
+        await _firestore.collection("patients").doc(user.email).get();
+    if (documentSnapshot.exists) {
+      Map<String, dynamic> data =
+          documentSnapshot.data() as Map<String, dynamic>;
+      for (var element in data["patients"]) {
+        patients.add(element.toString());
+      }
+    }
+    return patients;
+  }
 }
