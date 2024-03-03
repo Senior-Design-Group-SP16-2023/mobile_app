@@ -51,7 +51,9 @@ class RecentActivity extends StatelessWidget {
                           Row(
                             children: [
                               Text(
-                                "${data[0]['timestamp']}",
+                                data.isNotEmpty
+                                    ? "${data[0]['timestamp']}"
+                                    : "",
                                 style: const TextStyle(
                                   fontSize: 14, // Adjust font size as needed
                                   color: Colors
@@ -80,7 +82,10 @@ class RecentActivity extends StatelessWidget {
                                   style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       color: Colors.blue)),
-                              Text("${data[0]['accuracy']}%",
+                              Text(
+                                  data.isNotEmpty
+                                      ? "${data[0]['accuracy']}%"
+                                      : "",
                                   style: const TextStyle(
                                       fontSize: 18, color: Colors.black)),
                             ],
@@ -96,7 +101,10 @@ class RecentActivity extends StatelessWidget {
                                   style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       color: Colors.blue)),
-                              Text('${data[0]['duration']} min',
+                              Text(
+                                  data.isNotEmpty
+                                      ? '${data[0]['duration']} min'
+                                      : "",
                                   style: const TextStyle(
                                       fontSize: 18, color: Colors.black)),
                             ],
@@ -106,14 +114,14 @@ class RecentActivity extends StatelessWidget {
                             width: 1,
                             color: Colors.grey,
                           ),
-                          const Column(
+                          Column(
                             children: <Widget>[
-                              Text('Status',
+                              const Text('Status',
                                   style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       color: Colors.blue)),
-                              Text('Yes',
-                                  style: TextStyle(
+                              Text(data.isNotEmpty ? 'Yes' : "",
+                                  style: const TextStyle(
                                       fontSize: 18, color: Colors.black)),
                             ],
                           ),
