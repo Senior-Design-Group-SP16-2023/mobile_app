@@ -3,7 +3,8 @@ import 'doctordashboarduser_view.dart'; // Make sure the import path is correct
 import 'package:senior_design/views/widgets/dashboard_header.dart'; // Adjust the path as necessary
 
 class SearchPage extends StatefulWidget {
-  const SearchPage({Key? key}) : super(key: key);
+  final List<String> patientNames;
+  const SearchPage({Key? key, required this.patientNames}) : super(key: key);
 
   @override
   _SearchPageState createState() => _SearchPageState();
@@ -12,46 +13,14 @@ class SearchPage extends StatefulWidget {
 class _SearchPageState extends State<SearchPage> {
   final TextEditingController _searchController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
-  final List<String> _allPatients = [
-    // Your list of patients
-    'Alex Johnson',
-    'Amelia Earhart',
-    'Bradley Hughes',
-    'Catherine Smith',
-    'Charlie Brown',
-    'Dennis Brown',
-    'Emily Davis',
-    'Ethan Hunt',
-    'Fiona Wilson',
-    'George Clark',
-    'Hannah Miller',
-    'Ian Moore',
-    'Isabella Wright',
-    'Julie Taylor',
-    'Jack Sparrow',
-    'Kevin White',
-    'Liam Neeson',
-    'Mia Wong',
-    'Nathan Drake',
-    'Olivia Smith',
-    'Pamela Jones',
-    'Quentin Tarantino',
-    'Rachel Green',
-    'Steven King',
-    'Tom Holland',
-    'Ursula Monroe',
-    'Vivian Darkbloom',
-    'Walter White',
-    'Xander Cage',
-    'Yvonne Strahovski',
-    'Zachary Levi',
-  ];
+  List<String> _allPatients = [];
 
   List<String> _filteredPatients = [];
 
   @override
   void initState() {
     super.initState();
+    _allPatients = widget.patientNames;
     _filteredPatients = _allPatients;
     _searchController.addListener(_onSearchChanged);
   }

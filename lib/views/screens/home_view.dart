@@ -78,7 +78,19 @@ class _HomeViewState extends State<HomeView> {
               offstage: index != 0,
               child: TickerMode(
                 enabled: index == 0,
-                child: const MaterialApp(home: SearchPage()),
+                child: MaterialApp(
+                  home: FutureBuilder(
+                      future: userViewModel.fetchAllPatients(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState == ConnectionState.done &&
+                            snapshot.hasData) {
+                          return SearchPage(patientNames: snapshot.data!);
+                        } else if (snapshot.hasError) {
+                          return Text("Error ${snapshot.error}");
+                        }
+                        return const CircularProgressIndicator();
+                      }),
+                ),
               ),
             ),
             Offstage(

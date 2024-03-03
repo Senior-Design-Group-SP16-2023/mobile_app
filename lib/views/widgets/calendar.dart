@@ -163,7 +163,6 @@ class _CalendarWidgetState extends State<CalendarWidget> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(builder: (context) {
-                              //widget.userViewModel.fetchWorkoutDataWithTime(selectedDay, latestTs);
                               return WorkoutDetailsView(
                                   selectedDay: selectedDay, workouts: items);
                             }),
