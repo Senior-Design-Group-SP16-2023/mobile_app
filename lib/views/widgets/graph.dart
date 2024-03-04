@@ -5,9 +5,13 @@ import 'package:senior_design/view_models/user_view_model.dart';
 class RecentActivityGraphWidget extends StatefulWidget {
   final UserViewModel userViewModel;
   final List<Map<String, dynamic>> data;
+  final String userName;
 
   const RecentActivityGraphWidget(
-      {super.key, required this.data, required this.userViewModel});
+      {super.key,
+      required this.data,
+      required this.userViewModel,
+      this.userName = ''});
 
   @override
   State<RecentActivityGraphWidget> createState() =>
@@ -163,7 +167,8 @@ class _RecentActivityGraphWidgetState extends State<RecentActivityGraphWidget> {
     int numWorkouts = newValue != "All"
         ? int.parse(newValue)
         : -1; // This might not be the best
-    var data = await widget.userViewModel.fetchWorkoutData(numWorkouts);
+    var data = await widget.userViewModel
+        .fetchWorkoutData(numWorkouts, widget.userName);
     setState(() {
       dropDownValue = newValue;
       workoutData = data;

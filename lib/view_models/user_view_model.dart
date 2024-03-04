@@ -170,16 +170,26 @@ class UserViewModel with ChangeNotifier {
     setUser(user);
   }
 
-  Future<List<Map<String, dynamic>>> fetchWorkoutData(
-      int numberOfWorkouts) async {
+  Future<User> returnUserFromFireStore(String email) async {
+    User user = await _fireStoreRepository.fetchUser(email);
+    return user;
+  }
+
+  Future<List<Map<String, dynamic>>> fetchWorkoutData(int numberOfWorkouts,
+      [String? email]) async {
+    User inputUser = user;
+    if (email != null) {
+      inputUser = await returnUserFromFireStore(email);
+    }
     numberOfWorkouts =
-        (numberOfWorkouts != -1 ? numberOfWorkouts : user.totalWorkouts)!;
+        (numberOfWorkouts != -1 ? numberOfWorkouts : inputUser.totalWorkouts)!;
     return await _fireStoreRepository.fetchWorkoutDataWithId(
-        user, numberOfWorkouts);
+        inputUser, numberOfWorkouts);
   }
 
   Future<List<DateTime>> fetchWorkoutsInMonth(
-      DateTime earliestTs, DateTime latestTs) async {
+      DateTime earliestTs, DateTime latestTs,
+      [String? email]) async {
     DateTime now = DateTime.now();
     if (earliestTs.isAfter(now)) {
       return [];
@@ -188,12 +198,13 @@ class UserViewModel with ChangeNotifier {
         ? DateTime.now()
         : latestTs; // Check if the given variable is valid
     var workouts = await _fireStoreRepository.fetchWorkoutDataWithTime(
-        user, earliestTs, latestTs);
+        email ?? user.email!, earliestTs, latestTs);
     return workouts.map((map) => map['timestamp'] as DateTime).toSet().toList();
   }
 
   Future<List<Map<String, dynamic>>> fetchWorkoutsInDay(
-      DateTime earliestTs, DateTime latestTs) async {
+      DateTime earliestTs, DateTime latestTs,
+      [String? email]) async {
     DateTime now = DateTime.now();
     if (earliestTs.isAfter(now)) {
       return [];
@@ -202,7 +213,7 @@ class UserViewModel with ChangeNotifier {
         ? DateTime.now()
         : latestTs; // Check if the given variable is valid
     return await _fireStoreRepository.fetchWorkoutDataWithTime(
-        user, earliestTs, latestTs);
+        email ?? user.email!, earliestTs, latestTs);
   }
 
   Future<List<String>> fetchAllPatients() async {

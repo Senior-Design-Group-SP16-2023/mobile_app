@@ -54,12 +54,12 @@ class FireStoreRepository {
   }
 
   Future<List<Map<String, dynamic>>> fetchWorkoutDataWithTime(
-      User user, DateTime earliestTs, DateTime latestTs) async {
+      String email, DateTime earliestTs, DateTime latestTs) async {
     List<Map<String, dynamic>> workoutData = [];
 
     await _firestore
         .collection("workouts")
-        .doc(user.email)
+        .doc(email)
         .collection("data")
         .where('timestamp', isGreaterThanOrEqualTo: earliestTs)
         .where('timestamp', isLessThan: latestTs)
