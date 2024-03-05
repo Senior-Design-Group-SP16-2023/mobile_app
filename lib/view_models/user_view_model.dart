@@ -170,16 +170,13 @@ class UserViewModel with ChangeNotifier {
     setUser(user);
   }
 
-  Future<User> returnUserFromFireStore(String email) async {
-    User user = await _fireStoreRepository.fetchUser(email);
-    return user;
-  }
-
   Future<List<Map<String, dynamic>>> fetchWorkoutData(int numberOfWorkouts,
       [String? email]) async {
-    User inputUser = user;
-    if (email != null) {
-      inputUser = await returnUserFromFireStore(email);
+    User inputUser;
+    if(email == null || email.isEmpty){
+      inputUser = user;
+    }else{
+      inputUser = await _fireStoreRepository.fetchUser(email);
     }
     numberOfWorkouts =
         (numberOfWorkouts != -1 ? numberOfWorkouts : inputUser.totalWorkouts)!;
@@ -194,11 +191,17 @@ class UserViewModel with ChangeNotifier {
     if (earliestTs.isAfter(now)) {
       return [];
     }
+    String? fetchEmail = "";
+    if(email == null || email.isEmpty){
+      fetchEmail = user.email;
+    }else{
+      fetchEmail = email;
+    }
     latestTs = latestTs.isAfter(DateTime.now())
         ? DateTime.now()
         : latestTs; // Check if the given variable is valid
     var workouts = await _fireStoreRepository.fetchWorkoutDataWithTime(
-        email ?? user.email!, earliestTs, latestTs);
+        fetchEmail!, earliestTs, latestTs);
     return workouts.map((map) => map['timestamp'] as DateTime).toSet().toList();
   }
 
@@ -209,11 +212,17 @@ class UserViewModel with ChangeNotifier {
     if (earliestTs.isAfter(now)) {
       return [];
     }
+    String? fetchEmail = "";
+    if(email == null || email.isEmpty){
+      fetchEmail = user.email;
+    }else{
+      fetchEmail = email;
+    }
     latestTs = latestTs.isAfter(DateTime.now())
         ? DateTime.now()
         : latestTs; // Check if the given variable is valid
     return await _fireStoreRepository.fetchWorkoutDataWithTime(
-        email ?? user.email!, earliestTs, latestTs);
+        fetchEmail!, earliestTs, latestTs);
   }
 
   Future<List<String>> fetchAllPatients() async {
