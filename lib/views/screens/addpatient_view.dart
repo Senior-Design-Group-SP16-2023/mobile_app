@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:provider/provider.dart';
+import 'package:senior_design/view_models/user_view_model.dart';
 
 class AddPatientView extends HookWidget {
   const AddPatientView({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final userViewModel = Provider.of<UserViewModel>(context);
     final firstNameController = useTextEditingController();
     final lastNameController = useTextEditingController();
     final emailController = useTextEditingController();
@@ -57,7 +60,13 @@ class AddPatientView extends HookWidget {
                 const SizedBox(height: 20.0),
                 ElevatedButton(
                   onPressed: () {
-                    // Implement the logic for adding a patient here
+                    userViewModel
+                        .addPatient(emailController.text)
+                        .then((String message) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text(message)),
+                      );
+                    });
                   },
                   style: ElevatedButton.styleFrom(
                     shape: RoundedRectangleBorder(

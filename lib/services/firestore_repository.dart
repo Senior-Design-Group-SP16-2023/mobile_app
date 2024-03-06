@@ -93,4 +93,46 @@ class FireStoreRepository {
     }
     return patients;
   }
+
+  Future<String> addPatient(String patientEmail, User doctor) async {
+    String message = "";
+    //Check if the given patient exists as a user
+    DocumentSnapshot patientSnapshot =
+        await _firestore.collection("users").doc(patientEmail).get();
+    if (patientSnapshot.exists) {
+      //Check if the given patient is a patient
+      bool? isPatient = patientSnapshot["isPatient"];
+      if(!isPatient!){
+        message = "Given user is not a patient.";
+      }else {
+        //Check if the doctor has any patients
+        DocumentSnapshot doctorSnapshot =
+        await _firestore.collection("patients").doc(doctor.email).get();
+        if (doctorSnapshot.exists) {
+          var patients =
+          List.from(doctorSnapshot.get("patients") as List<dynamic>);
+          //Check if the given patient is already a patient of the doctor
+          if (patients.contains(patientEmail)) {
+            message = "Patient already added.";
+          } else {
+            patients.add(patientEmail);
+            await _firestore
+                .collection("patients")
+                .doc(doctor.email)
+                .update({"patients": patients});
+            message = "Patient added.";
+          }
+        } else {
+          Map<String, dynamic> data = {
+            "patients": [patientEmail]
+          };
+          await _firestore.collection("patients").doc(doctor.email).set(data);
+          message = "Patient added.";
+        }
+      }
+    } else {
+      message = "Given patient does not exist.";
+    }
+    return message;
+  }
 }

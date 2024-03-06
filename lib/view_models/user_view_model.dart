@@ -173,9 +173,9 @@ class UserViewModel with ChangeNotifier {
   Future<List<Map<String, dynamic>>> fetchWorkoutData(int numberOfWorkouts,
       [String? email]) async {
     User inputUser;
-    if(email == null || email.isEmpty){
+    if (email == null || email.isEmpty) {
       inputUser = user;
-    }else{
+    } else {
       inputUser = await _fireStoreRepository.fetchUser(email);
     }
     numberOfWorkouts =
@@ -192,9 +192,9 @@ class UserViewModel with ChangeNotifier {
       return [];
     }
     String? fetchEmail = "";
-    if(email == null || email.isEmpty){
+    if (email == null || email.isEmpty) {
       fetchEmail = user.email;
-    }else{
+    } else {
       fetchEmail = email;
     }
     latestTs = latestTs.isAfter(DateTime.now())
@@ -213,9 +213,9 @@ class UserViewModel with ChangeNotifier {
       return [];
     }
     String? fetchEmail = "";
-    if(email == null || email.isEmpty){
+    if (email == null || email.isEmpty) {
       fetchEmail = user.email;
-    }else{
+    } else {
       fetchEmail = email;
     }
     latestTs = latestTs.isAfter(DateTime.now())
@@ -227,5 +227,9 @@ class UserViewModel with ChangeNotifier {
 
   Future<List<String>> fetchAllPatients() async {
     return await _fireStoreRepository.fetchAllPatients(user);
+  }
+
+  Future<String> addPatient(String patientEmail) async {
+    return await _fireStoreRepository.addPatient(patientEmail, user);
   }
 }
