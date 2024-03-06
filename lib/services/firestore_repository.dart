@@ -102,15 +102,15 @@ class FireStoreRepository {
     if (patientSnapshot.exists) {
       //Check if the given patient is a patient
       bool? isPatient = patientSnapshot["isPatient"];
-      if(!isPatient!){
+      if (!isPatient!) {
         message = "Given user is not a patient.";
-      }else {
+      } else {
         //Check if the doctor has any patients
         DocumentSnapshot doctorSnapshot =
-        await _firestore.collection("patients").doc(doctor.email).get();
+            await _firestore.collection("patients").doc(doctor.email).get();
         if (doctorSnapshot.exists) {
           var patients =
-          List.from(doctorSnapshot.get("patients") as List<dynamic>);
+              List.from(doctorSnapshot.get("patients") as List<dynamic>);
           //Check if the given patient is already a patient of the doctor
           if (patients.contains(patientEmail)) {
             message = "Patient already added.";
