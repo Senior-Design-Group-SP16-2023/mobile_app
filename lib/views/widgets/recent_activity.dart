@@ -58,14 +58,6 @@ class RecentActivity extends StatelessWidget {
                                       .black, // Adjust text color as needed
                                 ),
                               ),
-                              const SizedBox(width: 4),
-                              const Icon(
-                                Icons
-                                    .arrow_forward_ios, // Right-pointing arrow icon
-                                size: 20, // Adjust icon size as needed
-                                color:
-                                    Colors.black, // Adjust icon color as needed
-                              ),
                             ],
                           ),
                         ],
