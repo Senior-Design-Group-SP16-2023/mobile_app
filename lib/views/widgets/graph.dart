@@ -88,14 +88,16 @@ class _RecentActivityGraphWidgetState extends State<RecentActivityGraphWidget> {
                     height: 200,
                     child: LineChart(
                       LineChartData(
-                        minY: ((workoutData.reduce((a, b) =>
-                                            a['accuracy'] < b['accuracy']
-                                                ? a
-                                                : b)['accuracy'] as num)
-                                        .toDouble() /
-                                    10)
-                                .floor() *
-                            10,
+                        minY: workoutData.isNotEmpty
+                            ? ((workoutData.reduce((a, b) =>
+                                                a['accuracy'] < b['accuracy']
+                                                    ? a
+                                                    : b)['accuracy'] as num)
+                                            .toDouble() /
+                                        10)
+                                    .floor() *
+                                10
+                            : 0,
                         maxY: 100, // Set maximum y-value to include 100
                         gridData: FlGridData(
                           show: true,
@@ -106,7 +108,7 @@ class _RecentActivityGraphWidgetState extends State<RecentActivityGraphWidget> {
                         titlesData: FlTitlesData(
                           bottomTitles: AxisTitles(
                             sideTitles: SideTitles(
-                              showTitles: true,
+                              showTitles: workoutData.isNotEmpty ? true : false,
                               reservedSize: 22,
                               interval: 1,
                               getTitlesWidget: (value, meta) {
