@@ -102,7 +102,7 @@ class FireStoreRepository {
     if (patientSnapshot.exists) {
       //Check if the given patient is a valid patient (a patient who completed signup)
       bool? isPatientValid = patientSnapshot["isPatient"] && patientSnapshot["completedSignUp"];
-      if (!isPatientValid!) {
+      if (!isPatientValid) {
         message = "Given user is not a valid patient.";
       } else {
         //Check if the doctor has any patients
