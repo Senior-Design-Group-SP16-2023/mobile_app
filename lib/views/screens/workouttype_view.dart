@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:senior_design/views/screens/workoutstart_view.dart';
+import 'package:senior_design/views/screens/test_workout.dart';
 
 class WorkoutTypeView extends StatefulWidget {
   const WorkoutTypeView({Key? key}) : super(key: key);
@@ -45,7 +45,7 @@ class _WorkoutTypeViewState extends State<WorkoutTypeView> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => const WorkoutStartView()),
+                      builder: (context) => const TestWorkout()),
                 );
               }, // Increase font size
               style: ElevatedButton.styleFrom(
@@ -68,7 +68,7 @@ class _WorkoutTypeViewState extends State<WorkoutTypeView> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => const WorkoutStartView()),
+                      builder: (context) => const TestWorkout()),
                 );
               },
               style: ElevatedButton.styleFrom(
