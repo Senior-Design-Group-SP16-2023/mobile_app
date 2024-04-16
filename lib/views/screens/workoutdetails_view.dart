@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-// 1. Workout Day and Time Widget
+// Workout Day and Time Widget
 class WorkoutDayAndTimeCard extends StatelessWidget {
   final DateTime dayAndTime;
 
@@ -11,7 +11,7 @@ class WorkoutDayAndTimeCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final String formattedDate =
-        DateFormat('MMMM d, y (h:mm a)').format(dayAndTime);
+    DateFormat('MMMM d, y (h:mm a)').format(dayAndTime);
     return Card(
       margin: const EdgeInsets.all(8.0),
       shape: RoundedRectangleBorder(
@@ -32,13 +32,10 @@ class WorkoutDayAndTimeCard extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(
-                height: 16), // Adjust space between title and date as needed
+            const SizedBox(height: 16),
             Text(
               formattedDate,
-              style: const TextStyle(
-                  fontSize: 22,
-                  color: Colors.blue), // Use a larger font size for the date
+              style: const TextStyle(fontSize: 22, color: Colors.blue),
             ),
           ],
         ),
@@ -47,7 +44,7 @@ class WorkoutDayAndTimeCard extends StatelessWidget {
   }
 }
 
-// 2. Workout Duration Widget
+// Workout Duration Widget
 class WorkoutDurationCard extends StatelessWidget {
   final int duration; // Duration in minutes
 
@@ -88,7 +85,7 @@ class WorkoutDurationCard extends StatelessWidget {
   }
 }
 
-// 3. Workout Type Widget
+// Workout Type Widget
 class WorkoutTypeCard extends StatelessWidget {
   final String type;
 
@@ -128,7 +125,7 @@ class WorkoutTypeCard extends StatelessWidget {
   }
 }
 
-// 4. Workout Accuracy Widget
+// Workout Accuracy Widget
 class WorkoutAccuracyCard extends StatelessWidget {
   final int accuracy; // Accuracy in percentage
 
@@ -169,6 +166,131 @@ class WorkoutAccuracyCard extends StatelessWidget {
   }
 }
 
+// New Widget for Number of Reps
+class WorkoutRepsCard extends StatelessWidget {
+  final int numberOfReps;
+
+  const WorkoutRepsCard({Key? key, required this.numberOfReps})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      margin: const EdgeInsets.all(8.0),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Row(
+              children: [
+                Icon(Icons.fitness_center, color: Colors.black),
+                SizedBox(width: 8),
+                Text(
+                  'Number of Reps',
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                ),
+              ],
+            ),
+            const SizedBox(height: 16),
+            Text(
+              '$numberOfReps',
+              style: const TextStyle(fontSize: 22, color: Colors.blue),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+// New Widget for Good/Bad Reps
+class WorkoutGoodBadRepsCard extends StatelessWidget {
+  final int goodReps;
+  final int badReps;
+
+  const WorkoutGoodBadRepsCard({Key? key, required this.goodReps, required this.badReps})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      margin: const EdgeInsets.all(8.0),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Row(
+              children: [
+                Icon(Icons.thumbs_up_down, color: Colors.black),
+                SizedBox(width: 8),
+                Text(
+                  'Good/Bad Reps',
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                ),
+              ],
+            ),
+            const SizedBox(height: 16),
+            Text(
+              '$goodReps/$badReps',
+              style: const TextStyle(fontSize: 22, color: Colors.blue),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+// New Widget for Average Duration
+class WorkoutAverageDurationCard extends StatelessWidget {
+  final double averageDuration;
+
+  const WorkoutAverageDurationCard({Key? key, required this.averageDuration})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      margin: const EdgeInsets.all(8.0),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Row(
+              children: [
+                Icon(Icons.timer, color: Colors.black),
+                SizedBox(width: 8),
+                Text(
+                  'Average Duration',
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                ),
+              ],
+            ),
+            const SizedBox(height: 16),
+            Text(
+              '${averageDuration.toStringAsFixed(2)} minutes',
+              style: const TextStyle(fontSize: 22, color: Colors.blue),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+// Main View to Combine All Cards
 class WorkoutDetailsView extends StatelessWidget {
   final DateTime selectedDay;
   final List<Map<String, dynamic>> workouts;
@@ -179,11 +301,15 @@ class WorkoutDetailsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // CHANGE HERE!!!!
-    final int workoutDuration = workouts[0]['duration']; // in minutes
-    const String workoutType = "Bicep Curl";
-    final int workoutAccuracy = workouts[0]['accuracy']; // in percentage
-    final DateTime workoutTime = workouts[0]['timestamp'];
+    // Safely extract workout details with default values for potential nulls
+    final int workoutDuration = workouts[0]['duration'] ?? 0;  // Default to 0 if null
+    const String workoutType = "Bicep Curl";  // Assuming type is always provided
+    final int workoutAccuracy = workouts[0]['accuracy'] ?? 100;  // Default to 100 if null
+    final DateTime workoutTime = workouts[0]['timestamp'] ?? DateTime.now();  // Default to current time if null
+    final int numberOfReps = workouts[0]['reps'] ?? 0;  // Default to 0 if null
+    final int goodReps = workouts[0]['goodReps'] ?? 0;  // Default to 0 if null
+    final int badReps = workouts[0]['badReps'] ?? 0;  // Default to 0 if null
+    final double averageDuration = workouts[0]['averageDuration']?.toDouble() ?? 0.0;  // Default to 0.0 if null
 
     return Scaffold(
       appBar: AppBar(
@@ -207,10 +333,13 @@ class WorkoutDetailsView extends StatelessWidget {
               style: TextStyle(fontSize: 35.0, fontWeight: FontWeight.bold),
             ),
           ),
+          WorkoutTypeCard(type: workoutType),
           WorkoutDayAndTimeCard(dayAndTime: workoutTime),
           WorkoutDurationCard(duration: workoutDuration),
-          const WorkoutTypeCard(type: workoutType),
           WorkoutAccuracyCard(accuracy: workoutAccuracy),
+          WorkoutRepsCard(numberOfReps: numberOfReps),
+          WorkoutGoodBadRepsCard(goodReps: goodReps, badReps: badReps),
+          WorkoutAverageDurationCard(averageDuration: averageDuration),
         ],
       ),
     );

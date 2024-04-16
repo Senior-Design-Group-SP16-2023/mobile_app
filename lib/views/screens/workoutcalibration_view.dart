@@ -9,6 +9,10 @@ class WorkoutCalibrateView extends StatefulWidget {
 }
 
 class _WorkoutCalibrationViewState extends State<WorkoutCalibrateView> {
+  bool _isStartEnabled = true;
+  bool _isEndEnabled = false;
+  bool _isNextEnabled = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,25 +42,70 @@ class _WorkoutCalibrationViewState extends State<WorkoutCalibrateView> {
           instructionStep('1', 'Place Device(s) on Arm'),
           instructionStep('2', 'Rest Arm by Side in Natural Position'),
           instructionStep('3', 'Grab Dumbell Weight in Arm'),
-          const SizedBox(
-              height:
-                  20.0), // Space between the last instruction and the Next button
+          const SizedBox(height: 20.0),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 20.0, right: 10.0),
+                  child: ElevatedButton(
+                    onPressed: _isStartEnabled ? () {
+                      setState(() {
+                        _isStartEnabled = false;
+                        _isEndEnabled = true;
+                      });
+                    } : null,
+                    style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      padding: const EdgeInsets.symmetric(vertical: 15.0),
+                      minimumSize: const Size(100, 60),
+                    ),
+                    child: const Text('Start', style: TextStyle(fontSize: 18)),
+                  ),
+                ),
+              ),
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 10.0, right: 20.0),
+                  child: ElevatedButton(
+                    onPressed: _isEndEnabled ? () {
+                      setState(() {
+                        _isEndEnabled = false;
+                        _isNextEnabled = true;
+                      });
+                    } : null,
+                    style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      padding: const EdgeInsets.symmetric(vertical: 15.0),
+                      minimumSize: const Size(100, 60),
+                    ),
+                    child: const Text('End', style: TextStyle(fontSize: 18)),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 40.0), // Increased space between 'End' and 'Next'
           Center(
             child: ElevatedButton(
-              onPressed: () {
+              onPressed: _isNextEnabled ? () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
                       builder: (context) => const WorkoutTypeView()),
                 );
-              }, // Increase font size
+              } : null,
               style: ElevatedButton.styleFrom(
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(15),
                 ),
-                padding: const EdgeInsets.symmetric(
-                    vertical: 15.0), // Increase button padding
-                minimumSize: const Size(300, 60), // Increase button size
+                padding: const EdgeInsets.symmetric(vertical: 15.0),
+                minimumSize: const Size(300, 60),
               ),
               child: const Text('Next', style: TextStyle(fontSize: 18)),
             ),

@@ -33,19 +33,15 @@ class _RecentActivityGraphWidgetState extends State<RecentActivityGraphWidget> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(10, 20, 10, 0),
-      child: Align(
-        alignment: Alignment.topCenter,
+      child: Card(
+        elevation: 5, // Adds shadow similar to the RecentActivity card
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10), // Rounded corners
+        ),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(10),
           child: Container(
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(10),
-              border: Border.all(
-                color: Colors.white.withOpacity(0.2),
-                width: 1.0,
-              ),
-            ),
+            color: Colors.white,
             child: Padding(
               padding: const EdgeInsets.all(16.0),
               child: Column(
@@ -65,22 +61,23 @@ class _RecentActivityGraphWidgetState extends State<RecentActivityGraphWidget> {
                         ),
                       ),
                       Expanded(
-                          child: Align(
-                        alignment: Alignment.centerRight,
-                        child: DropdownButton<String>(
-                          value: dropDownValue,
-                          icon: const Icon(Icons.keyboard_arrow_down),
-                          items: allValues.map((String val) {
-                            return DropdownMenuItem(
-                              value: val,
-                              child: Text(val),
-                            );
-                          }).toList(),
-                          onChanged: (String? newValue) {
-                            updateData(newValue!);
-                          },
+                        child: Align(
+                          alignment: Alignment.centerRight,
+                          child: DropdownButton<String>(
+                            value: dropDownValue,
+                            icon: const Icon(Icons.keyboard_arrow_down),
+                            items: allValues.map((String val) {
+                              return DropdownMenuItem(
+                                value: val,
+                                child: Text(val),
+                              );
+                            }).toList(),
+                            onChanged: (String? newValue) {
+                              updateData(newValue!);
+                            },
+                          ),
                         ),
-                      ))
+                      ),
                     ],
                   ),
                   const SizedBox(height: 25),

@@ -70,6 +70,8 @@ flutter:
   assets:
     - lib/views/widgets/backgrounds/loginBackground.png
     - lib/views/widgets/backgrounds/pageBackground.png
+    - lib/views/widgets/backgrounds/workoutImage.png
+
 
   # To add assets to your application, add an assets section, like this:
   # assets:

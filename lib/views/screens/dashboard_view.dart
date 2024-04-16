@@ -26,7 +26,6 @@ class _DashboardViewState extends State<DashboardView> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // insert a space between the top of the screen and the content
-              const SizedBox(height: 50),
               DashboardHeader(),
               FutureBuilder(
                   future: userViewModel.fetchWorkoutData(1),
