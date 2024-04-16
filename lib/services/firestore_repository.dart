@@ -35,7 +35,8 @@ class FireStoreRepository {
       (snapshot) {
         for (var docSnapshot in snapshot.docs) {
           DateTime dateTime = docSnapshot.data()['timestamp'].toDate();
-          String formattedDate = DateFormat("MMM d yyyy (h:mm a)").format(dateTime);
+          String formattedDate =
+              DateFormat("MMM d yyyy (h:mm a)").format(dateTime);
 
           workoutData.add({
             "accuracy": docSnapshot.data()['accuracy'],
@@ -101,7 +102,8 @@ class FireStoreRepository {
         await _firestore.collection("users").doc(patientEmail).get();
     if (patientSnapshot.exists) {
       //Check if the given patient is a valid patient (a patient who completed signup)
-      bool? isPatientValid = patientSnapshot["isPatient"] && patientSnapshot["completedSignUp"];
+      bool? isPatientValid =
+          patientSnapshot["isPatient"] && patientSnapshot["completedSignUp"];
       if (!isPatientValid) {
         message = "Given user is not a valid patient.";
       } else {
@@ -134,5 +136,22 @@ class FireStoreRepository {
       message = "Given patient does not exist.";
     }
     return message;
+  }
+
+  Future<void> addNewWorkout(
+      User user, int workoutNum, Map<String, dynamic> workoutDetails) {
+    DocumentReference doc_ref = _firestore
+        .collection('workouts')
+        .doc(user.email)
+        .collection('data')
+        .doc("workout_$workoutNum");
+    return doc_ref.set({
+      'accuracy': workoutDetails['accuracy'],
+      'duration': workoutDetails['duration'],
+      'timestamp': workoutDetails['timestamp'],
+      'numberOfReps': workoutDetails['numberOfReps'],
+      'repList': workoutDetails['repList'],
+      'workout_id': workoutNum
+    });
   }
 }

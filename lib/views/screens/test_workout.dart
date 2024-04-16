@@ -22,14 +22,28 @@ class _WorkoutViewState extends State<TestWorkout> {
           Center(
             child: ElevatedButton(
               onPressed: () {
-                // Assume you somehow store the data in Firestore
-                triggerRegularProcessing(userViewModel.user.email!,
-                        userViewModel.user.totalWorkouts! + 1)
+                // Collect data from Bluetooth
+                // Measure the time between start and stop
+                // Store the data in Firestore under most recent workout
+                triggerRegularProcessing(userViewModel.user.email!)
                     .then((accuracyList) {
-                  print(accuracyList);
-                  print(accuracyList.length);
-                  print((accuracyList.where((item) => item).length / accuracyList.length)*100);
-                  print(DateTime.now());
+                  // Increment number of workouts
+                  userViewModel
+                      .setTotalWorkouts(userViewModel.user.totalWorkouts! + 1);
+                  userViewModel.updateUserInFireStore();
+                  // Store the new workout in Firestore
+                  Map<String, dynamic> workoutDetails = {
+                    'accuracy': (accuracyList.where((item) => item).length /
+                            accuracyList.length) *
+                        100,
+                    'duration': 10, // CHANGE THIS
+                    'timestamp': DateTime.now(),
+                    'numberOfReps': accuracyList.length,
+                    'repList': accuracyList,
+                    'workout_id': userViewModel.user.totalWorkouts
+                  };
+                  userViewModel.addNewWorkout(
+                      userViewModel.user.totalWorkouts!, workoutDetails);
                 });
               },
               child: const Text('TEST'),
@@ -41,9 +55,9 @@ class _WorkoutViewState extends State<TestWorkout> {
   }
 }
 
-Future<List<dynamic>> triggerRegularProcessing(String email, int id) async {
+Future<List<dynamic>> triggerRegularProcessing(String email) async {
   var url = Uri.parse('https://regularprocessing-kykbcbmk5q-uc.a.run.app/');
-  var params = {'email': email, 'workout_num': id.toString()};
+  var params = {'email': email};
   final uri = Uri.parse(url.toString()).replace(queryParameters: params);
 
   try {

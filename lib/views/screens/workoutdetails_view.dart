@@ -130,7 +130,7 @@ class WorkoutTypeCard extends StatelessWidget {
 
 // 4. Workout Accuracy Widget
 class WorkoutAccuracyCard extends StatelessWidget {
-  final int accuracy; // Accuracy in percentage
+  final double accuracy; // Accuracy in percentage
 
   const WorkoutAccuracyCard({Key? key, required this.accuracy})
       : super(key: key);
@@ -182,7 +182,7 @@ class WorkoutDetailsView extends StatelessWidget {
     // CHANGE HERE!!!!
     final int workoutDuration = workouts[0]['duration']; // in minutes
     const String workoutType = "Bicep Curl";
-    final int workoutAccuracy = workouts[0]['accuracy']; // in percentage
+    final double workoutAccuracy = workouts[0]['accuracy']; // in percentage
     final DateTime workoutTime = workouts[0]['timestamp'];
 
     return Scaffold(

@@ -109,6 +109,11 @@ class UserViewModel with ChangeNotifier {
     notifyListeners();
   }
 
+  void setTotalWorkouts(int? totalWorkouts) {
+    _user.totalWorkouts = totalWorkouts;
+    notifyListeners();
+  }
+
   void setDoctorInfo(
       String? hospitalName,
       String? hospitalAddress,
@@ -231,5 +236,9 @@ class UserViewModel with ChangeNotifier {
 
   Future<String> addPatient(String patientEmail) async {
     return await _fireStoreRepository.addPatient(patientEmail, user);
+  }
+
+  void addNewWorkout(int workoutNum, Map<String, dynamic> workoutDetails) {
+    _fireStoreRepository.addNewWorkout(user, workoutNum, workoutDetails);
   }
 }
