@@ -154,7 +154,7 @@ class _CalendarWidgetState extends State<CalendarWidget> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) {
-                          return WorkoutDetailsView(selectedDay: selectedDay, workouts: items);
+                          return WorkoutDetailsView(workouts: items);
                         }),
                       );
                     });

@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'dart:async'; // Import this to use Timer
 
 class WorkoutStartView extends StatefulWidget {
-  const WorkoutStartView({Key? key}) : super(key: key);
+  final bool isGolden;
+  const WorkoutStartView({Key? key, required this.isGolden}) : super(key: key);
 
   @override
   State<WorkoutStartView> createState() => _WorkoutStartViewState();
@@ -14,7 +15,8 @@ class _WorkoutStartViewState extends State<WorkoutStartView> {
   bool _isRunning = false; // To track whether the stopwatch is running
 
   void _startTimer() {
-    if (_timer != null) _timer!.cancel(); // If there's an existing timer, cancel it
+    if (_timer != null)
+      _timer!.cancel(); // If there's an existing timer, cancel it
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       setState(() {
         _duration += const Duration(seconds: 1);
@@ -64,8 +66,13 @@ class _WorkoutStartViewState extends State<WorkoutStartView> {
             padding: const EdgeInsets.symmetric(vertical: 20.0),
             child: Center(
               child: Text(
-                _duration.toString().split('.').first.padLeft(8, "0"), // Display the stopwatch time
-                style: const TextStyle(fontSize: 32.0, fontWeight: FontWeight.bold),
+                _duration
+                    .toString()
+                    .split('.')
+                    .first
+                    .padLeft(8, "0"), // Display the stopwatch time
+                style: const TextStyle(
+                    fontSize: 32.0, fontWeight: FontWeight.bold),
               ),
             ),
           ),
@@ -76,7 +83,9 @@ class _WorkoutStartViewState extends State<WorkoutStartView> {
                 child: Padding(
                   padding: const EdgeInsets.only(left: 20.0, right: 10.0),
                   child: ElevatedButton(
-                    onPressed: !_isRunning ? _startTimer : null, // Start the timer if not already running
+                    onPressed: !_isRunning
+                        ? _startTimer
+                        : null, // Start the timer if not already running
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15),
@@ -92,7 +101,9 @@ class _WorkoutStartViewState extends State<WorkoutStartView> {
                 child: Padding(
                   padding: const EdgeInsets.only(left: 10.0, right: 20.0),
                   child: ElevatedButton(
-                    onPressed: _isRunning ? _stopTimer : null, // Stop the timer if running
+                    onPressed: _isRunning
+                        ? _stopTimer
+                        : null, // Stop the timer if running
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15),
@@ -109,10 +120,13 @@ class _WorkoutStartViewState extends State<WorkoutStartView> {
           const SizedBox(height: 40.0), // Space between buttons
           Center(
             child: ElevatedButton(
-              onPressed: !_isRunning && _duration != Duration.zero ? () {
-                // Proceed only if the timer is not running and has been started at least once
-                Navigator.of(context).pop(); // Example navigation, modify as needed
-              } : null,
+              onPressed: !_isRunning && _duration != Duration.zero
+                  ? () {
+                      // Proceed only if the timer is not running and has been started at least once
+                      Navigator.of(context)
+                          .pop(); // Example navigation, modify as needed
+                    }
+                  : null,
               style: ElevatedButton.styleFrom(
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(15),

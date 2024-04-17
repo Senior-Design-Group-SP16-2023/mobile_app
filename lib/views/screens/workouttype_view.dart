@@ -45,7 +45,8 @@ class _WorkoutTypeViewState extends State<WorkoutTypeView> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => const WorkoutStartView()),
+                      builder: (context) =>
+                          const WorkoutStartView(isGolden: true)),
                 );
               }, // Increase font size
               style: ElevatedButton.styleFrom(
@@ -68,7 +69,8 @@ class _WorkoutTypeViewState extends State<WorkoutTypeView> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => const WorkoutStartView()),
+                      builder: (context) =>
+                          const WorkoutStartView(isGolden: false)),
                 );
               },
               style: ElevatedButton.styleFrom(
