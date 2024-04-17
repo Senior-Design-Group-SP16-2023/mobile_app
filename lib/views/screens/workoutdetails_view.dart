@@ -254,8 +254,7 @@ class WorkoutGoodBadRepsCard extends StatelessWidget {
 class WorkoutDetailsView extends StatelessWidget {
   final List<Map<String, dynamic>> workouts;
 
-  const WorkoutDetailsView(
-      {Key? key, required this.workouts})
+  const WorkoutDetailsView({Key? key, required this.workouts})
       : super(key: key);
 
   @override
@@ -268,7 +267,7 @@ class WorkoutDetailsView extends StatelessWidget {
         workouts[0]['accuracy'] ?? 0; // Default to 100 if null
     final DateTime workoutTime = workouts[0]['timestamp'] ??
         DateTime.now(); // Default to current time if null
-    final int numberOfReps = workouts[0]['reps'] ?? 0; // Default to 0 if null
+    final int numberOfReps = workouts[0]['numberOfReps'] ?? 0; // Default to 0 if null
     final int goodReps = workouts[0]['goodReps'] ?? 0; // Default to 0 if null
     final int badReps = workouts[0]['badReps'] ?? 0; // Default to 0 if null
 
@@ -294,7 +293,7 @@ class WorkoutDetailsView extends StatelessWidget {
               style: TextStyle(fontSize: 35.0, fontWeight: FontWeight.bold),
             ),
           ),
-          WorkoutTypeCard(type: workoutType),
+          const WorkoutTypeCard(type: workoutType),
           WorkoutDayAndTimeCard(dayAndTime: workoutTime),
           WorkoutDurationCard(duration: workoutDuration),
           WorkoutAccuracyCard(accuracy: workoutAccuracy),

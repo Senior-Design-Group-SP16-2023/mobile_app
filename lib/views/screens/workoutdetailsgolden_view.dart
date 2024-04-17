@@ -11,7 +11,7 @@ class WorkoutDayAndTimeCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final String formattedDate =
-    DateFormat('MMMM d, y (h:mm a)').format(dayAndTime);
+        DateFormat('MMMM d, y (h:mm a)').format(dayAndTime);
     return Card(
       margin: const EdgeInsets.all(8.0),
       shape: RoundedRectangleBorder(
@@ -128,46 +128,6 @@ class WorkoutTypeCard extends StatelessWidget {
   }
 }
 
-class WorkoutAverageDurationCard extends StatelessWidget {
-  final double averageDuration;
-
-  const WorkoutAverageDurationCard({Key? key, required this.averageDuration})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      margin: const EdgeInsets.all(8.0),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Row(
-              children: [
-                Icon(Icons.timer, color: Colors.black),
-                SizedBox(width: 8),
-                Text(
-                  'Average Duration',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                ),
-              ],
-            ),
-            const SizedBox(height: 16),
-            Text(
-              '${averageDuration.toStringAsFixed(2)} minutes',
-              style: const TextStyle(fontSize: 22, color: Colors.blue),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
 // New Widget for Number of Reps
 class WorkoutRepsCard extends StatelessWidget {
   final int numberOfReps;
@@ -210,22 +170,18 @@ class WorkoutRepsCard extends StatelessWidget {
 }
 
 class WorkoutDetailsGoldenView extends StatelessWidget {
-  final DateTime selectedDay;
   final List<Map<String, dynamic>> workouts;
 
   const WorkoutDetailsGoldenView(
-      {Key? key, required this.selectedDay, required this.workouts})
+      {Key? key, required this.workouts})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    // CHANGE HERE!!!!
     final int workoutDuration = workouts[0]['duration']; // in minutes
     const String workoutType = "Bicep Curl";
-    final int workoutAccuracy = workouts[0]['accuracy']; // in percentage
     final DateTime workoutTime = workouts[0]['timestamp'];
-    final double averageDuration = workouts[0]['averageDuration']?.toDouble() ?? 0.0;  // Default to 0.0 if null
-    final int numberOfReps = workouts[0]['reps'] ?? 0;  // Default to 0 if null
+    final int numberOfReps = workouts[0]['numberOfReps'] ?? 0; // Default to 0 if null
 
     return Scaffold(
       appBar: AppBar(
@@ -253,7 +209,6 @@ class WorkoutDetailsGoldenView extends StatelessWidget {
           WorkoutDayAndTimeCard(dayAndTime: workoutTime),
           WorkoutDurationCard(duration: workoutDuration),
           WorkoutRepsCard(numberOfReps: numberOfReps),
-          WorkoutAverageDurationCard(averageDuration: averageDuration)
         ],
       ),
     );

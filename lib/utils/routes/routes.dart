@@ -30,7 +30,6 @@ class Routes {
         return MaterialPageRoute(
             builder: (context) => const DoctorAccountView());
       case RoutesName.workoutDetails:
-        final selectedDay = settings.arguments as DateTime;
         final workouts = settings.arguments as List<Map<String, dynamic>>;
         return MaterialPageRoute(
             builder: (context) => WorkoutDetailsView(workouts: workouts));

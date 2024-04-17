@@ -50,12 +50,14 @@ class _WorkoutCalibrationViewState extends State<WorkoutCalibrateView> {
                 child: Padding(
                   padding: const EdgeInsets.only(left: 20.0, right: 10.0),
                   child: ElevatedButton(
-                    onPressed: _isStartEnabled ? () {
-                      setState(() {
-                        _isStartEnabled = false;
-                        _isEndEnabled = true;
-                      });
-                    } : null,
+                    onPressed: _isStartEnabled
+                        ? () {
+                            setState(() {
+                              _isStartEnabled = false;
+                              _isEndEnabled = true;
+                            });
+                          }
+                        : null,
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15),
@@ -71,12 +73,14 @@ class _WorkoutCalibrationViewState extends State<WorkoutCalibrateView> {
                 child: Padding(
                   padding: const EdgeInsets.only(left: 10.0, right: 20.0),
                   child: ElevatedButton(
-                    onPressed: _isEndEnabled ? () {
-                      setState(() {
-                        _isEndEnabled = false;
-                        _isNextEnabled = true;
-                      });
-                    } : null,
+                    onPressed: _isEndEnabled
+                        ? () {
+                            setState(() {
+                              _isEndEnabled = false;
+                              _isNextEnabled = true;
+                            });
+                          }
+                        : null,
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15),
@@ -90,16 +94,19 @@ class _WorkoutCalibrationViewState extends State<WorkoutCalibrateView> {
               ),
             ],
           ),
-          const SizedBox(height: 40.0), // Increased space between 'End' and 'Next'
+          const SizedBox(
+              height: 40.0), // Increased space between 'End' and 'Next'
           Center(
             child: ElevatedButton(
-              onPressed: _isNextEnabled ? () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const WorkoutTypeView()),
-                );
-              } : null,
+              onPressed: _isNextEnabled
+                  ? () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const WorkoutTypeView()),
+                      );
+                    }
+                  : null,
               style: ElevatedButton.styleFrom(
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(15),

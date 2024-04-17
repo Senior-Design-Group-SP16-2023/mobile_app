@@ -27,17 +27,20 @@ class _WorkoutViewState extends State<WorkoutView> {
           Center(
             // Reduced bottom padding to decrease space between the image and the next text widget
             child: Padding(
-              padding: const EdgeInsets.only(bottom: 10.0), // Reduced from 20.0 to 10.0
-              child: Image.asset('lib/views/widgets/backgrounds/workoutImage.png'),
+              padding: const EdgeInsets.only(
+                  bottom: 10.0), // Reduced from 20.0 to 10.0
+              child:
+                  Image.asset('lib/views/widgets/backgrounds/workoutImage.png'),
             ),
           ),
           // The RichText widget with "Type: Bicep Curl" and "Duration: ~10 minutes"
           Center(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
               child: RichText(
                 textAlign: TextAlign.center,
-                text: TextSpan(
+                text: const TextSpan(
                   style: TextStyle(
                     fontSize: 18.0,
                     color: Colors.black,
@@ -75,7 +78,8 @@ class _WorkoutViewState extends State<WorkoutView> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const WorkoutConnectView()),
+                  MaterialPageRoute(
+                      builder: (context) => const WorkoutConnectView()),
                 );
               },
               style: ElevatedButton.styleFrom(
