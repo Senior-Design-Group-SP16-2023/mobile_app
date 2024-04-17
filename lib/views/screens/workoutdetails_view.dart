@@ -265,7 +265,7 @@ class WorkoutDetailsView extends StatelessWidget {
         workouts[0]['duration'] ?? 0; // Default to 0 if null
     const String workoutType = "Bicep Curl"; // Assuming type is always provided
     final double workoutAccuracy =
-        workouts[0]['accuracy'] ?? 100; // Default to 100 if null
+        workouts[0]['accuracy'] ?? 0; // Default to 100 if null
     final DateTime workoutTime = workouts[0]['timestamp'] ??
         DateTime.now(); // Default to current time if null
     final int numberOfReps = workouts[0]['reps'] ?? 0; // Default to 0 if null
