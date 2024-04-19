@@ -107,11 +107,8 @@ class BLEService extends ChangeNotifier {
     }
   }
 
-  Map<String, Map<String, List<int>>> endReading() {
-    if (disableBluetooth) return {};
-    for (BLEDevice device in targetDevices) {
-      device.endReading();
-    }
+
+  Map<String, Map<String, List<int>>> getData(){
     Map<String, Map<String, List<int>>> data = {};
     int i = 0;
 
@@ -123,6 +120,13 @@ class BLEService extends ChangeNotifier {
     //   print(data);
     // }
     return data;
+  }
+
+  endReading() {
+    if (disableBluetooth) return {};
+    for (BLEDevice device in targetDevices) {
+      device.endReading();
+    }
   }
 
   beginCalibration() {

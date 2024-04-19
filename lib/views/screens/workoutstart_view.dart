@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:senior_design/ble/ble_service.dart';
+import 'package:senior_design/view_models/user_view_model.dart';
 import 'dart:async';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -48,6 +51,7 @@ class _WorkoutStartViewState extends State<WorkoutStartView> {
   @override
   Widget build(BuildContext context) {
     final userViewModel = Provider.of<UserViewModel>(context);
+    final bleService = Provider.of<BLEService>(context);
 
     return WillPopScope(
       onWillPop: () async => false, // Prevent back navigation on Android
