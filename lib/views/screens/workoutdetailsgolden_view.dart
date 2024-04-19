@@ -169,27 +169,30 @@ class WorkoutRepsCard extends StatelessWidget {
   }
 }
 
-class WorkoutDetailsGoldenView extends StatelessWidget {
+class WorkoutDetailsGoldenView extends StatefulWidget {
   final List<Map<String, dynamic>> workouts;
 
-  const WorkoutDetailsGoldenView(
-      {Key? key, required this.workouts})
+  const WorkoutDetailsGoldenView({Key? key, required this.workouts})
       : super(key: key);
 
   @override
+  _WorkoutDetailsGoldenViewState createState() => _WorkoutDetailsGoldenViewState();
+}
+
+class _WorkoutDetailsGoldenViewState extends State<WorkoutDetailsGoldenView> {
+  String dropdownValue = '1'; // Initial dropdown value
+
+  @override
   Widget build(BuildContext context) {
-    final int workoutDuration = workouts[0]['duration']; // in minutes
-    const String workoutType = "Bicep Curl";
-    final DateTime workoutTime = workouts[0]['timestamp'];
-    final int numberOfReps = workouts[0]['numberOfReps'] ?? 0; // Default to 0 if null
+    final List<String> dropdownItems = ['1', '2', '3']; // Example dropdown items, customize as needed
 
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
+          icon: const Icon(Icons.check),
           onPressed: () => Navigator.of(context).pop(),
         ),
-        title: const Text('Back'),
+        title: const Text('Done'),
         centerTitle: false,
         titleSpacing: 0,
         elevation: 0,
@@ -198,17 +201,38 @@ class WorkoutDetailsGoldenView extends StatelessWidget {
       ),
       body: ListView(
         children: [
-          const Padding(
-            padding: EdgeInsets.only(top: 20.0, left: 20.0, bottom: 20.0),
-            child: Text(
-              'Workout Details',
-              style: TextStyle(fontSize: 35.0, fontWeight: FontWeight.bold),
+          Padding(
+            padding: const EdgeInsets.only(top: 20.0, left: 20.0, right: 20.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text(
+                  'Workout Details',
+                  style: TextStyle(fontSize: 35.0, fontWeight: FontWeight.bold),
+                ),
+                DropdownButton<String>(
+                  value: dropdownValue,
+                  icon: const Icon(Icons.keyboard_arrow_down),
+                  onChanged: (String? newValue) {
+                    setState(() {
+                      dropdownValue = newValue!;
+                    });
+                  },
+                  items: dropdownItems.map<DropdownMenuItem<String>>((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
+                ),
+              ],
             ),
           ),
-          const WorkoutTypeCard(type: workoutType),
-          WorkoutDayAndTimeCard(dayAndTime: workoutTime),
-          WorkoutDurationCard(duration: workoutDuration),
-          WorkoutRepsCard(numberOfReps: numberOfReps),
+          // Include your other custom card widgets here
+          const WorkoutTypeCard(type: "Bicep Curl"),
+          WorkoutDayAndTimeCard(dayAndTime: widget.workouts[0]['timestamp'] ?? DateTime.now()),
+          WorkoutDurationCard(duration: widget.workouts[0]['duration'] ?? 0),
+          WorkoutRepsCard(numberOfReps: widget.workouts[0]['numberOfReps'] ?? 0),
         ],
       ),
     );

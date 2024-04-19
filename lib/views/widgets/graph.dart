@@ -53,7 +53,7 @@ class _RecentActivityGraphWidgetState extends State<RecentActivityGraphWidget> {
                       const Icon(Icons.bar_chart, color: Colors.black),
                       const SizedBox(width: 8),
                       const Text(
-                        'Recent Activity',
+                        'Previous Workouts',
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,

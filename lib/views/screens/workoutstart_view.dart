@@ -22,7 +22,7 @@ class _WorkoutStartViewState extends State<WorkoutStartView> {
 
   void _startTimer() {
     if (_timer != null) {
-      _timer!.cancel(); // If there's an existing timer, cancel it
+      _timer!.cancel();
     }
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       setState(() {
@@ -31,6 +31,7 @@ class _WorkoutStartViewState extends State<WorkoutStartView> {
     });
     setState(() {
       _isRunning = true;
+      // Here we disable the ability to go back
     });
   }
 
@@ -47,21 +48,23 @@ class _WorkoutStartViewState extends State<WorkoutStartView> {
   Widget build(BuildContext context) {
     final userViewModel = Provider.of<UserViewModel>(context);
 
-    return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-        ),
-        title: const Text('Back'),
-        centerTitle: false,
-        titleSpacing: 0,
-        elevation: 0,
-        backgroundColor: Colors.transparent,
-        foregroundColor: Colors.black,
-      ),
+    return WillPopScope(
+        onWillPop: () async => false,  // Prevent back navigation on Android
+    child: Scaffold(
+    appBar: AppBar(
+    leading: _isRunning ? null : IconButton(  // Disable back button when running
+    icon: const Icon(Icons.arrow_back),
+    onPressed: () {
+    Navigator.of(context).pop();
+    },
+    ),
+    title: const Text('Back'),
+    centerTitle: false,
+    titleSpacing: 0,
+    elevation: 0,
+    backgroundColor: Colors.transparent,
+    foregroundColor: Colors.black,
+    ),
       body: ListView(
         children: [
           const Padding(
@@ -161,6 +164,7 @@ class _WorkoutStartViewState extends State<WorkoutStartView> {
           ),
         ],
       ),
+    ),
     );
   }
 

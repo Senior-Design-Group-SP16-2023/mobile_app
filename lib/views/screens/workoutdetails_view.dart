@@ -166,58 +166,37 @@ class WorkoutAccuracyCard extends StatelessWidget {
   }
 }
 
-// New Widget for Number of Reps
-class WorkoutRepsCard extends StatelessWidget {
-  final int numberOfReps;
-
-  const WorkoutRepsCard({Key? key, required this.numberOfReps})
-      : super(key: key);
+// Repetitions Widget
+class RepetitionsCard extends StatelessWidget {
+  const RepetitionsCard({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      margin: const EdgeInsets.all(8.0),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Row(
-              children: [
-                Icon(Icons.fitness_center, color: Colors.black),
-                SizedBox(width: 8),
-                Text(
-                  'Number of Reps',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                ),
-              ],
-            ),
-            const SizedBox(height: 16),
-            Text(
-              '$numberOfReps',
-              style: const TextStyle(fontSize: 22, color: Colors.blue),
-            ),
-          ],
+    // Generate list of colors for each circle
+    List<Color> colors = List.generate(20, (index) {
+      if (index < 10) {
+        return Colors.green;  // First 10 reps are good
+      } else if (index < 15) {
+        return Colors.red;  // Next 5 reps are bad
+      } else {
+        return Colors.grey;  // Last 5 reps are upcoming or uncompleted
+      }
+    });
+
+    // Generate list of widgets for circles
+    List<Widget> circleWidgets = List.generate(20, (index) {
+      return Container(
+        width: 30,
+        height: 30,
+        decoration: BoxDecoration(
+          color: colors[index],
+          shape: BoxShape.circle,
         ),
-      ),
-    );
-  }
-}
+        alignment: Alignment.center,
+        child: Text('${index + 1}', style: TextStyle(color: Colors.white)),
+      );
+    });
 
-// New Widget for Good/Bad Reps
-class WorkoutGoodBadRepsCard extends StatelessWidget {
-  final int goodReps;
-  final int badReps;
-
-  const WorkoutGoodBadRepsCard(
-      {Key? key, required this.goodReps, required this.badReps})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
     return Card(
       margin: const EdgeInsets.all(8.0),
       shape: RoundedRectangleBorder(
@@ -228,21 +207,22 @@ class WorkoutGoodBadRepsCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Row(
+            Row(
               children: [
                 Icon(Icons.thumbs_up_down, color: Colors.black),
                 SizedBox(width: 8),
                 Text(
-                  'Good/Bad Reps',
+                  'Repetitions',
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                 ),
               ],
             ),
             const SizedBox(height: 16),
-            Text(
-              '$goodReps/$badReps',
-              style: const TextStyle(fontSize: 22, color: Colors.blue),
-            ),
+            Wrap(
+              spacing: 8, // horizontal spacing
+              runSpacing: 8, // vertical spacing
+              children: circleWidgets,
+            )
           ],
         ),
       ),
@@ -250,34 +230,29 @@ class WorkoutGoodBadRepsCard extends StatelessWidget {
   }
 }
 
-// Main View to Combine All Cards
-class WorkoutDetailsView extends StatelessWidget {
+class WorkoutDetailsView extends StatefulWidget {
   final List<Map<String, dynamic>> workouts;
 
-  const WorkoutDetailsView({Key? key, required this.workouts})
-      : super(key: key);
+  const WorkoutDetailsView({Key? key, required this.workouts}) : super(key: key);
+
+  @override
+  _WorkoutDetailsViewState createState() => _WorkoutDetailsViewState();
+}
+
+class _WorkoutDetailsViewState extends State<WorkoutDetailsView> {
+  String dropdownValue = '1'; // Initial dropdown value
 
   @override
   Widget build(BuildContext context) {
-    // Safely extract workout details with default values for potential nulls
-    final int workoutDuration =
-        workouts[0]['duration'] ?? 0; // Default to 0 if null
-    const String workoutType = "Bicep Curl"; // Assuming type is always provided
-    final double workoutAccuracy =
-        workouts[0]['accuracy'] ?? 0; // Default to 100 if null
-    final DateTime workoutTime = workouts[0]['timestamp'] ??
-        DateTime.now(); // Default to current time if null
-    final int numberOfReps = workouts[0]['numberOfReps'] ?? 0; // Default to 0 if null
-    final int goodReps = workouts[0]['goodReps'] ?? 0; // Default to 0 if null
-    final int badReps = workouts[0]['badReps'] ?? 0; // Default to 0 if null
+    final List<String> dropdownItems = ['1', '2', '3'];
 
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
+          icon: const Icon(Icons.check),
           onPressed: () => Navigator.of(context).pop(),
         ),
-        title: const Text('Back'),
+        title: const Text('Done'),
         centerTitle: false,
         titleSpacing: 0,
         elevation: 0,
@@ -286,19 +261,38 @@ class WorkoutDetailsView extends StatelessWidget {
       ),
       body: ListView(
         children: [
-          const Padding(
-            padding: EdgeInsets.only(top: 20.0, left: 20.0, bottom: 20.0),
-            child: Text(
-              'Workout Details',
-              style: TextStyle(fontSize: 35.0, fontWeight: FontWeight.bold),
+          Padding(
+            padding: const EdgeInsets.only(top: 20.0, left: 20.0, right: 20.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text(
+                  'Workout Details',
+                  style: TextStyle(fontSize: 35.0, fontWeight: FontWeight.bold),
+                ),
+                DropdownButton<String>(
+                  value: dropdownValue,
+                  icon: const Icon(Icons.keyboard_arrow_down),
+                  onChanged: (String? newValue) {
+                    setState(() {
+                      dropdownValue = newValue!;
+                    });
+                  },
+                  items: dropdownItems.map<DropdownMenuItem<String>>((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
+                ),
+              ],
             ),
           ),
-          const WorkoutTypeCard(type: workoutType),
-          WorkoutDayAndTimeCard(dayAndTime: workoutTime),
-          WorkoutDurationCard(duration: workoutDuration),
-          WorkoutAccuracyCard(accuracy: workoutAccuracy),
-          WorkoutRepsCard(numberOfReps: numberOfReps),
-          WorkoutGoodBadRepsCard(goodReps: goodReps, badReps: badReps),
+          const WorkoutTypeCard(type: "Bicep Curl"), // Use actual data or constants as needed
+          WorkoutDayAndTimeCard(dayAndTime: widget.workouts[0]['timestamp'] ?? DateTime.now()),
+          WorkoutDurationCard(duration: widget.workouts[0]['duration'] ?? 0),
+          WorkoutAccuracyCard(accuracy: widget.workouts[0]['accuracy'] ?? 0.0),
+          RepetitionsCard(),
         ],
       ),
     );
