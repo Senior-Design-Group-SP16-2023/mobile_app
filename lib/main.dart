@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:senior_design/view_models/auth_view_model.dart';
 import 'package:senior_design/view_models/user_view_model.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:senior_design/ble/ble_service.dart';
 
 Future<void> main() async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,6 +25,7 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (context) => AuthViewModel()),
         ChangeNotifierProvider(create: (context) => UserViewModel()),
+        ChangeNotifierProvider(create: (context) => BLEService()),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',

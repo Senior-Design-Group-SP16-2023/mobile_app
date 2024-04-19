@@ -156,4 +156,31 @@ class FireStoreRepository {
       'workout_id': workoutNum
     });
   }
+
+  //golden write to goldens/test@gmail.com/idealworkouts
+// write as a document
+
+  Future<void> addIdealWorkout(String email, Map<String, dynamic> data) {
+    data = {
+
+    };
+
+
+    return _firestore
+        .collection("goldens")
+        .doc(email)
+        .set(data);
+  }
+
+  Future<void> addMostRecentWorkout(String email, Map<String, dynamic> data) {
+    return _firestore
+        .collection("goldens")
+        .doc(email)
+        .collection("mostrecentworkouts")
+        .doc("mostrecentworkout")
+        .set(data);
+  }
+
+
+
 }

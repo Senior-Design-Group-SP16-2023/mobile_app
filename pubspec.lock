@@ -161,6 +161,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.10.0"
+  fixnum:
+    dependency: transitive
+    description:
+      name: fixnum
+      sha256: "25517a4deb0c03aa0f32fd12db525856438902d9c16536311e76cdc57b31d7d1"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.0"
   fl_chart:
     dependency: "direct main"
     description:
@@ -190,6 +198,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.3"
+  flutter_reactive_ble:
+    dependency: "direct main"
+    description:
+      name: flutter_reactive_ble
+      sha256: "247e2efa76de203d1ba11335c13754b5b9d0504b5423e5b0c93a600f016b24e0"
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.3.1"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -208,6 +224,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.1.0"
+  functional_data:
+    dependency: transitive
+    description:
+      name: functional_data
+      sha256: "76d17dc707c40e552014f5a49c0afcc3f1e3f05e800cd6b7872940bfe41a5039"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.2.0"
   http_parser:
     dependency: transitive
     description:
@@ -296,6 +320,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.8"
+  protobuf:
+    dependency: transitive
+    description:
+      name: protobuf
+      sha256: "01dd9bd0fa02548bf2ceee13545d4a0ec6046459d847b6b061d8a27237108a08"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.1.0"
   provider:
     dependency: "direct main"
     description:
@@ -304,6 +336,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.1.1"
+  reactive_ble_mobile:
+    dependency: transitive
+    description:
+      name: reactive_ble_mobile
+      sha256: "9ec2b4c9c725e439950838d551579750060258fbccd5536d0543b4d07d225798"
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.3.1"
+  reactive_ble_platform_interface:
+    dependency: transitive
+    description:
+      name: reactive_ble_platform_interface
+      sha256: "632c92401a2d69c9b94bd48f8fd47488a7013f3d1f9b291884350291a4a81813"
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.3.1"
   simple_gesture_detector:
     dependency: transitive
     description:

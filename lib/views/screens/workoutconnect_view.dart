@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:senior_design/views/screens/workoutcalibration_view.dart';
+import 'package:provider/provider.dart';
+import 'package:senior_design/ble/ble_service.dart';
 
 class WorkoutConnectView extends StatefulWidget {
   const WorkoutConnectView({Key? key}) : super(key: key);
@@ -11,6 +13,7 @@ class WorkoutConnectView extends StatefulWidget {
 class _WorkoutConnectViewState extends State<WorkoutConnectView> {
   @override
   Widget build(BuildContext context) {
+    final bleService = Provider.of<BLEService>(context);
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -45,25 +48,46 @@ class _WorkoutConnectViewState extends State<WorkoutConnectView> {
               height:
                   20.0), // Space between the last instruction and the Next button
           Center(
-            child: ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const WorkoutCalibrateView()),
-                );
-              }, // Increase font size
-              style: ElevatedButton.styleFrom(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15),
+              child: Column(
+            children: [
+              ElevatedButton(
+                onPressed: () {
+                  bleService.startScan();
+                }, // Increase font size
+                style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  padding: const EdgeInsets.symmetric(
+                      vertical: 15.0), // Increase button padding
+                  minimumSize: const Size(300, 60), // Increase button size
                 ),
-                padding: const EdgeInsets.symmetric(
-                    vertical: 15.0), // Increase button padding
-                minimumSize: const Size(300, 60), // Increase button size
+                child: const Text('Connect to Device',
+                    style: TextStyle(fontSize: 18)),
               ),
-              child: const Text('Next', style: TextStyle(fontSize: 18)),
-            ),
-          ),
+              ElevatedButton(
+                onPressed: !bleService.isReadyToWorkout
+                    ? null
+                    : () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  const WorkoutCalibrateView()),
+                        );
+                      }, // Increase font size
+                style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  padding: const EdgeInsets.symmetric(
+                      vertical: 15.0), // Increase button padding
+                  minimumSize: const Size(300, 60), // Increase button size
+                ),
+                child: const Text('Next', style: TextStyle(fontSize: 18)),
+              ),
+            ],
+          )),
         ],
       ),
     );
