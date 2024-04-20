@@ -49,122 +49,125 @@ class _WorkoutStartViewState extends State<WorkoutStartView> {
     final userViewModel = Provider.of<UserViewModel>(context);
 
     return WillPopScope(
-        onWillPop: () async => false,  // Prevent back navigation on Android
-    child: Scaffold(
-    appBar: AppBar(
-    leading: _isRunning ? null : IconButton(  // Disable back button when running
-    icon: const Icon(Icons.arrow_back),
-    onPressed: () {
-    Navigator.of(context).pop();
-    },
-    ),
-    title: const Text('Back'),
-    centerTitle: false,
-    titleSpacing: 0,
-    elevation: 0,
-    backgroundColor: Colors.transparent,
-    foregroundColor: Colors.black,
-    ),
-      body: ListView(
-        children: [
-          const Padding(
-            padding: EdgeInsets.only(top: 20.0, left: 20.0, bottom: 20.0),
-            child: Text(
-              'Start Workout',
-              style: TextStyle(fontSize: 35.0, fontWeight: FontWeight.bold),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 20.0),
-            child: Center(
+      onWillPop: () async => false, // Prevent back navigation on Android
+      child: Scaffold(
+        appBar: AppBar(
+          leading: _isRunning
+              ? null
+              : IconButton(
+                  // Disable back button when running
+                  icon: const Icon(Icons.arrow_back),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+          title: const Text('Back'),
+          centerTitle: false,
+          titleSpacing: 0,
+          elevation: 0,
+          backgroundColor: Colors.transparent,
+          foregroundColor: Colors.black,
+        ),
+        body: ListView(
+          children: [
+            const Padding(
+              padding: EdgeInsets.only(top: 20.0, left: 20.0, bottom: 20.0),
               child: Text(
-                _duration
-                    .toString()
-                    .split('.')
-                    .first
-                    .padLeft(8, "0"), // Display the stopwatch time
-                style: const TextStyle(
-                    fontSize: 32.0, fontWeight: FontWeight.bold),
+                'Start Workout',
+                style: TextStyle(fontSize: 35.0, fontWeight: FontWeight.bold),
               ),
             ),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 20.0, right: 10.0),
-                  child: ElevatedButton(
-                    onPressed: !_isRunning
-                        ? _startTimer
-                        : null, // Start the timer if not already running
-                    style: ElevatedButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      padding: const EdgeInsets.symmetric(vertical: 15.0),
-                      minimumSize: const Size(100, 60),
-                    ),
-                    child: const Text('Start', style: TextStyle(fontSize: 18)),
-                  ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 20.0),
+              child: Center(
+                child: Text(
+                  _duration
+                      .toString()
+                      .split('.')
+                      .first
+                      .padLeft(8, "0"), // Display the stopwatch time
+                  style: const TextStyle(
+                      fontSize: 32.0, fontWeight: FontWeight.bold),
                 ),
               ),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 10.0, right: 20.0),
-                  child: ElevatedButton(
-                    onPressed: _isRunning
-                        ? _stopTimer
-                        : null, // Stop the timer if running
-                    style: ElevatedButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      padding: const EdgeInsets.symmetric(vertical: 15.0),
-                      minimumSize: const Size(100, 60),
-                    ),
-                    child: const Text('Stop', style: TextStyle(fontSize: 18)),
-                  ),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 40.0), // Space between buttons
-          Center(
-            child: ElevatedButton(
-              onPressed: !_isRunning && _duration != Duration.zero
-                  ? () {
-                print("DURATION" + _duration.toString());
-                      // Collect data from Bluetooth
-                      // Measure the time between start and stop
-                      // Store the data in Firestore under most recent workout
-                      triggerRegularProcessing(userViewModel)
-                          .then((workoutDetails) {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => widget.isGolden
-                                  ? WorkoutDetailsGoldenView(
-                                      workouts: [workoutDetails])
-                                  : WorkoutDetailsView(
-                                      workouts: [workoutDetails])),
-                        );
-                      });
-                    }
-                  : null,
-              style: ElevatedButton.styleFrom(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                padding: const EdgeInsets.symmetric(vertical: 15.0),
-                minimumSize: const Size(300, 60),
-              ),
-              child: const Text('Next', style: TextStyle(fontSize: 18)),
             ),
-          ),
-        ],
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 20.0, right: 10.0),
+                    child: ElevatedButton(
+                      onPressed: !_isRunning
+                          ? _startTimer
+                          : null, // Start the timer if not already running
+                      style: ElevatedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        padding: const EdgeInsets.symmetric(vertical: 15.0),
+                        minimumSize: const Size(100, 60),
+                      ),
+                      child:
+                          const Text('Start', style: TextStyle(fontSize: 18)),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 10.0, right: 20.0),
+                    child: ElevatedButton(
+                      onPressed: _isRunning
+                          ? _stopTimer
+                          : null, // Stop the timer if running
+                      style: ElevatedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        padding: const EdgeInsets.symmetric(vertical: 15.0),
+                        minimumSize: const Size(100, 60),
+                      ),
+                      child: const Text('Stop', style: TextStyle(fontSize: 18)),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 40.0), // Space between buttons
+            Center(
+              child: ElevatedButton(
+                onPressed: !_isRunning && _duration != Duration.zero
+                    ? () {
+                        print("DURATION" + _duration.toString());
+                        // Collect data from Bluetooth
+                        // Store the data in Firestore under most recent workout
+                        triggerRegularProcessing(userViewModel)
+                            .then((workoutDetails) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => widget.isGolden
+                                    ? WorkoutDetailsGoldenView(
+                                        workouts: [workoutDetails])
+                                    : WorkoutDetailsView(
+                                        workouts: [workoutDetails])),
+                          );
+                        });
+                      }
+                    : null,
+                style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  padding: const EdgeInsets.symmetric(vertical: 15.0),
+                  minimumSize: const Size(300, 60),
+                ),
+                child: const Text('Next', style: TextStyle(fontSize: 18)),
+              ),
+            ),
+          ],
+        ),
       ),
-    ),
     );
   }
 

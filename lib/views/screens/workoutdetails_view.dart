@@ -168,23 +168,21 @@ class WorkoutAccuracyCard extends StatelessWidget {
 
 // Repetitions Widget
 class RepetitionsCard extends StatelessWidget {
-  const RepetitionsCard({Key? key}) : super(key: key);
+  final List<dynamic> repList;
+  const RepetitionsCard({Key? key, required this.repList}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     // Generate list of colors for each circle
-    List<Color> colors = List.generate(20, (index) {
-      if (index < 10) {
-        return Colors.green;  // First 10 reps are good
-      } else if (index < 15) {
-        return Colors.red;  // Next 5 reps are bad
+    List<Color> colors = List.generate(repList.length, (index) {
+      if (repList[index]) {
+        return Colors.green;
       } else {
-        return Colors.grey;  // Last 5 reps are upcoming or uncompleted
+        return Colors.red;
       }
     });
 
-    // Generate list of widgets for circles
-    List<Widget> circleWidgets = List.generate(20, (index) {
+    List<Widget> circleWidgets = List.generate(repList.length, (index) {
       return Container(
         width: 30,
         height: 30,
@@ -193,7 +191,8 @@ class RepetitionsCard extends StatelessWidget {
           shape: BoxShape.circle,
         ),
         alignment: Alignment.center,
-        child: Text('${index + 1}', style: TextStyle(color: Colors.white)),
+        child:
+            Text('${index + 1}', style: const TextStyle(color: Colors.white)),
       );
     });
 
@@ -207,7 +206,7 @@ class RepetitionsCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
+            const Row(
               children: [
                 Icon(Icons.thumbs_up_down, color: Colors.black),
                 SizedBox(width: 8),
@@ -233,7 +232,8 @@ class RepetitionsCard extends StatelessWidget {
 class WorkoutDetailsView extends StatefulWidget {
   final List<Map<String, dynamic>> workouts;
 
-  const WorkoutDetailsView({Key? key, required this.workouts}) : super(key: key);
+  const WorkoutDetailsView({Key? key, required this.workouts})
+      : super(key: key);
 
   @override
   _WorkoutDetailsViewState createState() => _WorkoutDetailsViewState();
@@ -241,10 +241,18 @@ class WorkoutDetailsView extends StatefulWidget {
 
 class _WorkoutDetailsViewState extends State<WorkoutDetailsView> {
   String dropdownValue = '1'; // Initial dropdown value
+  late Map<String, dynamic> selectedWorkout;
+
+  @override
+  void initState() {
+    super.initState();
+    selectedWorkout = widget.workouts[0];
+  }
 
   @override
   Widget build(BuildContext context) {
-    final List<String> dropdownItems = ['1', '2', '3'];
+    final List<String> dropdownItems = List.generate(
+        widget.workouts.length, (index) => (index + 1).toString());
 
     return Scaffold(
       appBar: AppBar(
@@ -276,9 +284,12 @@ class _WorkoutDetailsViewState extends State<WorkoutDetailsView> {
                   onChanged: (String? newValue) {
                     setState(() {
                       dropdownValue = newValue!;
+                      int index = int.parse(dropdownValue) - 1;
+                      selectedWorkout = widget.workouts[index];
                     });
                   },
-                  items: dropdownItems.map<DropdownMenuItem<String>>((String value) {
+                  items: dropdownItems
+                      .map<DropdownMenuItem<String>>((String value) {
                     return DropdownMenuItem<String>(
                       value: value,
                       child: Text(value),
@@ -288,11 +299,12 @@ class _WorkoutDetailsViewState extends State<WorkoutDetailsView> {
               ],
             ),
           ),
-          const WorkoutTypeCard(type: "Bicep Curl"), // Use actual data or constants as needed
-          WorkoutDayAndTimeCard(dayAndTime: widget.workouts[0]['timestamp'] ?? DateTime.now()),
-          WorkoutDurationCard(duration: widget.workouts[0]['duration'] ?? 0),
-          WorkoutAccuracyCard(accuracy: widget.workouts[0]['accuracy'] ?? 0.0),
-          RepetitionsCard(),
+          const WorkoutTypeCard(type: "Bicep Curl"),
+          WorkoutDayAndTimeCard(
+              dayAndTime: selectedWorkout['timestamp'] ?? DateTime.now()),
+          WorkoutDurationCard(duration: selectedWorkout['duration'] ?? 0),
+          WorkoutAccuracyCard(accuracy: selectedWorkout['accuracy'] ?? 0.0),
+          RepetitionsCard(repList: selectedWorkout['repList'] ?? []),
         ],
       ),
     );

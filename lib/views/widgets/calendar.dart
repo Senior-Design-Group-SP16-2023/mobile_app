@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:senior_design/views/screens/workoutdetails_view.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:senior_design/view_models/user_view_model.dart';
-import 'package:senior_design/views/screens/workoutdetailsgolden_view.dart';
-
 
 class CalendarWidget extends StatefulWidget {
   final UserViewModel userViewModel;

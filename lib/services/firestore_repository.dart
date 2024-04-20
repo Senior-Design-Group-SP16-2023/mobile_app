@@ -72,7 +72,9 @@ class FireStoreRepository {
             "accuracy": docSnapshot.data()['accuracy'],
             "timestamp": docSnapshot.data()['timestamp'].toDate(),
             "workout_id": docSnapshot.data()['workout_id'],
-            "duration": docSnapshot.data()['duration']
+            "duration": docSnapshot.data()['duration'],
+            "repList": docSnapshot.data()['repList'],
+            "numberOfReps": docSnapshot.data()['numberOfReps']
           });
         }
       },
