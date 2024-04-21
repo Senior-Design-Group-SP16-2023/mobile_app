@@ -13,12 +13,12 @@ class DashboardHeader extends StatelessWidget {
         children: [
           Text(
             formattedDate,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 19.0,
               fontWeight: FontWeight.normal,
             ),
           ),
-          Text(
+          const Text(
             'Dashboard',
             style: TextStyle(
               fontSize: 35.0,

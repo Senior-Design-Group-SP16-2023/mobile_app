@@ -17,7 +17,8 @@ class RecentActivity extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
-            mainAxisSize: MainAxisSize.min, // Ensures the Column wraps its content
+            mainAxisSize:
+                MainAxisSize.min, // Ensures the Column wraps its content
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Row(
@@ -52,22 +53,34 @@ class RecentActivity extends StatelessWidget {
                 children: <Widget>[
                   Column(
                     children: <Widget>[
-                      const Text('Accuracy', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.blue)),
-                      Text(data.isNotEmpty ? "${data[0]['accuracy']}%" : "", style: const TextStyle(fontSize: 18, color: Colors.black)),
+                      const Text('Accuracy',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, color: Colors.blue)),
+                      Text(data.isNotEmpty ? "${data[0]['accuracy']}%" : "",
+                          style: const TextStyle(
+                              fontSize: 18, color: Colors.black)),
                     ],
                   ),
                   Container(height: 30, width: 1, color: Colors.grey),
                   Column(
                     children: <Widget>[
-                      const Text('Duration', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.blue)),
-                      Text(data.isNotEmpty ? '${data[0]['duration']} min' : "", style: const TextStyle(fontSize: 18, color: Colors.black)),
+                      const Text('Duration',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, color: Colors.blue)),
+                      Text(data.isNotEmpty ? '${data[0]['duration']} min' : "",
+                          style: const TextStyle(
+                              fontSize: 18, color: Colors.black)),
                     ],
                   ),
                   Container(height: 30, width: 1, color: Colors.grey),
                   Column(
                     children: <Widget>[
-                      const Text('Type', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.blue)),
-                      Text(data.isNotEmpty ? 'Bicep Curl' : "", style: const TextStyle(fontSize: 18, color: Colors.black)),
+                      const Text('Type',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, color: Colors.blue)),
+                      Text(data.isNotEmpty ? 'Bicep Curl' : "",
+                          style: const TextStyle(
+                              fontSize: 18, color: Colors.black)),
                     ],
                   ),
                 ],
