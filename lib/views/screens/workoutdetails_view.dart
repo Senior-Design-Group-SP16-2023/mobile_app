@@ -231,8 +231,10 @@ class RepetitionsCard extends StatelessWidget {
 
 class WorkoutDetailsView extends StatefulWidget {
   final List<Map<String, dynamic>> workouts;
+  final bool isFromWorkout;
 
-  const WorkoutDetailsView({Key? key, required this.workouts})
+  const WorkoutDetailsView(
+      {Key? key, required this.workouts, required this.isFromWorkout})
       : super(key: key);
 
   @override
@@ -258,7 +260,9 @@ class _WorkoutDetailsViewState extends State<WorkoutDetailsView> {
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.check),
-          onPressed: () => Navigator.of(context).pop(),
+          onPressed: () => widget.isFromWorkout
+              ? popMultiple(context, 5)
+              : Navigator.of(context).pop(),
         ),
         title: const Text('Done'),
         centerTitle: false,
@@ -309,4 +313,11 @@ class _WorkoutDetailsViewState extends State<WorkoutDetailsView> {
       ),
     );
   }
+}
+
+void popMultiple(BuildContext context, int count) {
+  int popCount = 0;
+  Navigator.popUntil(context, (route) {
+    return popCount++ >= count;
+  });
 }

@@ -187,7 +187,12 @@ class _WorkoutDetailsGoldenViewState extends State<WorkoutDetailsGoldenView> {
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.check),
-          onPressed: () => Navigator.of(context).pop(),
+          onPressed: () {
+            int popCount = 0;
+            Navigator.popUntil(context, (route) {
+              return popCount++ >= 5;
+            });
+          },
         ),
         title: const Text('Done'),
         centerTitle: false,

@@ -25,7 +25,7 @@ class _CalendarWidgetState extends State<CalendarWidget> {
 
   bool isWorkoutDay(DateTime day) {
     return workoutDays.any((workoutDay) =>
-    day.year == workoutDay.year &&
+        day.year == workoutDay.year &&
         day.month == workoutDay.month &&
         day.day == workoutDay.day);
   }
@@ -79,8 +79,10 @@ class _CalendarWidgetState extends State<CalendarWidget> {
                     fontWeight: FontWeight.bold,
                     color: Colors.black,
                   ),
-                  leftChevronIcon: Icon(Icons.chevron_left, color: Colors.black),
-                  rightChevronIcon: Icon(Icons.chevron_right, color: Colors.black),
+                  leftChevronIcon:
+                      Icon(Icons.chevron_left, color: Colors.black),
+                  rightChevronIcon:
+                      Icon(Icons.chevron_right, color: Colors.black),
                 ),
                 daysOfWeekStyle: const DaysOfWeekStyle(
                   weekendStyle: TextStyle(color: Colors.black),
@@ -149,18 +151,25 @@ class _CalendarWidgetState extends State<CalendarWidget> {
                 ),
                 onDaySelected: (selectedDay, focusedDay) {
                   if (isWorkoutDay(selectedDay)) {
-                    DateTime latestTs = DateTime(selectedDay.year, selectedDay.month, selectedDay.day).add(const Duration(days: 1));
-                    widget.userViewModel.fetchWorkoutsInDay(selectedDay, latestTs, widget.userName).then((items) {
+                    DateTime latestTs = DateTime(selectedDay.year,
+                            selectedDay.month, selectedDay.day)
+                        .add(const Duration(days: 1));
+                    widget.userViewModel
+                        .fetchWorkoutsInDay(
+                            selectedDay, latestTs, widget.userName)
+                        .then((items) {
                       Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) {
-                          return WorkoutDetailsView(workouts: items);
+                          return WorkoutDetailsView(
+                              workouts: items, isFromWorkout: false);
                         }),
                       );
                     });
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Selected day is not a workout day')),
+                      const SnackBar(
+                          content: Text('Selected day is not a workout day')),
                     );
                   }
                 },
@@ -182,7 +191,8 @@ class _CalendarWidgetState extends State<CalendarWidget> {
       month += 1;
     }
     DateTime firstDayOfNextMonth = DateTime(year, month, 1, 0, 0, 0);
-    var data = await widget.userViewModel.fetchWorkoutsInMonth(earliestTs, firstDayOfNextMonth, widget.userName);
+    var data = await widget.userViewModel
+        .fetchWorkoutsInMonth(earliestTs, firstDayOfNextMonth, widget.userName);
     setState(() {
       workoutDays = data;
     });

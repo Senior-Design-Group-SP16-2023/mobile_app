@@ -161,7 +161,8 @@ class _WorkoutStartViewState extends State<WorkoutStartView> {
                                     ? WorkoutDetailsGoldenView(
                                         workouts: [workoutDetails])
                                     : WorkoutDetailsView(
-                                        workouts: [workoutDetails])),
+                                        workouts: [workoutDetails],
+                                        isFromWorkout: true)),
                           );
                         });
                       }
