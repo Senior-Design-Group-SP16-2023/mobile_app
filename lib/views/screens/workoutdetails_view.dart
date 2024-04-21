@@ -46,7 +46,7 @@ class WorkoutDayAndTimeCard extends StatelessWidget {
 
 // Workout Duration Widget
 class WorkoutDurationCard extends StatelessWidget {
-  final int duration; // Duration in minutes
+  final int duration; // Duration in seconds
 
   const WorkoutDurationCard({Key? key, required this.duration})
       : super(key: key);
@@ -75,7 +75,7 @@ class WorkoutDurationCard extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             Text(
-              '$duration minutes',
+              '$duration seconds',
               style: const TextStyle(fontSize: 22, color: Colors.blue),
             ),
           ],
