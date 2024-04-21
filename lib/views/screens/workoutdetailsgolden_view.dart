@@ -176,16 +176,13 @@ class WorkoutDetailsGoldenView extends StatefulWidget {
       : super(key: key);
 
   @override
-  _WorkoutDetailsGoldenViewState createState() => _WorkoutDetailsGoldenViewState();
+  _WorkoutDetailsGoldenViewState createState() =>
+      _WorkoutDetailsGoldenViewState();
 }
 
 class _WorkoutDetailsGoldenViewState extends State<WorkoutDetailsGoldenView> {
-  String dropdownValue = '1'; // Initial dropdown value
-
   @override
   Widget build(BuildContext context) {
-    final List<String> dropdownItems = ['1', '2', '3']; // Example dropdown items, customize as needed
-
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -201,38 +198,25 @@ class _WorkoutDetailsGoldenViewState extends State<WorkoutDetailsGoldenView> {
       ),
       body: ListView(
         children: [
-          Padding(
-            padding: const EdgeInsets.only(top: 20.0, left: 20.0, right: 20.0),
+          const Padding(
+            padding: EdgeInsets.only(top: 20.0, left: 20.0, right: 20.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text(
-                  'Workout Details',
+                Text(
+                  'Golden Workout Details',
                   style: TextStyle(fontSize: 35.0, fontWeight: FontWeight.bold),
-                ),
-                DropdownButton<String>(
-                  value: dropdownValue,
-                  icon: const Icon(Icons.keyboard_arrow_down),
-                  onChanged: (String? newValue) {
-                    setState(() {
-                      dropdownValue = newValue!;
-                    });
-                  },
-                  items: dropdownItems.map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
                 ),
               ],
             ),
           ),
           // Include your other custom card widgets here
           const WorkoutTypeCard(type: "Bicep Curl"),
-          WorkoutDayAndTimeCard(dayAndTime: widget.workouts[0]['timestamp'] ?? DateTime.now()),
+          WorkoutDayAndTimeCard(
+              dayAndTime: widget.workouts[0]['timestamp'] ?? DateTime.now()),
           WorkoutDurationCard(duration: widget.workouts[0]['duration'] ?? 0),
-          WorkoutRepsCard(numberOfReps: widget.workouts[0]['numberOfReps'] ?? 0),
+          WorkoutRepsCard(
+              numberOfReps: widget.workouts[0]['numberOfReps'] ?? 0),
         ],
       ),
     );
