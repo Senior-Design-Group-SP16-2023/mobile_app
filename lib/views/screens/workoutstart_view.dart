@@ -49,7 +49,7 @@ class _WorkoutStartViewState extends State<WorkoutStartView> {
   Future<void> _sendData(
       UserViewModel userViewModel, BLEService bleService) async {
     final data = bleService.getData();
-    if (widget.isGolden) {
+    if (!widget.isGolden) {
       userViewModel.addMostRecentWorkoutData(userViewModel.user.email!, data);
     } else {
       userViewModel.addMostRecentGoldenData(userViewModel.user.email!, data);

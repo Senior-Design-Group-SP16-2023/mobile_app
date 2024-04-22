@@ -162,6 +162,7 @@ class FireStoreRepository {
 
   Future<void> addMostRecentGoldenData(
       String email, Map<String, dynamic> data) async {
+    if (data == {}) return Future.value();
     _firestore.collection("goldens").doc(email).get().then((value) {
       var data = value.data();
       List<dynamic> idealWorkouts = data!["idealworkouts"];
@@ -173,6 +174,7 @@ class FireStoreRepository {
 
   Future<void> addMostRecentWorkoutData(
       String email, Map<String, dynamic> data) {
+    if (data == {}) return Future.value();
     final map = {"most_recent": data};
     return _firestore.collection("workouts").doc(email).set(map);
   }

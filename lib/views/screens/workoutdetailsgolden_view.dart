@@ -209,7 +209,7 @@ class _WorkoutDetailsGoldenViewState extends State<WorkoutDetailsGoldenView> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Golden Workout Details',
+                  'Workout Details',
                   style: TextStyle(fontSize: 35.0, fontWeight: FontWeight.bold),
                 ),
               ],
