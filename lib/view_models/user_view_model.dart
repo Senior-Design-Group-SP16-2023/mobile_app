@@ -238,8 +238,12 @@ class UserViewModel with ChangeNotifier {
     return await _fireStoreRepository.addPatient(patientEmail, user);
   }
 
-  Future<void> addMostRecentWorkout(String email, Map<String, Map<String, List<int>>> data) async {
-    await _fireStoreRepository.addMostRecentWorkout(email, data);
+  Future<void> addMostRecentWorkoutData(String email, Map<String, Map<String, List<int>>> data) async {
+    await _fireStoreRepository.addMostRecentWorkoutData(email, data);
+  }
+
+  Future<void> addMostRecentGoldenData(String email, Map<String, dynamic> data) async {
+    await _fireStoreRepository.addMostRecentGoldenData(email, data);
   }
 
   void addNewWorkout(int workoutNum, Map<String, dynamic> workoutDetails) {

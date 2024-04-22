@@ -39,6 +39,7 @@ class BLEDevice {
         isReadyNotifier.value = false;
         if (reconnectCounter < reconnectAttempts) {
           if (kDebugMode) print('Reconnecting...');
+          await Future.delayed(const Duration(seconds: 1));
           reconnectCounter++;
           connectToDevice();
         }
@@ -125,5 +126,11 @@ class BLEDevice {
         print(e);
       }
     }
+  }
+
+  Future<void> clearData() async {
+    X.clear();
+    Y.clear();
+    Z.clear();
   }
 }

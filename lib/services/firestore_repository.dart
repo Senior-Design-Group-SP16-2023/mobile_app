@@ -160,13 +160,20 @@ class FireStoreRepository {
   //golden write to goldens/test@gmail.com/idealworkouts
 // write as a document
 
-
-  Future<void> addMostRecentWorkout(String email, Map<String, dynamic> data) {
-   final map = {
-     "most_recent": data
-   };
-    return _firestore
-        .collection("workouts").doc(email).set(map);
+  Future<void> addMostRecentGoldenData(
+      String email, Map<String, dynamic> data) async {
+    _firestore.collection("goldens").doc(email).get().then((value) {
+      var data = value.data();
+      List<dynamic> idealWorkouts = data!["idealworkouts"];
+      idealWorkouts.add(data);
+      var map = {"idealworkouts": idealWorkouts};
+      return _firestore.collection("goldens").doc(email).set(map);
+    });
   }
 
+  Future<void> addMostRecentWorkoutData(
+      String email, Map<String, dynamic> data) {
+    final map = {"most_recent": data};
+    return _firestore.collection("workouts").doc(email).set(map);
+  }
 }

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:senior_design/views/screens/workouttype_view.dart';
+import 'package:provider/provider.dart';
+import 'package:senior_design/ble/ble_service.dart';
 
 class WorkoutCalibrateView extends StatefulWidget {
   const WorkoutCalibrateView({Key? key}) : super(key: key);
@@ -10,11 +12,24 @@ class WorkoutCalibrateView extends StatefulWidget {
 
 class _WorkoutCalibrationViewState extends State<WorkoutCalibrateView> {
   bool _isStartEnabled = true;
-  bool _isEndEnabled = false;
   bool _isNextEnabled = false;
+
+  //function to call the calibration function and then wait 5 seconds before saying calibration is complete
+  void calibrateDevice(BLEService bleService) async {
+    //call calibration function
+    //wait 5 seconds
+    bleService.beginCalibration();
+    await Future.delayed(const Duration(seconds: 5));
+    //set _isNextEnabled to true
+    setState(() {
+      _isNextEnabled = true;
+    });
+  }
+
 
   @override
   Widget build(BuildContext context) {
+    final bleService = Provider.of<BLEService>(context);
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -54,7 +69,7 @@ class _WorkoutCalibrationViewState extends State<WorkoutCalibrateView> {
                         ? () {
                             setState(() {
                               _isStartEnabled = false;
-                              _isEndEnabled = true;
+                              calibrateDevice(bleService);
                             });
                           }
                         : null,
@@ -66,29 +81,6 @@ class _WorkoutCalibrationViewState extends State<WorkoutCalibrateView> {
                       minimumSize: const Size(100, 60),
                     ),
                     child: const Text('Start', style: TextStyle(fontSize: 18)),
-                  ),
-                ),
-              ),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 10.0, right: 20.0),
-                  child: ElevatedButton(
-                    onPressed: _isEndEnabled
-                        ? () {
-                            setState(() {
-                              _isEndEnabled = false;
-                              _isNextEnabled = true;
-                            });
-                          }
-                        : null,
-                    style: ElevatedButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      padding: const EdgeInsets.symmetric(vertical: 15.0),
-                      minimumSize: const Size(100, 60),
-                    ),
-                    child: const Text('End', style: TextStyle(fontSize: 18)),
                   ),
                 ),
               ),

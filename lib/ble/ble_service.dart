@@ -15,7 +15,6 @@ class BLEService extends ChangeNotifier {
 
   BLEService() {
     if (disableBluetooth) {
-      //use disableBluetooth when running on emulator to get past screens that require bluetooth
       isBluetoothOn = true;
       isReadyToWorkout = true;
       notifyListeners();
@@ -107,8 +106,8 @@ class BLEService extends ChangeNotifier {
     }
   }
 
-
-  Map<String, Map<String, List<int>>> getData(){
+  Map<String, Map<String, List<int>>> getData() {
+    if (disableBluetooth) return {};
     Map<String, Map<String, List<int>>> data = {};
     int i = 0;
 
@@ -133,6 +132,13 @@ class BLEService extends ChangeNotifier {
     if (disableBluetooth) return;
     for (BLEDevice device in targetDevices) {
       device.beginCalibration();
+    }
+  }
+
+  clearData() {
+    if (disableBluetooth) return;
+    for (BLEDevice device in targetDevices) {
+      device.clearData();
     }
   }
 }

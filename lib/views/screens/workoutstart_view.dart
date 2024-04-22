@@ -5,8 +5,6 @@ import 'package:senior_design/view_models/user_view_model.dart';
 import 'dart:async';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:provider/provider.dart';
-import 'package:senior_design/view_models/user_view_model.dart';
 import 'package:senior_design/views/screens/workoutdetails_view.dart';
 import 'package:senior_design/views/screens/workoutdetailsgolden_view.dart';
 
@@ -48,6 +46,16 @@ class _WorkoutStartViewState extends State<WorkoutStartView> {
     }
   }
 
+  Future<void> _sendData(
+      UserViewModel userViewModel, BLEService bleService) async {
+    final data = bleService.getData();
+    if (widget.isGolden) {
+      userViewModel.addMostRecentWorkoutData(userViewModel.user.email!, data);
+    } else {
+      userViewModel.addMostRecentGoldenData(userViewModel.user.email!, data);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final userViewModel = Provider.of<UserViewModel>(context);
@@ -63,6 +71,7 @@ class _WorkoutStartViewState extends State<WorkoutStartView> {
                   // Disable back button when running
                   icon: const Icon(Icons.arrow_back),
                   onPressed: () {
+                    bleService.clearData();
                     Navigator.of(context).pop();
                   },
                 ),
@@ -104,7 +113,10 @@ class _WorkoutStartViewState extends State<WorkoutStartView> {
                     padding: const EdgeInsets.only(left: 20.0, right: 10.0),
                     child: ElevatedButton(
                       onPressed: !_isRunning
-                          ? _startTimer
+                          ? () {
+                              bleService.beginReading();
+                              _startTimer();
+                            }
                           : null, // Start the timer if not already running
                       style: ElevatedButton.styleFrom(
                         shape: RoundedRectangleBorder(
@@ -123,7 +135,10 @@ class _WorkoutStartViewState extends State<WorkoutStartView> {
                     padding: const EdgeInsets.only(left: 10.0, right: 20.0),
                     child: ElevatedButton(
                       onPressed: _isRunning
-                          ? _stopTimer
+                          ? () {
+                              _stopTimer();
+                              bleService.endReading();
+                            }
                           : null, // Stop the timer if running
                       style: ElevatedButton.styleFrom(
                         shape: RoundedRectangleBorder(
@@ -148,26 +163,22 @@ class _WorkoutStartViewState extends State<WorkoutStartView> {
                           _isNextPressed = true;
                         });
 
-                        /*
-                          THOMAS MAKE YOUR CHANGES HERE:
-                          Collect data from Bluetooth
-                          If golden, insert to list under goldens > user > ideal_workouts
-                          If not golden, store under workouts > user > most_recent
-                         */
-
-                        cloudProcessing(userViewModel, widget.isGolden,
-                                _duration.inSeconds)
-                            .then((workoutDetails) {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => widget.isGolden
-                                    ? WorkoutDetailsGoldenView(
-                                        workouts: [workoutDetails])
-                                    : WorkoutDetailsView(
-                                        workouts: [workoutDetails],
-                                        isFromWorkout: true)),
-                          );
+                        _sendData(userViewModel, bleService).then((value) {
+                          cloudProcessing(userViewModel, widget.isGolden,
+                                  _duration.inSeconds)
+                              .then((workoutDetails) {
+                            bleService.clearData();
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => widget.isGolden
+                                      ? WorkoutDetailsGoldenView(
+                                          workouts: [workoutDetails])
+                                      : WorkoutDetailsView(
+                                          workouts: [workoutDetails],
+                                          isFromWorkout: true)),
+                            );
+                          });
                         });
                       }
                     : null,
