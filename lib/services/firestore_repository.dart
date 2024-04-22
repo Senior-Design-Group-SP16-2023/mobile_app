@@ -165,9 +165,12 @@ class FireStoreRepository {
     if (data == {}) return Future.value();
     _firestore.collection("goldens").doc(email).get().then((value) {
       var data = value.data();
-      List<dynamic> idealWorkouts = data!["idealworkouts"];
+      if(data == null) {
+        data = {"ideal_workouts": []};
+      }
+      List<dynamic> idealWorkouts = data["ideal_workouts"];
       idealWorkouts.add(data);
-      var map = {"idealworkouts": idealWorkouts};
+      var map = {"ideal_workouts": idealWorkouts};
       return _firestore.collection("goldens").doc(email).set(map);
     });
   }
