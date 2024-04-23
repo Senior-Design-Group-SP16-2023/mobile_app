@@ -72,7 +72,13 @@ class BLEDevice {
   }
 
   Future<void> beginCalibration() async {
-    await _configCharacteristic.write([0x01]);
+    try {
+      await _configCharacteristic.write([0x01]);
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+    }
   }
 
   static const int max = 32767;
