@@ -13,6 +13,10 @@ class BLEDevice {
   List<int> Y = [];
   List<int> Z = [];
 
+  List<int> aX = [];
+  List<int> aY = [];
+  List<int> aZ = [];
+
   var reconnectCounter = 0;
 
   dynamic _dataCharacteristic;
@@ -96,9 +100,9 @@ class BLEDevice {
       int gyroX = convert(event[0] | (event[1] << 8));
       int gyroY = convert(event[2] | (event[3] << 8));
       int gyroZ = convert(event[4] | (event[5] << 8));
-      // int accelX = convert(event[6] | (event[7] << 8));
-      // int accelY = convert(event[8] | (event[9] << 8));
-      // int accelZ = convert(event[10] | (event[11] << 8));
+      int accelX = convert(event[6] | (event[7] << 8));
+      int accelY = convert(event[8] | (event[9] << 8));
+      int accelZ = convert(event[10] | (event[11] << 8));
 
       // int timestamp =
       // event[12] | (event[13] << 8) | (event[14] << 16) | (event[15] << 24);
@@ -106,6 +110,9 @@ class BLEDevice {
       X.add(gyroX);
       Y.add(gyroY);
       Z.add(gyroZ);
+      aX.add(accelX);
+      aY.add(accelY);
+      aZ.add(accelZ);
     });
   }
 
@@ -121,6 +128,9 @@ class BLEDevice {
       'x': X,
       'y': Y,
       'z': Z,
+      'ax': aX,
+      'ay': aY,
+      'az': aZ,
     };
   }
 
