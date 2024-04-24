@@ -67,7 +67,7 @@ class RecentActivity extends StatelessWidget {
                       const Text('Duration',
                           style: TextStyle(
                               fontWeight: FontWeight.bold, color: Colors.blue)),
-                      Text(data.isNotEmpty ? '${data[0]['duration']} min' : "",
+                      Text(data.isNotEmpty ? '${data[0]['duration']} sec' : "",
                           style: const TextStyle(
                               fontSize: 18, color: Colors.black)),
                     ],
