@@ -23,7 +23,7 @@
             android:name="android.permission.BLUETOOTH_SCAN"
             android:usesPermissionFlags="neverForLocation" />
     <application
-        android:label="senior_design"
+        android:label="Recover"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

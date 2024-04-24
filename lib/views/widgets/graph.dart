@@ -26,7 +26,7 @@ class _RecentActivityGraphWidgetState extends State<RecentActivityGraphWidget> {
   @override
   void initState() {
     super.initState();
-    workoutData = widget.data;
+    workoutData = workoutData.length > 1 ? widget.data : [];
   }
 
   @override
