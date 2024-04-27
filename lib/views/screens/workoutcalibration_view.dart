@@ -78,16 +78,16 @@ class _WorkoutCalibrationViewState extends State<WorkoutCalibrateView> {
                         borderRadius: BorderRadius.circular(15),
                       ),
                       padding: const EdgeInsets.symmetric(vertical: 15.0),
-                      minimumSize: const Size(100, 60),
+                      minimumSize: const Size(300, 60),
                     ),
-                    child: const Text('Start', style: TextStyle(fontSize: 18)),
+                    child: const Text('Next', style: TextStyle(fontSize: 18)),
                   ),
                 ),
               ),
             ],
           ),
           const SizedBox(
-              height: 40.0), // Increased space between 'End' and 'Next'
+              height: 15.0), // Increased space between 'End' and 'Next'
           Center(
             child: ElevatedButton(
               onPressed: _isNextEnabled
@@ -106,7 +106,7 @@ class _WorkoutCalibrationViewState extends State<WorkoutCalibrateView> {
                 padding: const EdgeInsets.symmetric(vertical: 15.0),
                 minimumSize: const Size(300, 60),
               ),
-              child: const Text('Next', style: TextStyle(fontSize: 18)),
+              child: const Text('Calibrate', style: TextStyle(fontSize: 18)),
             ),
           ),
         ],

@@ -19,17 +19,30 @@ class _ProfileViewState extends State<ProfileView> {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
-            crossAxisAlignment:
-                CrossAxisAlignment.start, // Ensures left alignment
+            crossAxisAlignment: CrossAxisAlignment.start, // Ensures left alignment
             children: [
-              const Padding(
-                padding: EdgeInsets.only(top: 20.0, left: 20.0),
-                child: Text(
-                  'Profile',
-                  style: TextStyle(
-                    fontSize: 35.0,
-                    fontWeight: FontWeight.bold,
-                  ),
+              Padding(
+                padding: const EdgeInsets.only(top: 20.0, left: 20.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween, // Aligns children across the main axis
+                  children: [
+                    const Text(
+                      'Profile',
+                      style: TextStyle(
+                        fontSize: 35.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(right: 20.0),
+                      child: IconButton(
+                        icon: const Icon(Icons.exit_to_app, color: Colors.blue),
+                        onPressed: () {
+                          // Add your sign out functionality here
+                        },
+                      ),
+                    ),
+                  ],
                 ),
               ),
               Padding(
@@ -37,20 +50,16 @@ class _ProfileViewState extends State<ProfileView> {
                 child: Card(
                   elevation: 5,
                   shape: RoundedRectangleBorder(
-                    // This shapes the card with rounded corners
-                    borderRadius: BorderRadius.circular(
-                        10), // Match the borderRadius as in your provided code
+                    borderRadius: BorderRadius.circular(10),
                   ),
                   child: Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment
-                          .start, // Ensures left alignment within the card
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const Row(
-                          mainAxisAlignment: MainAxisAlignment
-                              .start, // Ensures the row content is left-aligned
+                          mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Icon(Icons.person, color: Colors.black),
                             SizedBox(width: 8),
@@ -67,8 +76,7 @@ class _ProfileViewState extends State<ProfileView> {
                         const SizedBox(height: 20),
                         ...userInfoMap.entries.map((entry) {
                           return Column(
-                            crossAxisAlignment: CrossAxisAlignment
-                                .start, // Ensures left alignment for each entry
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Padding(
                                 padding: const EdgeInsets.only(bottom: 8.0),
@@ -76,7 +84,7 @@ class _ProfileViewState extends State<ProfileView> {
                                   text: TextSpan(
                                     style: const TextStyle(
                                       fontSize: 16,
-                                      color: Colors.black, // Default text color
+                                      color: Colors.black,
                                     ),
                                     children: <TextSpan>[
                                       TextSpan(
@@ -86,8 +94,7 @@ class _ProfileViewState extends State<ProfileView> {
                                       TextSpan(
                                         text: entry.value.toString(),
                                         style: const TextStyle(
-                                            color: Colors
-                                                .blue), // Value text color
+                                            color: Colors.blue),
                                       ),
                                     ],
                                   ),

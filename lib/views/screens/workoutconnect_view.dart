@@ -41,7 +41,7 @@ class _WorkoutConnectViewState extends State<WorkoutConnectView> {
           instructionStep('1', 'Open Settings App'),
           instructionStep('2', 'Go to Bluetooth'),
           instructionStep('3', 'Turn on Device(s)'),
-          instructionStep('4', 'Search for "XXX"'),
+          instructionStep('4', 'Search for "SP16 Device"'),
           instructionStep('5', 'Select Device(s) to Pair'),
           instructionStep('6', 'Return to Recover'),
           const SizedBox(
@@ -62,9 +62,10 @@ class _WorkoutConnectViewState extends State<WorkoutConnectView> {
                       vertical: 15.0), // Increase button padding
                   minimumSize: const Size(300, 60), // Increase button size
                 ),
-                child: const Text('Connect to Device',
+                child: const Text('Connect',
                     style: TextStyle(fontSize: 18)),
               ),
+              const SizedBox(height: 15.0),
               ElevatedButton(
                 onPressed: !bleService.isReadyToWorkout
                     ? null
