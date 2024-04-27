@@ -62,7 +62,7 @@ class _WorkoutViewState extends State<WorkoutView> {
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                     TextSpan(
-                      text: '~10 minutes',
+                      text: '~30 seconds',
                       style: TextStyle(
                         color: Colors.blue,
                         fontWeight: FontWeight.normal,
