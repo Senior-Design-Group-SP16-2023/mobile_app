@@ -26,7 +26,7 @@ class _RecentActivityGraphWidgetState extends State<RecentActivityGraphWidget> {
   @override
   void initState() {
     super.initState();
-    workoutData = workoutData.length > 1 ? widget.data : [];
+    workoutData = widget.data.length > 1 ? widget.data : [];
   }
 
   @override
@@ -100,7 +100,7 @@ class _RecentActivityGraphWidgetState extends State<RecentActivityGraphWidget> {
                           show: true,
                           drawVerticalLine: false,
                           horizontalInterval:
-                              20, // Increased for reduced frequency
+                              10, // Increased for reduced frequency
                         ),
                         titlesData: FlTitlesData(
                           bottomTitles: AxisTitles(
@@ -153,6 +153,13 @@ class _RecentActivityGraphWidgetState extends State<RecentActivityGraphWidget> {
                       ),
                     ),
                   ),
+                  const SizedBox(height: 25),
+                  if (widget.data.length <= 1)
+                    Text(
+                      "Not enough data, please perform more workouts.",
+                      style: const TextStyle(
+                          fontWeight: FontWeight.bold, color: Colors.red),
+                    ),
                 ],
               ),
             ),
@@ -170,7 +177,7 @@ class _RecentActivityGraphWidgetState extends State<RecentActivityGraphWidget> {
         .fetchWorkoutData(numWorkouts, widget.userName);
     setState(() {
       dropDownValue = newValue;
-      workoutData = data;
+      workoutData = data.length > 1 ? data : [];
     });
   }
 
@@ -179,7 +186,8 @@ class _RecentActivityGraphWidgetState extends State<RecentActivityGraphWidget> {
     for (int i = 0; i < workoutData.length; i++) {
       double workoutId = (i + 1).toDouble();
       double accuracy = workoutData[i]['accuracy'].toDouble();
-      spots.add(FlSpot(workoutId, accuracy));
+      double twoDecimalAccuracy = double.parse(accuracy.toStringAsFixed(2));
+      spots.add(FlSpot(workoutId, twoDecimalAccuracy));
     }
     return spots;
   }
