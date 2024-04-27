@@ -156,7 +156,7 @@ class WorkoutAccuracyCard extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             Text(
-              '$accuracy%',
+              '${accuracy.toStringAsFixed(2)}%',
               style: const TextStyle(fontSize: 22, color: Colors.blue),
             ),
           ],

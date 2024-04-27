@@ -56,7 +56,10 @@ class RecentActivity extends StatelessWidget {
                       const Text('Accuracy',
                           style: TextStyle(
                               fontWeight: FontWeight.bold, color: Colors.blue)),
-                      Text(data.isNotEmpty ? "${data[0]['accuracy']}%" : "",
+                      Text(
+                          data.isNotEmpty
+                              ? "${data[0]['accuracy'].toStringAsFixed(2)}%"
+                              : "",
                           style: const TextStyle(
                               fontSize: 18, color: Colors.black)),
                     ],
