@@ -52,7 +52,7 @@ class _WorkoutConnectViewState extends State<WorkoutConnectView> {
             children: [
               ElevatedButton(
                 onPressed: () {
-                  bleService.startScan();
+                  bleService.startScan(context);
                 }, // Increase font size
                 style: ElevatedButton.styleFrom(
                   shape: RoundedRectangleBorder(

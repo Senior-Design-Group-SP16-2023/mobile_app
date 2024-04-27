@@ -3,6 +3,8 @@ import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
 import 'dart:async';
 import 'package:senior_design/ble/ble_device.dart';
 import 'package:senior_design/ble/ble_consts.dart';
+import 'package:senior_design/utils/routes/routes_name.dart';
+import 'package:flutter/material.dart';
 
 class BLEService extends ChangeNotifier {
   static final FlutterReactiveBle _ble = FlutterReactiveBle();
@@ -34,7 +36,7 @@ class BLEService extends ChangeNotifier {
     });
   }
 
-  startScan() {
+  startScan(context) {
     if (disableBluetooth) {
       if (kDebugMode) print("Bluetooth is disabled");
       return;
@@ -58,7 +60,16 @@ class BLEService extends ChangeNotifier {
               targetDevices.every((element) => element.isReadyNotifier.value)) {
             isReadyToWorkout = true;
             notifyListeners();
-          } else {
+          } else if(newDevice.isReadyNotifier.value == false){
+            //disconnect from every device
+            for (BLEDevice device in targetDevices) {
+              device.disconnect();
+            }
+            isReadyToWorkout = false;
+            notifyListeners();
+            Navigator.of(context).pushNamed(RoutesName.workoutConnect);
+
+          } else{
             isReadyToWorkout = false;
             notifyListeners();
           }

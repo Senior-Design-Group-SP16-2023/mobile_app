@@ -146,6 +146,10 @@ class BLEDevice {
 
   Future<void> disconnect() async {
     try {
+      _dataCharacteristic = null;
+      _configCharacteristic = null;
+      clearData();
+
       await _connection?.cancel();
     } catch (e) {
       if (kDebugMode) {
@@ -158,5 +162,10 @@ class BLEDevice {
     X.clear();
     Y.clear();
     Z.clear();
+    if(sendAcceleration) {
+      aX.clear();
+      aY.clear();
+      aZ.clear();
+    }
   }
 }
