@@ -62,18 +62,11 @@ class BLEService extends ChangeNotifier {
               targetDevices.every((element) => element.isReadyNotifier.value)) {
             isReadyToWorkout = true;
             notifyListeners();
-          } else if(newDevice.isReadyNotifier.value == false && inWorkoutFlow){
-            //disconnect from every device
-            for (BLEDevice device in targetDevices) {
-              device.disconnect();
-            }
-            isReadyToWorkout = false;
-            inWorkoutFlow = false;
-            notifyListeners();
-            //pop until pages away
+          } else if (newDevice.isReadyNotifier.value == false &&
+              inWorkoutFlow) {
+            disconnect();
             popMultiple(context, pagesAway);
-
-          } else{
+          } else {
             isReadyToWorkout = false;
             notifyListeners();
           }
@@ -110,6 +103,7 @@ class BLEService extends ChangeNotifier {
     for (BLEDevice device in targetDevices) {
       await device.disconnect();
     }
+    inWorkoutFlow = false;
     isReadyToWorkout = false;
     targetDevices.clear();
     notifyListeners();
