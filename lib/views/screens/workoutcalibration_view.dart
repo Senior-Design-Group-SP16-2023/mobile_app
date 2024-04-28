@@ -26,7 +26,6 @@ class _WorkoutCalibrationViewState extends State<WorkoutCalibrateView> {
     });
   }
 
-
   @override
   Widget build(BuildContext context) {
     final bleService = Provider.of<BLEService>(context);
@@ -58,33 +57,25 @@ class _WorkoutCalibrationViewState extends State<WorkoutCalibrateView> {
           instructionStep('2', 'Rest Arm by Side in Natural Position'),
           instructionStep('3', 'Grab Dumbell Weight in Arm'),
           const SizedBox(height: 20.0),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 20.0, right: 10.0),
-                  child: ElevatedButton(
-                    onPressed: _isStartEnabled
-                        ? () {
-                            setState(() {
-                              _isStartEnabled = false;
-                              calibrateDevice(bleService);
-                            });
-                          }
-                        : null,
-                    style: ElevatedButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      padding: const EdgeInsets.symmetric(vertical: 15.0),
-                      minimumSize: const Size(300, 60),
-                    ),
-                    child: const Text('Next', style: TextStyle(fontSize: 18)),
-                  ),
+          Center(
+            child: ElevatedButton(
+              onPressed: _isStartEnabled
+                  ? () {
+                      setState(() {
+                        _isStartEnabled = false;
+                        calibrateDevice(bleService);
+                      });
+                    }
+                  : null,
+              style: ElevatedButton.styleFrom(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15),
                 ),
+                padding: const EdgeInsets.symmetric(vertical: 15.0),
+                minimumSize: const Size(300, 60),
               ),
-            ],
+              child: const Text('Calibrate', style: TextStyle(fontSize: 18)),
+            ),
           ),
           const SizedBox(
               height: 15.0), // Increased space between 'End' and 'Next'
@@ -106,7 +97,7 @@ class _WorkoutCalibrationViewState extends State<WorkoutCalibrateView> {
                 padding: const EdgeInsets.symmetric(vertical: 15.0),
                 minimumSize: const Size(300, 60),
               ),
-              child: const Text('Calibrate', style: TextStyle(fontSize: 18)),
+              child: const Text('Next', style: TextStyle(fontSize: 18)),
             ),
           ),
         ],

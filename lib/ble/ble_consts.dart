@@ -1,5 +1,5 @@
 //use disableBluetooth when running on emulator to get past screens that require bluetooth
-const disableBluetooth = true;
+const disableBluetooth = false;
 
 const sendAcceleration = false;
 
