@@ -142,11 +142,6 @@ class SignInView extends HookWidget {
                     ),
                   ],
                 ),
-              TextButton(
-                onPressed: () {/* Forgot Password? action */},
-                child: const Text('Forgot Password?',
-                    style: TextStyle(color: Colors.blue)),
-              ),
               const Spacer(flex: 1),
             ],
           ),

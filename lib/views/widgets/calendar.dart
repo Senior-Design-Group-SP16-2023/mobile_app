@@ -151,6 +151,9 @@ class _CalendarWidgetState extends State<CalendarWidget> {
                 ),
                 onDaySelected: (selectedDay, focusedDay) {
                   if (isWorkoutDay(selectedDay)) {
+                    // Update timezone
+                    selectedDay = DateTime(
+                        selectedDay.year, selectedDay.month, selectedDay.day);
                     DateTime latestTs = DateTime(selectedDay.year,
                             selectedDay.month, selectedDay.day)
                         .add(const Duration(days: 1));
@@ -190,6 +193,8 @@ class _CalendarWidgetState extends State<CalendarWidget> {
     } else {
       month += 1;
     }
+    // Update timezone
+    earliestTs = DateTime(earliestTs.year, earliestTs.month, earliestTs.day);
     DateTime firstDayOfNextMonth = DateTime(year, month, 1, 0, 0, 0);
     var data = await widget.userViewModel
         .fetchWorkoutsInMonth(earliestTs, firstDayOfNextMonth, widget.userName);

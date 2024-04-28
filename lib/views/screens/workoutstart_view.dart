@@ -163,7 +163,8 @@ class _WorkoutStartViewState extends State<WorkoutStartView> {
                           _isNextPressed = true;
                         });
 
-                        _sendData(userViewModel, bleService).then((value) {
+                        _sendData(userViewModel, bleService).then((value) async {
+                          await Future.delayed(Duration(seconds: 5));
                           cloudProcessing(userViewModel, widget.isGolden,
                                   _duration.inSeconds)
                               .then((workoutDetails) {
