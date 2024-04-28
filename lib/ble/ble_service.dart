@@ -66,6 +66,9 @@ class BLEService extends ChangeNotifier {
               inWorkoutFlow) {
             disconnect();
             popMultiple(context, pagesAway);
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text("One or more Bluetooth devices disconnected.")),
+            );
           } else {
             isReadyToWorkout = false;
             notifyListeners();
