@@ -45,6 +45,11 @@ class BLEService extends ChangeNotifier {
     }
     if (!isBluetoothOn) {
       if (kDebugMode) print("Bluetooth is off");
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+            content: Text(
+                "Please ensure Bluetooth permissions are enabled in the Settings.")),
+      );
       return;
     }
     disconnect();
@@ -67,7 +72,8 @@ class BLEService extends ChangeNotifier {
             disconnect();
             popMultiple(context, pagesAway);
             ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text("One or more Bluetooth devices disconnected.")),
+              SnackBar(
+                  content: Text("One or more Bluetooth devices disconnected.")),
             );
           } else {
             isReadyToWorkout = false;
