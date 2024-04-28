@@ -3,7 +3,6 @@ import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
 import 'dart:async';
 import 'package:senior_design/ble/ble_device.dart';
 import 'package:senior_design/ble/ble_consts.dart';
-import 'package:senior_design/utils/routes/routes_name.dart';
 import 'package:flutter/material.dart';
 
 class BLEService extends ChangeNotifier {
@@ -11,6 +10,9 @@ class BLEService extends ChangeNotifier {
 
   bool isBluetoothOn = false;
   bool isReadyToWorkout = false;
+  bool inWorkoutFlow = false;
+
+  var pagesAway = 0;
 
   StreamSubscription? _subscription;
   final targetDevices = <BLEDevice>[];
@@ -60,14 +62,15 @@ class BLEService extends ChangeNotifier {
               targetDevices.every((element) => element.isReadyNotifier.value)) {
             isReadyToWorkout = true;
             notifyListeners();
-          } else if(newDevice.isReadyNotifier.value == false){
+          } else if(newDevice.isReadyNotifier.value == false && inWorkoutFlow){
             //disconnect from every device
             for (BLEDevice device in targetDevices) {
               device.disconnect();
             }
             isReadyToWorkout = false;
             notifyListeners();
-            Navigator.of(context).pushNamed(RoutesName.workoutConnect);
+            //pop until pages away
+            popMultiple(context, pagesAway);
 
           } else{
             isReadyToWorkout = false;
@@ -151,5 +154,28 @@ class BLEService extends ChangeNotifier {
     for (BLEDevice device in targetDevices) {
       device.clearData();
     }
+  }
+
+  void setPagesAway(int pages) {
+    pagesAway = pages;
+  }
+
+  void increasePagesAway() {
+    pagesAway++;
+  }
+
+  void decreasePagesAway() {
+    pagesAway--;
+  }
+
+  void setInWorkoutFlow(bool inFlow) {
+    inWorkoutFlow = inFlow;
+  }
+
+  void popMultiple(BuildContext context, int count) {
+    int popCount = 0;
+    Navigator.popUntil(context, (route) {
+      return popCount++ >= count;
+    });
   }
 }

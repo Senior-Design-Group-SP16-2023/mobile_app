@@ -71,6 +71,7 @@ class _WorkoutStartViewState extends State<WorkoutStartView> {
                   // Disable back button when running
                   icon: const Icon(Icons.arrow_back),
                   onPressed: () {
+                    bleService.decreasePagesAway();
                     bleService.clearData();
                     Navigator.of(context).pop();
                   },
@@ -162,6 +163,8 @@ class _WorkoutStartViewState extends State<WorkoutStartView> {
                         setState(() {
                           _isNextPressed = true;
                         });
+                        bleService.setInWorkoutFlow(false);
+                        bleService.setPagesAway(0);
 
                         _sendData(userViewModel, bleService).then((value) async {
                           await Future.delayed(Duration(seconds: 5));

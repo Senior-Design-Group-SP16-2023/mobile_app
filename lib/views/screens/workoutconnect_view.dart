@@ -70,6 +70,8 @@ class _WorkoutConnectViewState extends State<WorkoutConnectView> {
                 onPressed: !bleService.isReadyToWorkout
                     ? null
                     : () {
+                        bleService.setInWorkoutFlow(true);
+                        bleService.setPagesAway(1);
                         Navigator.push(
                           context,
                           MaterialPageRoute(

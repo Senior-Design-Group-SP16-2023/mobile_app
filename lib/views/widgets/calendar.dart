@@ -67,6 +67,7 @@ class _CalendarWidgetState extends State<CalendarWidget> {
               ),
               const SizedBox(height: 10),
               TableCalendar(
+                availableGestures: AvailableGestures.none,
                 firstDay: DateTime.utc(2010, 10, 16),
                 lastDay: DateTime.utc(2030, 3, 14),
                 focusedDay: _focusedDay,

@@ -34,6 +34,8 @@ class _WorkoutCalibrationViewState extends State<WorkoutCalibrateView> {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
+            bleService.decreasePagesAway();
+            bleService.setInWorkoutFlow(false);
             Navigator.of(context).pop();
           },
         ),

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:senior_design/views/screens/workoutstart_view.dart';
+import 'package:senior_design/ble/ble_service.dart';
+import 'package:provider/provider.dart';
 
 class WorkoutTypeView extends StatefulWidget {
   const WorkoutTypeView({Key? key}) : super(key: key);
@@ -11,11 +13,15 @@ class WorkoutTypeView extends StatefulWidget {
 class _WorkoutTypeViewState extends State<WorkoutTypeView> {
   @override
   Widget build(BuildContext context) {
+    final bleService = Provider.of<BLEService>(context);
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
-          onPressed: () => Navigator.of(context).pop(),
+          onPressed: () {
+            bleService.decreasePagesAway();
+            Navigator.of(context).pop();
+          },
         ),
         title: const Text('Back'),
         centerTitle: false,
@@ -42,6 +48,7 @@ class _WorkoutTypeViewState extends State<WorkoutTypeView> {
                 horizontal: 16.0, vertical: 8.0), // Adjust vertical padding
             child: ElevatedButton(
               onPressed: () {
+                bleService.increasePagesAway();
                 Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -66,6 +73,7 @@ class _WorkoutTypeViewState extends State<WorkoutTypeView> {
                 const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
             child: ElevatedButton(
               onPressed: () {
+                bleService.increasePagesAway();
                 Navigator.push(
                   context,
                   MaterialPageRoute(
