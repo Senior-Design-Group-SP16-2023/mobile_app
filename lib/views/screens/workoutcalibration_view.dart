@@ -85,6 +85,7 @@ class _WorkoutCalibrationViewState extends State<WorkoutCalibrateView> {
             child: ElevatedButton(
               onPressed: _isNextEnabled
                   ? () {
+                      bleService.increasePagesAway();
                       Navigator.push(
                         context,
                         MaterialPageRoute(
