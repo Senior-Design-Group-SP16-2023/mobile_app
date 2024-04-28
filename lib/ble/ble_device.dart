@@ -19,6 +19,8 @@ class BLEDevice {
 
   var reconnectCounter = 0;
 
+  var reconnectAttempts = 5;
+
   dynamic _dataCharacteristic;
   dynamic _configCharacteristic;
 
@@ -72,7 +74,10 @@ class BLEDevice {
     }
     isReadyNotifier.value =
         _dataCharacteristic != null && _configCharacteristic != null;
-    if (isReadyNotifier.value) reconnectCounter = 0;
+    if (isReadyNotifier.value) {
+      reconnectCounter = 0;
+      reconnectAttempts = 0;
+    }
   }
 
   Future<void> beginCalibration() async {

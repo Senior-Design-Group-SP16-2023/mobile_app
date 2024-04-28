@@ -68,6 +68,7 @@ class BLEService extends ChangeNotifier {
               device.disconnect();
             }
             isReadyToWorkout = false;
+            inWorkoutFlow = false;
             notifyListeners();
             //pop until pages away
             popMultiple(context, pagesAway);
@@ -110,6 +111,7 @@ class BLEService extends ChangeNotifier {
       await device.disconnect();
     }
     isReadyToWorkout = false;
+    targetDevices.clear();
     notifyListeners();
   }
 
