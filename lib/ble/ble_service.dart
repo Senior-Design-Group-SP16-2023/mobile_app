@@ -60,7 +60,7 @@ class BLEService extends ChangeNotifier {
       requireLocationServicesEnabled: false,
     ).listen(
       (device) {
-        BLEDevice newDevice = BLEDevice(_ble, device);
+        BLEDevice newDevice = BLEDevice(_ble, device, device.name);
         targetDevices.add(newDevice);
         newDevice.isReadyNotifier.addListener(() {
           if (targetDevices.length == numDevices &&
@@ -128,11 +128,8 @@ class BLEService extends ChangeNotifier {
   Map<String, Map<String, List<int>>> getData() {
     if (disableBluetooth) return {};
     Map<String, Map<String, List<int>>> data = {};
-    int i = 0;
-
     for (BLEDevice device in targetDevices) {
-      data['dev$i'] = device.getData();
-      i++;
+      data[device.name] = device.getData();
     }
     // if(kDebugMode) {
     //   print(data);

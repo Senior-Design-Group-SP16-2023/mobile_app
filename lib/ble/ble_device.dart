@@ -26,8 +26,9 @@ class BLEDevice {
 
   final FlutterReactiveBle _ble;
   final DiscoveredDevice targetDevice;
+  final String name;
 
-  BLEDevice(this._ble, this.targetDevice);
+  BLEDevice(this._ble, this.targetDevice, this.name);
 
   connectToDevice() {
     _connection = _ble
