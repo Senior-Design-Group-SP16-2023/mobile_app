@@ -3,7 +3,7 @@ const disableBluetooth = false;
 
 const sendAcceleration = false;
 
-const numDevices = 1;
+const numDevices = 2;
 
 const sensorServiceUUID = "7147ac18-c824-438e-8506-60829fbd96a3";
 
